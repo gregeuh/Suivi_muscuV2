@@ -102,7 +102,7 @@
             box-shadow: var(--shadow-soft); 
         }
 
-        /* --- WIDGET MACROS (Style Foodvisor) --- */
+        /* --- WIDGET MACROS (Foodvisor) --- */
         .macro-dashboard { 
             background: white; 
             border-radius: var(--radius-lg); 
@@ -165,7 +165,7 @@
             transition: width 0.5s ease; 
         }
 
-        /* --- WIDGET EAU (Style Waterllama) --- */
+        /* --- WIDGET EAU (Waterllama) --- */
         .water-widget { 
             background: white; 
             border-radius: var(--radius-lg); 
@@ -206,7 +206,7 @@
             margin-bottom: 4px; 
         }
 
-        /* Liste des boissons bues */
+        /* Historique des boissons */
         .drink-log-mini {
             margin-top: 16px;
             display: flex;
@@ -450,6 +450,7 @@
             font-size: 11px;
             font-weight: 800;
             text-align: center;
+            white-space: nowrap;
         }
 
         .volume-grid {
@@ -462,11 +463,21 @@
         .volume-btn {
             background: var(--bg);
             border: 2px solid transparent;
-            padding: 12px 4px;
+            padding: 10px 4px;
             border-radius: 12px;
             font-weight: 800;
             font-size: 14px;
             cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .volume-btn small {
+            font-size: 11px;
+            color: var(--text-light);
+            font-weight: 600;
         }
 
         .volume-btn.selected {
@@ -500,10 +511,20 @@
             align-items: center; 
             gap: 16px; 
             cursor: pointer; 
+            margin-bottom: 10px;
         }
 
         .choice-card:active { 
             background: #E2E8F0; 
+        }
+
+        .category-header {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--text-light);
+            margin: 24px 0 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         /* --- SETUP WIZARD --- */
@@ -809,12 +830,12 @@
             <div class="drink-type-grid" id="drink-type-grid">
                 </div>
 
-            <label>Quantité</label>
+            <label>Contenant / Quantité</label>
             <div class="volume-grid">
-                <button class="volume-btn selected" onclick="selectVolume(250, this)">250ml</button>
-                <button class="volume-btn" onclick="selectVolume(330, this)">330ml</button>
-                <button class="volume-btn" onclick="selectVolume(500, this)">500ml</button>
-                <button class="volume-btn" onclick="selectVolume(1000, this)">1L</button>
+                <button class="volume-btn selected" onclick="selectVolume(250, this)">Tasse<small>250ml</small></button>
+                <button class="volume-btn" onclick="selectVolume(330, this)">Canette<small>330ml</small></button>
+                <button class="volume-btn" onclick="selectVolume(500, this)">Gourde<small>500ml</small></button>
+                <button class="volume-btn" onclick="selectVolume(1000, this)">Bouteille<small>1L</small></button>
             </div>
             
             <div class="custom-volume-wrapper">
@@ -833,7 +854,8 @@
                 <h3 style="font-weight:900; font-size:24px;">Que manges-tu ?</h3>
                 <button class="close-btn" onclick="closeModal('meals-modal')">✕</button>
             </div>
-            <div id="meals-list" style="display: grid; gap: 12px;"></div>
+            <div id="meals-list">
+                </div>
         </div>
     </div>
 
@@ -888,33 +910,63 @@
         const googleProvider = new firebase.auth.GoogleAuthProvider();
 
         // ========================================================
-        // BASE DE DONNEES REPAS
+        // BASE DE DONNEES REPAS FRANCAIS (Catégorisée)
         // ========================================================
         const mealsDb = [
-            {name: 'Petit-déjeuner équilibré', icon: '🥣', cal: 450, prot: 20, carb: 55, fat: 15},
-            {name: 'Salade Poulet/Avocat', icon: '🥗', cal: 550, prot: 40, carb: 15, fat: 35},
-            {name: 'Plat de Pâtes (viande)', icon: '🍝', cal: 700, prot: 35, carb: 85, fat: 20},
-            {name: 'Steak & Légumes', icon: '🥩', cal: 500, prot: 45, carb: 20, fat: 25},
-            {name: 'Shaker Protéiné', icon: '🥤', cal: 150, prot: 30, carb: 5, fat: 2},
-            {name: 'Fruit / En-cas', icon: '🍎', cal: 100, prot: 1, carb: 25, fat: 0}
+            // Petit-déjeuner
+            {name: 'Croissant', icon: '🥐', cal: 250, prot: 5, carb: 26, fat: 14, cat: 'Matin'},
+            {name: 'Pain au chocolat', icon: '🍫', cal: 300, prot: 6, carb: 35, fat: 16, cat: 'Matin'},
+            {name: 'Tartine Beurre Confiture', icon: '🥖', cal: 220, prot: 4, carb: 35, fat: 7, cat: 'Matin'},
+            {name: 'Bol de Céréales & Lait', icon: '🥣', cal: 350, prot: 10, carb: 65, fat: 5, cat: 'Matin'},
+            
+            // Plats classiques
+            {name: 'Steak Frites', icon: '🥩', cal: 800, prot: 35, carb: 60, fat: 45, cat: 'Plats'},
+            {name: 'Poulet Rôti & Purée', icon: '🍗', cal: 600, prot: 40, carb: 45, fat: 25, cat: 'Plats'},
+            {name: 'Pâtes Carbonara', icon: '🍝', cal: 750, prot: 25, carb: 70, fat: 40, cat: 'Plats'},
+            {name: 'Pâtes Bolognaise', icon: '🍝', cal: 650, prot: 30, carb: 75, fat: 20, cat: 'Plats'},
+            {name: 'Blanquette de Veau', icon: '🍲', cal: 700, prot: 45, carb: 30, fat: 40, cat: 'Plats'},
+            {name: 'Quiche Lorraine', icon: '🥧', cal: 500, prot: 18, carb: 30, fat: 35, cat: 'Plats'},
+            {name: 'Hachis Parmentier', icon: '🥔', cal: 600, prot: 30, carb: 45, fat: 30, cat: 'Plats'},
+            {name: 'Salade Niçoise', icon: '🥗', cal: 450, prot: 25, carb: 15, fat: 30, cat: 'Plats'},
+            
+            // Sur le pouce & Rapide
+            {name: 'Sandwich Jambon-Beurre', icon: '🥖', cal: 400, prot: 15, carb: 50, fat: 15, cat: 'Rapide'},
+            {name: 'Croque-Monsieur', icon: '🥪', cal: 450, prot: 20, carb: 35, fat: 25, cat: 'Rapide'},
+            {name: 'Pizza Reine (1/2)', icon: '🍕', cal: 600, prot: 25, carb: 70, fat: 25, cat: 'Rapide'},
+            {name: 'Burger & Frites', icon: '🍔', cal: 1000, prot: 35, carb: 100, fat: 50, cat: 'Rapide'},
+            {name: 'Tacos Français (Viande)', icon: '🌯', cal: 950, prot: 40, carb: 90, fat: 45, cat: 'Rapide'},
+            
+            // Desserts & Snacks
+            {name: 'Yaourt Nature', icon: '🥛', cal: 60, prot: 5, carb: 6, fat: 1, cat: 'Desserts'},
+            {name: 'Fruit Frais', icon: '🍎', cal: 90, prot: 1, carb: 22, fat: 0, cat: 'Desserts'},
+            {name: 'Crêpe au Sucre', icon: '🥞', cal: 150, prot: 4, carb: 25, fat: 4, cat: 'Desserts'},
+            {name: 'Gâteau au Chocolat', icon: '🍰', cal: 350, prot: 5, carb: 40, fat: 20, cat: 'Desserts'}
         ];
 
+        // Catégories pour l'affichage
+        const mealCategories = {
+            'Matin': '☕ Petit-déjeuner',
+            'Plats': '🍽️ Plats Traditionnels',
+            'Rapide': '🌯 Sur le pouce',
+            'Desserts': '🍰 Desserts & Snacks'
+        };
+
         // ========================================================
-        // BASE DE DONNEES BOISSONS (Style Waterllama avec Facteur d'hydratation)
+        // BASE DE DONNEES BOISSONS (Avec Chocolat Chaud)
         // ========================================================
         const drinksDb = [
             { id: 'water', name: 'Eau', icon: '💧', factor: 1.0 },
             { id: 'tea', name: 'Thé', icon: '🍵', factor: 1.0 },
             { id: 'coffee', name: 'Café', icon: '☕', factor: 0.8 },
+            { id: 'hot_choco', name: 'Chocolat', icon: '🍫', factor: 0.9 }, // NOUVEAU
             { id: 'milk', name: 'Lait', icon: '🥛', factor: 1.0 },
             { id: 'juice', name: 'Jus', icon: '🧃', factor: 0.9 },
             { id: 'soda', name: 'Soda', icon: '🥤', factor: 0.8 },
-            { id: 'beer', name: 'Bière', icon: '🍺', factor: -0.5 }, // Déshydratant
-            { id: 'wine', name: 'Vin', icon: '🍷', factor: -0.8 }    // Fortement déshydratant
+            { id: 'beer', name: 'Bière', icon: '🍺', factor: -0.5 } // Déshydratant
         ];
 
         let selectedDrinkId = 'water';
-        let selectedVolumeValue = 250;
+        let selectedVolumeValue = 250; // Tasse standard par défaut
 
         // ========================================================
         // STRUCTURE DES DONNEES
@@ -941,8 +993,8 @@
             today: {
                 date: new Date().toDateString(), 
                 foods: [], 
-                drinks: [], // NOUVEAU: Historique des boissons
-                waterMl: 0, // Résultat net d'hydratation
+                drinks: [], 
+                waterMl: 0, 
                 cal: 0, 
                 prot: 0, 
                 carb: 0, 
@@ -963,6 +1015,33 @@
                     <div class="drink-type-name">${d.name}</div>
                 </div>
             `).join('');
+        }
+
+        function initMealGrid() {
+            const list = document.getElementById('meals-list');
+            let html = '';
+            
+            for(let cat in mealCategories) {
+                html += `<div class="category-header">${mealCategories[cat]}</div>`;
+                
+                const catMeals = mealsDb.filter(m => m.cat === cat);
+                
+                catMeals.forEach(m => {
+                    // Trouver l'index original dans mealsDb pour la fonction addFood
+                    const originalIndex = mealsDb.indexOf(m);
+                    html += `
+                        <div class="choice-card" onclick="addFood(${originalIndex})">
+                            <div style="font-size:32px">${m.icon}</div>
+                            <div>
+                                <div style="font-weight:700">${m.name}</div>
+                                <div style="color:var(--text-light); font-size:14px">P:${m.prot}g • G:${m.carb}g • L:${m.fat}g</div>
+                            </div>
+                            <div style="margin-left: auto; font-weight:900; color:var(--primary)">${m.cal}</div>
+                        </div>
+                    `;
+                });
+            }
+            list.innerHTML = html;
         }
 
         function selectDrinkType(id, element) {
@@ -999,6 +1078,7 @@
                 
                 loadLocalData();
                 initDrinkGrid();
+                initMealGrid();
             } else {
                 document.getElementById('auth-screen').style.display = 'flex';
                 document.getElementById('app').style.display = 'none';
@@ -1099,8 +1179,6 @@
         // ========================================================
         function addWaterllamaDrink() {
             const drinkTemplate = drinksDb.find(d => d.id === selectedDrinkId);
-            
-            // Prendre la valeur de l'input texte si elle existe, sinon le bouton sélectionné
             const customInput = document.getElementById('custom-volume-input').value;
             const volumeToLog = customInput ? parseInt(customInput) : selectedVolumeValue;
 
@@ -1108,7 +1186,6 @@
                 return showToast('Veuillez entrer une quantité valide');
             }
 
-            // Calcul de l'hydratation nette
             const hydrationValue = Math.round(volumeToLog * drinkTemplate.factor);
             
             const newDrink = {
@@ -1122,8 +1199,6 @@
             };
 
             data.today.drinks.push(newDrink);
-            
-            // On recalcule le total d'hydratation
             recalcWaterTotal();
 
             saveLocalData();
@@ -1145,10 +1220,7 @@
         }
 
         function recalcWaterTotal() {
-            // Additionner l'hydratation nette de chaque boisson
             let total = data.today.drinks.reduce((sum, drink) => sum + drink.netHydration, 0);
-            
-            // L'affichage visuel ne peut pas être inférieur à zéro
             data.today.waterMl = Math.max(0, total);
         }
 
@@ -1255,18 +1327,6 @@
                 document.getElementById('drink-log-mini').innerHTML = '';
             }
 
-            // -- Liste des repas dans la modale --
-            document.getElementById('meals-list').innerHTML = mealsDb.map((m, i) => `
-                <div class="choice-card" onclick="addFood(${i})">
-                    <div style="font-size:32px">${m.icon}</div>
-                    <div>
-                        <div style="font-weight:700">${m.name}</div>
-                        <div style="color:var(--text-light); font-size:14px">P:${m.prot}g • G:${m.carb}g • L:${m.fat}g</div>
-                    </div>
-                    <div style="margin-left: auto; font-weight:800; color:var(--primary)">${m.cal}</div>
-                </div>
-            `).join('');
-
             // -- Journal du jour sur l'accueil --
             if (data.today.foods.length > 0) {
                 document.getElementById('today-log').innerHTML = data.today.foods.map((f, i) => `
@@ -1276,7 +1336,7 @@
                             <div class="log-name">${f.name}</div>
                             <div class="log-macros">P:${f.prot}g • G:${f.carb}g • L:${f.fat}g</div>
                         </div>
-                        <div class="log-cal">${f.cal}</div>
+                        <div class="log-cal">${f.cal} kcal</div>
                         <button class="delete-btn" onclick="deleteFood(${i})">✕</button>
                     </div>
                 `).join('');
@@ -1357,13 +1417,11 @@
                 const savedData = JSON.parse(raw);
                 data = { ...data, ...savedData };
                 
-                // Mises à jour de structure pour anciens comptes
                 if(data.today.prot === undefined) data.today.prot = 0;
                 if(data.today.carb === undefined) data.today.carb = 0;
                 if(data.today.fat === undefined) data.today.fat = 0;
                 if(data.today.drinks === undefined) data.today.drinks = [];
                 
-                // Gestion du changement de jour
                 const currentDate = new Date().toDateString();
                 if (data.today.date !== currentDate) {
                     if (data.today.cal > 0 || data.today.waterMl > 0) {
