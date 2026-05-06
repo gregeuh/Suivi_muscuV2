@@ -7,24 +7,26 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <title>FitTrack Pro</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
         :root {
             --primary: #FF6B6B;
             --primary-grad: linear-gradient(135deg, #FF8E53, #FF6B6B);
-            --water: #00C6FF;
-            --water-grad: linear-gradient(135deg, #0072FF, #00C6FF);
+            --water: #00A8FF;
+            --water-grad: linear-gradient(135deg, #00C6FF, #0072FF);
             --prot: #FF4757;
             --carb: #1E90FF;
             --fat: #FFA502;
-            --bg: #F4F7FB;
+            --bg: #F8F9FA;
             --surface: #FFFFFF;
-            --text-dark: #2D3436;
-            --text-light: #A0AEC0;
-            --danger: #FF3B30;
-            --shadow-soft: 0 10px 40px rgba(0, 0, 0, 0.05);
-            --radius-lg: 28px;
-            --radius-md: 20px;
+            --text-dark: #1E293B;
+            --text-light: #64748B;
+            --danger: #EF4444;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+            --radius-lg: 20px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
         }
 
         * { 
@@ -32,353 +34,344 @@
             padding: 0; 
             box-sizing: border-box; 
             -webkit-tap-highlight-color: transparent; 
-            font-family: 'Nunito', sans-serif; 
+            font-family: 'Inter', -apple-system, sans-serif; 
         }
 
         body { 
             background: var(--bg); 
             color: var(--text-dark); 
-            line-height: 1.5; 
-            padding-bottom: 140px; /* Augmenté pour le nouveau menu */
+            line-height: 1.4; 
+            padding-bottom: 90px; 
             overflow-x: hidden; 
+            font-size: 15px;
         }
 
         /* --- HEADER --- */
         header { 
-            padding: calc(24px + env(safe-area-inset-top)) 24px 16px; 
+            padding: calc(16px + env(safe-area-inset-top)) 20px 12px; 
             position: sticky; 
             top: 0; 
             z-index: 90; 
-            background: var(--bg); 
+            background: rgba(248, 249, 250, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0,0,0,0.03);
         }
 
         .greeting { 
-            font-size: 16px; 
+            font-size: 13px; 
             color: var(--text-light); 
             font-weight: 600; 
+            margin-bottom: 2px; 
         }
-
+        
         h1 { 
-            font-size: 28px; 
+            font-size: 22px; 
             font-weight: 800; 
+            letter-spacing: -0.5px; 
         }
-
+        
         .header-top { 
             display: flex; 
             justify-content: space-between; 
             align-items: flex-end; 
         }
-
+        
         .streak-badge { 
             background: white; 
-            padding: 8px 16px; 
+            padding: 6px 12px; 
             border-radius: 100px; 
             font-weight: 700; 
-            font-size: 14px; 
-            color: #FF9500; 
-            box-shadow: var(--shadow-soft); 
+            font-size: 13px; 
+            color: #F59E0B; 
+            box-shadow: var(--shadow-sm); 
             cursor: pointer; 
+            border: 1px solid rgba(0,0,0,0.03);
         }
 
         .container { 
-            padding: 0 24px; 
+            padding: 0 20px; 
             max-width: 600px; 
             margin: 0 auto; 
         }
-
+        
         .section-title { 
-            font-size: 18px; 
-            font-weight: 800; 
-            margin: 24px 0 16px; 
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            font-size: 16px; 
+            font-weight: 700; 
+            margin: 20px 0 12px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            letter-spacing: -0.3px; 
         }
 
         .card { 
             background: var(--surface); 
             border-radius: var(--radius-lg); 
-            padding: 24px; 
-            margin-bottom: 20px; 
-            box-shadow: var(--shadow-soft); 
+            padding: 16px; 
+            margin-bottom: 16px; 
+            box-shadow: var(--shadow-sm); 
+            border: 1px solid rgba(0,0,0,0.02);
         }
 
-        /* --- WIDGET MACROS (Foodvisor) --- */
+        /* --- WIDGET MACROS --- */
         .macro-dashboard { 
             background: white; 
             border-radius: var(--radius-lg); 
-            padding: 24px; 
-            box-shadow: var(--shadow-soft); 
-            margin-bottom: 20px; 
+            padding: 20px; 
+            box-shadow: var(--shadow-sm); 
+            margin-bottom: 16px; 
+            border: 1px solid rgba(0,0,0,0.02);
         }
-
+        
         .cal-header { 
             display: flex; 
             justify-content: space-between; 
             align-items: flex-end; 
             margin-bottom: 16px; 
         }
-
+        
         .cal-title { 
-            font-size: 14px; 
+            font-size: 12px; 
             color: var(--text-light); 
             font-weight: 700; 
             text-transform: uppercase; 
-            letter-spacing: 1px; 
+            letter-spacing: 0.5px; 
         }
-
+        
         .cal-value { 
-            font-size: 36px; 
-            font-weight: 900; 
+            font-size: 28px; 
+            font-weight: 800; 
             line-height: 1; 
             color: var(--primary); 
+            letter-spacing: -1px; 
+            margin-top: 4px; 
+        }
+        
+        .cal-goal { 
+            font-size: 14px; 
+            color: var(--text-light); 
+            font-weight: 600; 
         }
         
         .macro-row { 
             display: flex; 
             gap: 12px; 
-            margin-top: 20px; 
+            margin-top: 16px; 
         }
-
-        .macro-col { 
-            flex: 1; 
-        }
-
+        
+        .macro-col { flex: 1; }
+        
         .macro-label { 
-            font-size: 12px; 
-            font-weight: 700; 
+            font-size: 11px; 
+            font-weight: 600; 
             color: var(--text-light); 
-            margin-bottom: 4px; 
+            margin-bottom: 6px; 
             display: flex; 
             justify-content: space-between; 
         }
-
+        
         .macro-track { 
-            height: 8px; 
+            height: 6px; 
             background: var(--bg); 
-            border-radius: 4px; 
+            border-radius: 3px; 
             overflow: hidden; 
         }
-
+        
         .macro-fill { 
             height: 100%; 
-            border-radius: 4px; 
+            border-radius: 3px; 
             transition: width 0.5s ease; 
         }
 
-        /* --- WIDGET EAU (Waterllama) --- */
+        /* --- WIDGET EAU --- */
         .water-widget { 
             background: white; 
             border-radius: var(--radius-lg); 
-            padding: 24px; 
-            box-shadow: var(--shadow-soft); 
+            padding: 16px 20px; 
+            box-shadow: var(--shadow-sm); 
             display: flex; 
-            gap: 20px; 
+            gap: 16px; 
             align-items: center; 
+            border: 1px solid rgba(0,0,0,0.02);
         }
-
+        
         .water-visual { 
-            width: 80px; 
-            height: 120px; 
+            width: 50px; 
+            height: 75px; 
             background: #E8F4F8; 
-            border-radius: 20px 20px 30px 30px; 
+            border-radius: 8px 8px 16px 16px; 
             position: relative; 
             overflow: hidden; 
-            border: 4px solid #D1E8F0; 
+            border: 2px solid #D1E8F0; 
         }
-
+        
         .water-wave { 
             position: absolute; 
             bottom: 0; 
             left: 0; 
             width: 100%; 
             background: var(--water-grad); 
-            transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1); 
-            border-radius: 0 0 24px 24px; 
+            transition: height 0.8s ease; 
         }
-
-        .water-info { 
-            flex: 1; 
-        }
-
+        
+        .water-info { flex: 1; }
+        
         .water-title { 
             font-weight: 800; 
-            font-size: 20px; 
-            margin-bottom: 4px; 
+            font-size: 18px; 
+            margin-bottom: 2px; 
+        }
+        
+        .water-goal-text { 
+            font-size: 12px; 
+            color: var(--text-light); 
+            font-weight: 600; 
         }
 
-        /* Historique des boissons rapide (Accueil) */
-        .drink-log-mini {
-            margin-top: 16px;
-            display: flex;
-            gap: 8px;
-            overflow-x: auto;
-            padding-bottom: 8px;
+        .drink-log-mini { 
+            margin-top: 12px; 
+            display: flex; 
+            gap: 6px; 
+            overflow-x: auto; 
+            padding-bottom: 4px; 
         }
-
-        .drink-log-item-mini {
-            background: var(--bg);
-            padding: 6px 12px;
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            white-space: nowrap;
+        
+        .drink-log-item-mini { 
+            background: var(--bg); 
+            padding: 4px 10px; 
+            border-radius: 8px; 
+            font-size: 12px; 
+            font-weight: 600; 
+            display: flex; 
+            align-items: center; 
+            white-space: nowrap; 
         }
 
         /* --- BOUTONS ACTIONS --- */
+        .btn-group { 
+            display: flex; 
+            gap: 8px; 
+            margin-top: 12px; 
+        }
+        
         .action-btn-main { 
             width: 100%; 
-            padding: 18px; 
+            padding: 12px; 
             background: var(--primary-grad); 
             color: white; 
             border: none; 
-            border-radius: 100px; 
-            font-size: 18px; 
-            font-weight: 800; 
+            border-radius: var(--radius-md); 
+            font-size: 15px; 
+            font-weight: 700; 
             cursor: pointer; 
-            box-shadow: var(--shadow-floating); 
-            margin-bottom: 12px; 
+            box-shadow: var(--shadow-sm); 
         }
-
+        
         .action-btn-outline { 
             width: 100%; 
-            padding: 18px; 
+            padding: 12px; 
             background: transparent; 
             color: var(--text-dark); 
-            border: 2px solid #E2E8F0; 
-            border-radius: 100px; 
-            font-size: 16px; 
-            font-weight: 800; 
+            border: 1px solid #CBD5E1; 
+            border-radius: var(--radius-md); 
+            font-size: 14px; 
+            font-weight: 600; 
             cursor: pointer; 
-            margin-bottom: 12px; 
         }
-
+        
         .action-btn-danger { 
             width: 100%; 
-            padding: 18px; 
+            padding: 12px; 
             background: transparent; 
             color: var(--danger); 
-            border: 2px solid rgba(255, 59, 48, 0.3); 
-            border-radius: 100px; 
-            font-size: 16px; 
-            font-weight: 800; 
+            border: 1px solid #FECACA; 
+            border-radius: var(--radius-md); 
+            font-size: 14px; 
+            font-weight: 600; 
             cursor: pointer; 
-            margin-bottom: 12px; 
-            transition: 0.2s;
         }
 
-        .action-btn-danger:active {
-            background: rgba(255, 59, 48, 0.1);
-        }
-
-        .action-btn-water {
-            width: 100%; 
-            padding: 16px; 
-            background: var(--water-grad); 
-            color: white; 
-            border: none; 
-            border-radius: 100px; 
-            font-size: 16px; 
-            font-weight: 800; 
-            cursor: pointer;
-            box-shadow: 0 10px 20px rgba(0, 198, 255, 0.2);
-            margin-top: 12px;
-        }
-
-        /* --- JOURNAL ALIMENTAIRE & DONNEES --- */
+        /* --- LISTES & LOGS --- */
         .log-item { 
             display: flex; 
             align-items: center; 
-            padding: 16px; 
+            padding: 12px 16px; 
             background: white; 
             border-radius: var(--radius-md); 
-            margin-bottom: 12px; 
-            box-shadow: var(--shadow-soft); 
+            margin-bottom: 8px; 
+            box-shadow: var(--shadow-sm); 
+            border: 1px solid rgba(0,0,0,0.02);
         }
-
+        
         .log-icon { 
-            font-size: 28px; 
-            margin-right: 16px; 
+            font-size: 20px; 
+            margin-right: 12px; 
             background: var(--bg); 
-            width: 50px; 
-            height: 50px; 
+            width: 40px; 
+            height: 40px; 
             display: flex; 
             align-items: center; 
             justify-content: center; 
-            border-radius: 16px; 
+            border-radius: 10px; 
         }
-
-        .log-details { 
-            flex-grow: 1; 
-        }
-
+        
+        .log-details { flex-grow: 1; }
+        
         .log-name { 
-            font-weight: 800; 
-            font-size: 16px; 
-        }
-
-        .log-macros { 
-            font-size: 12px; 
-            color: var(--text-light); 
             font-weight: 700; 
-            margin-top: 4px; 
-            display: flex; 
-            gap: 8px; 
+            font-size: 14px; 
+            margin-bottom: 2px; 
         }
-
+        
+        .log-macros { 
+            font-size: 11px; 
+            color: var(--text-light); 
+            font-weight: 500; 
+        }
+        
         .log-cal { 
-            font-weight: 900; 
+            font-weight: 800; 
             color: var(--text-dark); 
-            font-size: 18px; 
+            font-size: 15px; 
         }
-
+        
         .delete-btn { 
             background: none; 
             border: none; 
             color: var(--text-light); 
-            font-size: 20px; 
+            font-size: 16px; 
             margin-left: 12px; 
-            padding: 8px; 
+            padding: 4px; 
             cursor: pointer; 
-            transition: 0.2s;
         }
 
-        .delete-btn:active {
-            color: var(--danger);
-            transform: scale(0.9);
-        }
-
-        /* --- MODALES & FORMS --- */
+        /* --- FORMS --- */
         input, select { 
             width: 100%; 
-            padding: 16px 20px; 
-            border: 2px solid var(--bg); 
-            border-radius: 16px; 
-            font-size: 16px; 
-            font-weight: 700; 
-            background: var(--bg); 
+            padding: 12px 16px; 
+            border: 1px solid #E2E8F0; 
+            border-radius: var(--radius-md); 
+            font-size: 15px; 
+            background: white; 
             color: var(--text-dark); 
             margin-bottom: 16px; 
             -webkit-appearance: none; 
         }
-
+        
         input:focus, select:focus { 
             outline: none; 
             border-color: var(--primary); 
-            background: white; 
-        }
-
-        label { 
-            display: block; 
-            font-size: 14px; 
-            font-weight: 800; 
-            color: var(--text-light); 
-            margin-bottom: 8px; 
         }
         
+        label { 
+            display: block; 
+            font-size: 13px; 
+            font-weight: 600; 
+            color: var(--text-light); 
+            margin-bottom: 6px; 
+        }
+
+        /* --- MODALES --- */
         .modal { 
             display: flex; 
             position: fixed; 
@@ -386,171 +379,211 @@
             left: 0; 
             width: 100%; 
             height: 100%; 
-            background: rgba(0,0,0,0.4); 
-            backdrop-filter: blur(4px); 
+            background: rgba(15, 23, 42, 0.4); 
+            backdrop-filter: blur(2px); 
             z-index: 1000; 
             align-items: flex-end; 
             opacity: 0; 
             pointer-events: none; 
-            transition: opacity 0.3s; 
+            transition: opacity 0.2s; 
         }
-
+        
         .modal.active { 
             opacity: 1; 
             pointer-events: auto; 
         }
-
+        
         .modal-content { 
             background: var(--surface); 
             width: 100%; 
-            max-height: 90vh; 
-            border-radius: 32px 32px 0 0; 
-            padding: 32px 24px 40px; 
+            max-height: 85vh; 
+            border-radius: 20px 20px 0 0; 
+            padding: 24px 20px 40px; 
             transform: translateY(100%); 
-            transition: transform 0.4s; 
+            transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); 
             overflow-y: auto; 
         }
-
+        
         .modal.active .modal-content { 
             transform: translateY(0); 
         }
-
+        
         .modal-header { 
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
-            margin-bottom: 24px; 
+            margin-bottom: 20px; 
+        }
+        
+        .modal-header h3 { 
+            font-size: 18px; 
+            font-weight: 800; 
+        }
+        
+        .close-btn { 
+            background: #F1F5F9; 
+            border: none; 
+            width: 30px; 
+            height: 30px; 
+            border-radius: 15px; 
+            font-weight: 600; 
+            cursor: pointer; 
+            color: var(--text-light); 
         }
 
-        .close-btn { 
+        /* --- DRINK SELECTOR --- */
+        .drink-type-grid { 
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 8px; 
+            margin-bottom: 20px; 
+        }
+        
+        .drink-type-btn { 
             background: var(--bg); 
-            border: none; 
-            width: 36px; 
-            height: 36px; 
-            border-radius: 18px; 
-            font-weight: bold; 
+            border: 1px solid transparent; 
+            border-radius: var(--radius-md); 
+            padding: 10px 4px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            gap: 6px; 
             cursor: pointer; 
         }
-
-        /* --- WATERLLAMA SPECIFICS --- */
-        .drink-type-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            margin-bottom: 24px;
+        
+        .drink-type-btn.selected { 
+            border-color: var(--water); 
+            background: #F0F9FF; 
         }
+        
+        .drink-type-icon { font-size: 24px; }
+        .drink-type-name { font-size: 10px; font-weight: 600; }
 
-        .drink-type-btn {
-            background: var(--bg);
-            border: 2px solid transparent;
-            border-radius: 16px;
-            padding: 12px 4px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            transition: 0.2s;
+        .volume-grid { 
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 8px; 
+            margin-bottom: 16px; 
         }
-
-        .drink-type-btn.selected {
-            border-color: var(--water);
-            background: #E8F4F8;
-        }
-
-        .drink-type-icon {
-            font-size: 32px;
-        }
-
-        .drink-type-name {
-            font-size: 11px;
-            font-weight: 800;
-            text-align: center;
-            white-space: nowrap;
-        }
-
-        .volume-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
-            margin-bottom: 16px;
-        }
-
-        .volume-btn {
-            background: var(--bg);
-            border: 2px solid transparent;
-            padding: 10px 4px;
-            border-radius: 12px;
-            font-weight: 800;
-            font-size: 14px;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .volume-btn small {
-            font-size: 11px;
-            color: var(--text-light);
-            font-weight: 600;
-        }
-
-        .volume-btn.selected {
-            border-color: var(--water);
-            background: #E8F4F8;
-            color: var(--water);
-        }
-
-        .custom-volume-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: var(--bg);
-            border-radius: 16px;
-            padding: 4px 16px;
-        }
-
-        .custom-volume-wrapper input {
-            margin: 0;
-            border: none;
-            background: transparent;
-            padding: 12px 0;
-            font-size: 18px;
-        }
-
-        .choice-card { 
+        
+        .volume-btn { 
             background: var(--bg); 
-            padding: 16px 20px; 
-            border-radius: 20px; 
+            border: 1px solid transparent; 
+            padding: 8px; 
+            border-radius: var(--radius-sm); 
+            font-weight: 700; 
+            font-size: 13px; 
+            cursor: pointer; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+        }
+        
+        .volume-btn small { 
+            font-size: 10px; 
+            color: var(--text-light); 
+            font-weight: 500; 
+        }
+        
+        .volume-btn.selected { 
+            border-color: var(--water); 
+            background: #F0F9FF; 
+            color: var(--water); 
+        }
+
+        .custom-volume-wrapper { 
             display: flex; 
             align-items: center; 
-            gap: 16px; 
+            gap: 12px; 
+            background: var(--bg); 
+            border-radius: var(--radius-sm); 
+            padding: 4px 12px; 
+        }
+        
+        .custom-volume-wrapper input { 
+            margin: 0; 
+            border: none; 
+            background: transparent; 
+            padding: 8px 0; 
+            font-size: 16px; 
+        }
+
+        /* --- COMPACT BOTTOM NAV --- */
+        .tab-bar { 
+            position: fixed; 
+            bottom: 0; 
+            left: 0; 
+            right: 0; 
+            background: rgba(255, 255, 255, 0.9); 
+            backdrop-filter: blur(10px); 
+            border-top: 1px solid rgba(0,0,0,0.05);
+            padding: 8px 12px calc(8px + env(safe-area-inset-bottom)); 
+            display: flex; 
+            justify-content: space-around; 
+            z-index: 100; 
+        }
+        
+        .tab-item { 
+            flex: 1; 
+            padding: 4px 0; 
+            border: none; 
+            background: transparent; 
+            color: var(--text-light); 
+            font-weight: 600; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            gap: 4px; 
+            font-size: 10px; 
             cursor: pointer; 
-            margin-bottom: 10px;
+        }
+        
+        .tab-item .icon { 
+            font-size: 20px; 
+            transition: transform 0.2s; 
+            filter: grayscale(100%) opacity(0.6); 
+        }
+        
+        .tab-item.active { 
+            color: var(--primary); 
+        }
+        
+        .tab-item.active .icon { 
+            filter: grayscale(0%) opacity(1); 
+            transform: translateY(-2px); 
         }
 
-        .choice-card:active { 
-            background: #E2E8F0; 
+        /* --- UTILS --- */
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .toast { 
+            position: fixed; 
+            top: env(safe-area-inset-top); 
+            left: 50%; 
+            transform: translateX(-50%) translateY(-100px); 
+            background: #1E293B; 
+            color: white; 
+            padding: 12px 20px; 
+            border-radius: 100px; 
+            font-weight: 600; 
+            font-size: 13px; 
+            z-index: 2000; 
+            transition: 0.3s; 
+        }
+        
+        .toast.show { 
+            transform: translateX(-50%) translateY(20px); 
         }
 
-        .category-header {
-            font-size: 16px;
-            font-weight: 800;
-            color: var(--text-light);
-            margin: 24px 0 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* --- SETUP WIZARD --- */
         .fullscreen-screen { 
             position: fixed; 
             top: 0; 
             left: 0; 
             width: 100%; 
             height: 100%; 
-            background: var(--bg); 
+            background: var(--surface); 
             z-index: 3000; 
             display: flex; 
             flex-direction: column; 
@@ -558,134 +591,40 @@
             padding: 24px; 
             overflow-y: auto; 
         }
-
-        .wizard-step { 
-            display: none; 
-            animation: fadeUp 0.4s ease; 
-        }
-
-        .wizard-step.active { 
-            display: block; 
-        }
-
+        
+        .wizard-step { display: none; }
+        .wizard-step.active { display: block; }
+        
         .choice-pill { 
-            border: 2px solid #E2E8F0; 
-            padding: 16px; 
-            border-radius: 16px; 
-            margin-bottom: 12px; 
-            font-weight: 700; 
+            border: 1px solid #E2E8F0; 
+            padding: 14px; 
+            border-radius: var(--radius-md); 
+            margin-bottom: 10px; 
+            font-weight: 600; 
             cursor: pointer; 
             text-align: center; 
-            background: white; 
+            font-size: 15px; 
             transition: 0.2s; 
         }
-
+        
         .choice-pill.selected { 
             border-color: var(--primary); 
-            background: rgba(255,107,107,0.1); 
+            background: #FEF2F2; 
             color: var(--primary); 
         }
 
-        /* --- NOUVEAU MENU DE NAVIGATION (Style Pilule) --- */
-        .tab-bar { 
-            position: fixed; 
-            bottom: 24px; 
-            left: 20px; 
-            right: 20px; 
-            background: #F0F4F8; /* Fond légèrement grisé */
-            border-radius: 40px; 
-            padding: 8px; 
+        .profile-line { 
             display: flex; 
-            justify-content: space-between;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08); 
-            z-index: 100; 
-        }
-
-        .tab-item { 
-            flex: 1; 
+            justify-content: space-between; 
             padding: 12px 0; 
-            border: none; 
-            background: transparent; 
-            color: var(--text-light); 
-            border-radius: 30px; 
-            font-weight: 800; 
-            display: flex; 
-            flex-direction: column; /* Icône au-dessus du texte */
-            align-items: center; 
-            justify-content: center; 
-            gap: 6px; 
-            font-size: 12px;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-bottom: 1px solid var(--bg); 
+            font-size: 14px; 
         }
-
-        .tab-item .icon {
-            font-size: 24px;
-            filter: grayscale(100%) opacity(0.5); /* Icônes grisées par défaut */
-            transition: all 0.3s ease;
-        }
-
-        .tab-item.active { 
-            background: #FFFFFF; /* Pilule blanche pour l'onglet actif */
-            color: var(--primary); 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-
-        .tab-item.active .icon {
-            filter: grayscale(0%) opacity(1); /* Icône colorée */
-            transform: translateY(-2px); /* Petit bond vers le haut */
-        }
-
-        .tab-content { 
-            display: none; 
-        }
-
-        .tab-content.active { 
-            display: block; 
-            animation: fadeUp 0.4s ease; 
-        }
-
-        @keyframes fadeUp { 
-            from { opacity: 0; transform: translateY(10px); } 
-            to { opacity: 1; transform: translateY(0); } 
-        }
-
-        .toast { 
-            position: fixed; 
-            top: 20px; 
-            left: 50%; 
-            transform: translateX(-50%) translateY(-100px); 
-            background: #2D3436; 
-            color: white; 
-            padding: 14px 24px; 
-            border-radius: 100px; 
-            font-weight: 700; 
-            z-index: 2000; 
-            transition: 0.4s; 
-        }
-
-        .toast.show { 
-            transform: translateX(-50%) translateY(0); 
-        }
-
-        /* Lignes d'informations dans Profil */
-        .profile-line {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid var(--bg);
-        }
-        .profile-line:last-child {
-            border-bottom: none;
-        }
-        .profile-line span {
-            color: var(--text-light);
-            font-weight: 700;
-        }
-        .profile-line strong {
-            color: var(--text-dark);
-            font-size: 16px;
-        }
+        
+        .profile-line:last-child { border-bottom: none; }
+        .profile-line span { color: var(--text-light); }
+        .profile-line strong { font-weight: 700; }
+        .empty-state { text-align: center; color: var(--text-light); font-size: 13px; padding: 24px; }
     </style>
 
     <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-app-compat.js"></script>
@@ -695,81 +634,67 @@
 
     <div id="auth-screen" class="fullscreen-screen" style="display: none;">
         <div style="text-align: center; margin-bottom: 40px;">
-            <div style="font-size: 64px; margin-bottom: 16px;">🥑</div>
-            <h1 style="font-size: 32px;">FitTrack</h1>
-            <p style="color: var(--text-light); font-weight: 600;">Nutrition & Hydratation</p>
+            <div style="font-size: 48px; margin-bottom: 12px;">🥑</div>
+            <h1 style="font-size: 28px;">FitTrack</h1>
+            <p style="color: var(--text-light); font-size: 14px; margin-top: 4px;">Nutrition & Hydratation</p>
         </div>
         
-        <button class="action-btn-outline" onclick="signInGoogle()" style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 32px;">
-            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20"> Continuer avec Google
+        <button class="action-btn-outline" onclick="signInGoogle()" style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 24px;">
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18"> Continuer avec Google
         </button>
         
-        <div class="card" style="padding: 20px;">
+        <div style="margin-bottom: 16px;">
             <label>Email</label>
             <input type="email" id="auth-email">
-            
             <label>Mot de passe</label>
             <input type="password" id="auth-pass">
-            
-            <button class="action-btn-main" onclick="signInEmail()" style="margin-top: 8px;">Connexion</button>
-            <button class="action-btn-outline" onclick="signUpEmail()" style="margin-bottom: 0;">Créer un compte</button>
+            <button class="action-btn-main" onclick="signInEmail()">Connexion</button>
+            <button class="action-btn-outline" onclick="signUpEmail()" style="border:none; margin-top:8px;">Créer un compte</button>
         </div>
     </div>
 
     <div id="setup" class="fullscreen-screen" style="display: none;">
-        
         <div class="wizard-step active" id="step1">
-            <h1 style="text-align: center; margin-bottom: 8px;">Ton Objectif</h1>
-            <p style="text-align: center; color: var(--text-light); margin-bottom: 32px; font-weight:700;">Que souhaites-tu accomplir ?</p>
+            <h1 style="text-align: center; margin-bottom: 6px;">Ton Objectif</h1>
+            <p style="text-align: center; color: var(--text-light); margin-bottom: 24px; font-size: 14px;">Que souhaites-tu accomplir ?</p>
             
             <div class="choice-pill selected" onclick="selectGoal('lose', this)">🔥 Perdre du poids</div>
             <div class="choice-pill" onclick="selectGoal('maintain', this)">⚖️ Maintenir mon poids</div>
             <div class="choice-pill" onclick="selectGoal('gain', this)">💪 Prendre du muscle</div>
             
             <button class="action-btn-main" style="margin-top:24px;" onclick="nextStep(2)">Continuer</button>
-            <button class="action-btn-outline" id="cancel-setup-btn" style="display: none; border: none; color: var(--text-light);" onclick="cancelSetup()">Annuler</button>
+            <button class="action-btn-outline" id="cancel-setup-btn" style="display: none; border: none;" onclick="cancelSetup()">Annuler</button>
         </div>
 
         <div class="wizard-step" id="step2">
-            <h1 style="text-align: center; margin-bottom: 32px;">Ton Profil</h1>
-            <div class="card">
-                <label>Sexe</label>
-                <select id="setup-gender">
-                    <option value="male">Homme</option>
-                    <option value="female">Femme</option>
-                </select>
-                
-                <div style="display:flex; gap:12px;">
-                    <div style="flex:1">
-                        <label>Âge</label>
-                        <input type="number" id="setup-age">
-                    </div>
-                    <div style="flex:1">
-                        <label>Taille (cm)</label>
-                        <input type="number" id="setup-height">
-                    </div>
-                </div>
-                
-                <label>Niveau d'activité</label>
-                <select id="setup-activity">
-                    <option value="1.2">Sédentaire (Bureau)</option>
-                    <option value="1.375" selected>Léger (1-2 séances/sem)</option>
-                    <option value="1.55">Modéré (3-4 séances/sem)</option>
-                    <option value="1.725">Très actif (5+ séances/sem)</option>
-                </select>
+            <h1 style="text-align: center; margin-bottom: 24px;">Ton Profil</h1>
+            <label>Sexe</label>
+            <select id="setup-gender">
+                <option value="male">Homme</option>
+                <option value="female">Femme</option>
+            </select>
+            
+            <div style="display:flex; gap:12px;">
+                <div style="flex:1"><label>Âge</label><input type="number" id="setup-age"></div>
+                <div style="flex:1"><label>Taille (cm)</label><input type="number" id="setup-height"></div>
             </div>
+            
+            <label>Niveau d'activité</label>
+            <select id="setup-activity">
+                <option value="1.2">Sédentaire (Bureau)</option>
+                <option value="1.375" selected>Léger (1-2x/sem)</option>
+                <option value="1.55">Modéré (3-4x/sem)</option>
+                <option value="1.725">Très actif (5+x/sem)</option>
+            </select>
             <button class="action-btn-main" onclick="nextStep(3)">Continuer</button>
         </div>
 
         <div class="wizard-step" id="step3">
-            <h1 style="text-align: center; margin-bottom: 32px;">Dernière étape</h1>
-            <div class="card">
-                <label>Poids actuel (kg)</label>
-                <input type="number" id="setup-current-weight" step="0.1">
-                
-                <label>Poids cible (kg)</label>
-                <input type="number" id="setup-target-weight" step="0.1">
-            </div>
+            <h1 style="text-align: center; margin-bottom: 24px;">Poids</h1>
+            <label>Poids actuel (kg)</label>
+            <input type="number" id="setup-current-weight" step="0.1">
+            <label>Poids cible (kg)</label>
+            <input type="number" id="setup-target-weight" step="0.1">
             <button class="action-btn-main" onclick="completeSetup()">Enregistrer le profil</button>
         </div>
     </div>
@@ -781,9 +706,7 @@
                     <div class="greeting">Bonjour <span id="user-display-name">!</span> 👋</div>
                     <h1>Aujourd'hui</h1>
                 </div>
-                <div class="streak-badge">
-                    🔥 <span id="streak-count">0</span>
-                </div>
+                <div class="streak-badge">🔥 <span id="streak-count">0</span></div>
             </div>
         </header>
 
@@ -793,100 +716,79 @@
                 <div class="macro-dashboard">
                     <div class="cal-header">
                         <div>
-                            <div class="cal-title">Calories consommées</div>
+                            <div class="cal-title">Calories</div>
                             <div class="cal-value" id="cal-now">0</div>
                         </div>
-                        <div style="text-align: right; color: var(--text-light); font-weight: 800;">
-                            / <span id="cal-goal">0</span> kcal
-                        </div>
+                        <div class="cal-goal">/ <span id="cal-goal">0</span></div>
                     </div>
                     
                     <div class="macro-row">
                         <div class="macro-col">
-                            <div class="macro-label"><span>Protéines</span><span id="prot-text">0/0g</span></div>
+                            <div class="macro-label"><span>Protéines</span><span id="prot-text">0g</span></div>
                             <div class="macro-track"><div class="macro-fill" id="prot-fill" style="background: var(--prot); width: 0%;"></div></div>
                         </div>
                         <div class="macro-col">
-                            <div class="macro-label"><span>Glucides</span><span id="carb-text">0/0g</span></div>
+                            <div class="macro-label"><span>Glucides</span><span id="carb-text">0g</span></div>
                             <div class="macro-track"><div class="macro-fill" id="carb-fill" style="background: var(--carb); width: 0%;"></div></div>
                         </div>
                         <div class="macro-col">
-                            <div class="macro-label"><span>Lipides</span><span id="fat-text">0/0g</span></div>
+                            <div class="macro-label"><span>Lipides</span><span id="fat-text">0g</span></div>
                             <div class="macro-track"><div class="macro-fill" id="fat-fill" style="background: var(--fat); width: 0%;"></div></div>
                         </div>
                     </div>
-                    
-                    <button class="action-btn-outline" style="margin-top:20px; margin-bottom:0; padding:12px;" onclick="openModal('meals-modal')">
-                        + Ajouter un repas
-                    </button>
+                    <div class="btn-group">
+                        <button class="action-btn-outline" style="font-size: 13px;" onclick="openModal('meals-modal')">🍽️ Ajouter un repas</button>
+                        <button class="action-btn-outline" style="font-size: 13px;" onclick="openModal('sync-modal')">⚖️ Pesée</button>
+                    </div>
                 </div>
 
-                <div class="water-widget" style="display: block;">
-                    <div style="display: flex; gap: 20px; align-items: center;">
-                        <div class="water-visual">
-                            <div class="water-wave" id="water-wave" style="height: 0%;"></div>
-                        </div>
-                        <div class="water-info">
-                            <div class="water-title"><span id="water-now">0</span> ml</div>
-                            <div style="color:var(--text-light); font-weight:700; font-size:14px;">
-                                Objectif : <span id="water-goal">2000</span> ml
-                            </div>
-                            <button class="action-btn-water" onclick="openModal('water-llama-modal')">
-                                + Ajouter une boisson
-                            </button>
+                <div class="water-widget">
+                    <div class="water-visual">
+                        <div class="water-wave" id="water-wave" style="height: 0%;"></div>
+                    </div>
+                    <div class="water-info">
+                        <div class="water-title"><span id="water-now">0</span> ml</div>
+                        <div class="water-goal-text">Objectif : <span id="water-goal">2000</span> ml</div>
+                        <div class="btn-group" style="margin-top: 8px;">
+                            <button class="action-btn-main" style="padding: 8px; font-size: 13px; background: var(--water-grad);" onclick="openModal('water-llama-modal')">💧 Boire</button>
                         </div>
                     </div>
-                    
-                    <div class="drink-log-mini" id="drink-log-mini-home">
-                        </div>
                 </div>
+                <div class="drink-log-mini" id="drink-log-mini-home"></div>
 
-                <div class="section-title">
-                    <span>Actions rapides</span>
-                    <span style="font-size:24px; cursor:pointer;" onclick="openModal('sleep-modal')" title="Ajouter le sommeil">😴</span>
-                </div>
-                <button class="action-btn-outline" onclick="openModal('sync-modal')">⚖️ Mettre à jour mon poids</button>
             </div>
 
             <div id="data-tab" class="tab-content">
-                <div class="section-title" style="margin-top: 0;">Boissons du jour</div>
+                <div class="section-title" style="margin-top: 0;">Repas & Boissons</div>
                 <div id="data-today-drinks"></div>
-
-                <div class="section-title">Repas du jour</div>
                 <div id="data-today-meals"></div>
                 
-                <div class="section-title" style="margin-top: 32px;">Jours précédents</div>
+                <div class="section-title" style="margin-top: 24px;">Historique des jours</div>
                 <div id="data-history-log"></div>
             </div>
 
             <div id="profile-tab" class="tab-content">
-                <div class="section-title" style="margin-top: 0;">Mon Profil</div>
-                <div class="card" id="profile-summary">
-                    </div>
-
-                <button class="action-btn-outline" onclick="editProfile()">⚙️ Modifier mon profil</button>
-                <button class="action-btn-danger" onclick="resetAllData()">🗑️ Effacer toutes mes données</button>
+                <div class="section-title" style="margin-top: 0;">Paramètres</div>
+                <div class="card" id="profile-summary"></div>
                 
-                <div style="height: 32px;"></div>
-                <button class="action-btn-outline" onclick="logOut()" style="border: none; color: var(--text-light);">
-                    Se déconnecter
-                </button>
+                <div class="section-title">Sommeil</div>
+                <button class="action-btn-outline" onclick="openModal('sleep-modal')">😴 Ajouter ma nuit</button>
+
+                <div class="section-title" style="margin-top: 24px;">Compte</div>
+                <button class="action-btn-outline" onclick="editProfile()">⚙️ Modifier mes objectifs</button>
+                <button class="action-btn-danger" onclick="resetAllData()">🗑️ Réinitialiser mes données</button>
+                <button class="action-btn-outline" style="border: none; margin-top: 16px;" onclick="logOut()">Déconnexion</button>
             </div>
         </div>
     </div>
 
     <div id="water-llama-modal" class="modal" onclick="closeOnBackdrop(event, 'water-llama-modal')">
         <div class="modal-content">
-            <div class="modal-header">
-                <h3 style="font-weight:900; font-size:24px;">Que bois-tu ?</h3>
-                <button class="close-btn" onclick="closeModal('water-llama-modal')">✕</button>
-            </div>
+            <div class="modal-header"><h3>Ajouter une boisson</h3><button class="close-btn" onclick="closeModal('water-llama-modal')">✕</button></div>
             
-            <label>Type de boisson</label>
-            <div class="drink-type-grid" id="drink-type-grid">
-                </div>
-
-            <label>Contenant / Quantité</label>
+            <div class="drink-type-grid" id="drink-type-grid"></div>
+            
+            <label>Contenant</label>
             <div class="volume-grid">
                 <button class="volume-btn selected" onclick="selectVolume(250, this)">Tasse<small>250ml</small></button>
                 <button class="volume-btn" onclick="selectVolume(330, this)">Canette<small>330ml</small></button>
@@ -895,64 +797,51 @@
             </div>
             
             <div class="custom-volume-wrapper">
-                <span style="font-size:20px;">✏️</span>
-                <input type="number" id="custom-volume-input" placeholder="Ou saisis ta quantité..." oninput="clearVolumeButtons()">
-                <span style="font-weight:800; color:var(--text-light)">ml</span>
+                <span style="font-size:16px;">✏️</span>
+                <input type="number" id="custom-volume-input" placeholder="Autre quantité..." oninput="clearVolumeButtons()">
+                <span style="font-weight:700; font-size:14px; color:var(--text-light)">ml</span>
             </div>
-
-            <button class="action-btn-water" style="margin-top:24px;" onclick="addWaterllamaDrink()">Valider</button>
+            
+            <button class="action-btn-main" style="margin-top:16px; background:var(--water-grad);" onclick="addWaterllamaDrink()">Valider</button>
         </div>
     </div>
 
     <div id="meals-modal" class="modal" onclick="closeOnBackdrop(event, 'meals-modal')">
         <div class="modal-content">
-            <div class="modal-header">
-                <h3 style="font-weight:900; font-size:24px;">Que manges-tu ?</h3>
-                <button class="close-btn" onclick="closeModal('meals-modal')">✕</button>
-            </div>
-            <div id="meals-list">
-                </div>
-        </div>
-    </div>
-
-    <div id="sleep-modal" class="modal" onclick="closeOnBackdrop(event, 'sleep-modal')">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 style="font-weight:900; font-size:24px;">Sommeil</h3>
-                <button class="close-btn" onclick="closeModal('sleep-modal')">✕</button>
-            </div>
-            <label>Heure de coucher</label>
-            <input type="time" id="sleep-bed">
-            <label>Heure de réveil</label>
-            <input type="time" id="sleep-wake">
-            <button class="action-btn-main" style="margin-top:16px;" onclick="logSleep()">Enregistrer</button>
+            <div class="modal-header"><h3>Ajouter un repas</h3><button class="close-btn" onclick="closeModal('meals-modal')">✕</button></div>
+            <div id="meals-list"></div>
         </div>
     </div>
 
     <div id="sync-modal" class="modal" onclick="closeOnBackdrop(event, 'sync-modal')">
         <div class="modal-content">
-            <div class="modal-header">
-                <h3>Nouveau poids</h3>
-                <button class="close-btn" onclick="closeModal('sync-modal')">✕</button>
-            </div>
-            <label>Poids (kg)</label>
-            <input type="number" id="sync-weight" step="0.1">
-            <button class="action-btn-main" onclick="syncData()">Enregistrer</button>
+            <div class="modal-header"><h3>Nouvelle pesée</h3><button class="close-btn" onclick="closeModal('sync-modal')">✕</button></div>
+            <input type="number" id="sync-weight" step="0.1" placeholder="Poids en kg">
+            <button class="action-btn-main" onclick="syncData()">Mettre à jour</button>
+        </div>
+    </div>
+
+    <div id="sleep-modal" class="modal" onclick="closeOnBackdrop(event, 'sleep-modal')">
+        <div class="modal-content">
+            <div class="modal-header"><h3>Ma nuit</h3><button class="close-btn" onclick="closeModal('sleep-modal')">✕</button></div>
+            <label>Coucher</label><input type="time" id="sleep-bed">
+            <label>Réveil</label><input type="time" id="sleep-wake">
+            <button class="action-btn-main" onclick="logSleep()">Enregistrer</button>
         </div>
     </div>
 
     <div class="tab-bar">
         <button class="tab-item active" onclick="switchTab('home', this)">
             <span class="icon">🏠</span>
-            <span>Accueil</span>
+            Accueil
         </button>
         <button class="tab-item" onclick="switchTab('data', this)">
             <span class="icon">📊</span>
-            <span>Données</span>
+            Journal
         </button>
         <button class="tab-item" onclick="switchTab('profile', this)">
             <span class="icon">👤</span>
-            <span>Profil</span>
+            Profil
         </button>
     </div>
 
@@ -976,171 +865,113 @@
         const googleProvider = new firebase.auth.GoogleAuthProvider();
 
         // ========================================================
-        // BASE DE DONNEES REPAS FRANCAIS (Catégorisée)
+        // DATABASES
         // ========================================================
         const mealsDb = [
-            // Petit-déjeuner
             {name: 'Croissant', icon: '🥐', cal: 250, prot: 5, carb: 26, fat: 14, cat: 'Matin'},
             {name: 'Pain au chocolat', icon: '🍫', cal: 300, prot: 6, carb: 35, fat: 16, cat: 'Matin'},
             {name: 'Tartine Beurre Confiture', icon: '🥖', cal: 220, prot: 4, carb: 35, fat: 7, cat: 'Matin'},
-            {name: 'Bol de Céréales & Lait', icon: '🥣', cal: 350, prot: 10, carb: 65, fat: 5, cat: 'Matin'},
-            
-            // Plats classiques
+            {name: 'Bol de Céréales', icon: '🥣', cal: 350, prot: 10, carb: 65, fat: 5, cat: 'Matin'},
             {name: 'Steak Frites', icon: '🥩', cal: 800, prot: 35, carb: 60, fat: 45, cat: 'Plats'},
-            {name: 'Poulet Rôti & Purée', icon: '🍗', cal: 600, prot: 40, carb: 45, fat: 25, cat: 'Plats'},
+            {name: 'Poulet & Purée', icon: '🍗', cal: 600, prot: 40, carb: 45, fat: 25, cat: 'Plats'},
             {name: 'Pâtes Carbonara', icon: '🍝', cal: 750, prot: 25, carb: 70, fat: 40, cat: 'Plats'},
             {name: 'Pâtes Bolognaise', icon: '🍝', cal: 650, prot: 30, carb: 75, fat: 20, cat: 'Plats'},
-            {name: 'Blanquette de Veau', icon: '🍲', cal: 700, prot: 45, carb: 30, fat: 40, cat: 'Plats'},
-            {name: 'Quiche Lorraine', icon: '🥧', cal: 500, prot: 18, carb: 30, fat: 35, cat: 'Plats'},
-            {name: 'Hachis Parmentier', icon: '🥔', cal: 600, prot: 30, carb: 45, fat: 30, cat: 'Plats'},
-            {name: 'Salade Niçoise', icon: '🥗', cal: 450, prot: 25, carb: 15, fat: 30, cat: 'Plats'},
-            
-            // Sur le pouce & Rapide
+            {name: 'Salade Composée', icon: '🥗', cal: 450, prot: 25, carb: 15, fat: 30, cat: 'Plats'},
             {name: 'Sandwich Jambon-Beurre', icon: '🥖', cal: 400, prot: 15, carb: 50, fat: 15, cat: 'Rapide'},
-            {name: 'Croque-Monsieur', icon: '🥪', cal: 450, prot: 20, carb: 35, fat: 25, cat: 'Rapide'},
-            {name: 'Pizza Reine (1/2)', icon: '🍕', cal: 600, prot: 25, carb: 70, fat: 25, cat: 'Rapide'},
             {name: 'Burger & Frites', icon: '🍔', cal: 1000, prot: 35, carb: 100, fat: 50, cat: 'Rapide'},
-            {name: 'Tacos Français (Viande)', icon: '🌯', cal: 950, prot: 40, carb: 90, fat: 45, cat: 'Rapide'},
-            
-            // Desserts & Snacks
             {name: 'Yaourt Nature', icon: '🥛', cal: 60, prot: 5, carb: 6, fat: 1, cat: 'Desserts'},
-            {name: 'Fruit Frais', icon: '🍎', cal: 90, prot: 1, carb: 22, fat: 0, cat: 'Desserts'},
-            {name: 'Crêpe au Sucre', icon: '🥞', cal: 150, prot: 4, carb: 25, fat: 4, cat: 'Desserts'},
-            {name: 'Gâteau au Chocolat', icon: '🍰', cal: 350, prot: 5, carb: 40, fat: 20, cat: 'Desserts'}
+            {name: 'Fruit Frais', icon: '🍎', cal: 90, prot: 1, carb: 22, fat: 0, cat: 'Desserts'}
         ];
-
-        const mealCategories = {
-            'Matin': '☕ Petit-déjeuner',
-            'Plats': '🍽️ Plats Traditionnels',
-            'Rapide': '🌯 Sur le pouce',
-            'Desserts': '🍰 Desserts & Snacks'
+        
+        const mealCategories = { 
+            'Matin': '☕ Matin', 
+            'Plats': '🍽️ Plats', 
+            'Rapide': '🌯 Rapide', 
+            'Desserts': '🍰 Snacks' 
         };
 
-        // ========================================================
-        // BASE DE DONNEES BOISSONS
-        // ========================================================
         const drinksDb = [
             { id: 'water', name: 'Eau', icon: '💧', factor: 1.0 },
             { id: 'tea', name: 'Thé', icon: '🍵', factor: 1.0 },
             { id: 'coffee', name: 'Café', icon: '☕', factor: 0.8 },
-            { id: 'hot_choco', name: 'Chocolat', icon: '🍫', factor: 0.9 },
+            { id: 'hot_choco', name: 'Choco', icon: '🍫', factor: 0.9 },
             { id: 'milk', name: 'Lait', icon: '🥛', factor: 1.0 },
             { id: 'juice', name: 'Jus', icon: '🧃', factor: 0.9 },
             { id: 'soda', name: 'Soda', icon: '🥤', factor: 0.8 },
-            { id: 'beer', name: 'Bière', icon: '🍺', factor: -0.5 } 
+            { id: 'beer', name: 'Bière', icon: '🍺', factor: -0.5 }
         ];
 
         let selectedDrinkId = 'water';
         let selectedVolumeValue = 250; 
-
-        // ========================================================
-        // STRUCTURE DES DONNEES LOCALES
-        // ========================================================
-        let data = {
-            setup: false,
-            profile: {
-                gender: 'male', 
-                age: 25, 
-                height: 175, 
-                weight: 70, 
-                target: 70, 
-                activity: 1.375, 
-                goal: 'lose'
-            },
-            goals: {
-                cal: 2000, 
-                waterMl: 2000, 
-                prot: 100, 
-                carb: 200, 
-                fat: 70
-            },
+        
+        let data = { 
+            setup: false, 
+            profile: { gender: 'male', age: 25, height: 175, weight: 70, target: 70, activity: 1.375, goal: 'lose' }, 
+            goals: { cal: 2000, waterMl: 2000, prot: 100, carb: 200, fat: 70 }, 
             history: [], 
-            today: {
-                date: new Date().toDateString(), 
-                foods: [], 
-                drinks: [], 
-                waterMl: 0, 
-                cal: 0, 
-                prot: 0, 
-                carb: 0, 
-                fat: 0
-            },
-            sleep: [],
-            streak: 0
+            today: { date: new Date().toDateString(), foods: [], drinks: [], waterMl: 0, cal: 0, prot: 0, carb: 0, fat: 0 }, 
+            sleep: [], 
+            streak: 0 
         };
 
         // ========================================================
-        // INITIALISATION DES MODALES
+        // INITIALISATION
         // ========================================================
         function initDrinkGrid() {
-            const grid = document.getElementById('drink-type-grid');
-            grid.innerHTML = drinksDb.map(d => `
+            document.getElementById('drink-type-grid').innerHTML = drinksDb.map(d => `
                 <div class="drink-type-btn ${d.id === selectedDrinkId ? 'selected' : ''}" onclick="selectDrinkType('${d.id}', this)">
                     <div class="drink-type-icon">${d.icon}</div>
                     <div class="drink-type-name">${d.name}</div>
                 </div>
             `).join('');
         }
-
+        
         function initMealGrid() {
-            const list = document.getElementById('meals-list');
             let html = '';
-            
             for(let cat in mealCategories) {
-                html += `<div class="category-header">${mealCategories[cat]}</div>`;
-                const catMeals = mealsDb.filter(m => m.cat === cat);
-                
-                catMeals.forEach(m => {
-                    const originalIndex = mealsDb.indexOf(m);
+                html += `<div style="font-size:13px; font-weight:700; color:var(--text-light); margin: 16px 0 8px; text-transform:uppercase;">${mealCategories[cat]}</div>`;
+                mealsDb.filter(m => m.cat === cat).forEach(m => {
                     html += `
-                        <div class="choice-card" onclick="addFood(${originalIndex})">
-                            <div style="font-size:32px">${m.icon}</div>
-                            <div>
-                                <div style="font-weight:700">${m.name}</div>
-                                <div style="color:var(--text-light); font-size:14px">P:${m.prot}g • G:${m.carb}g • L:${m.fat}g</div>
+                        <div class="log-item" style="cursor:pointer;" onclick="addFood(${mealsDb.indexOf(m)})">
+                            <div class="log-icon">${m.icon}</div>
+                            <div class="log-details">
+                                <div class="log-name">${m.name}</div>
+                                <div class="log-macros">P:${m.prot}g G:${m.carb}g L:${m.fat}g</div>
                             </div>
-                            <div style="margin-left: auto; font-weight:900; color:var(--primary)">${m.cal}</div>
-                        </div>
-                    `;
+                            <div class="log-cal">${m.cal}</div>
+                        </div>`;
                 });
             }
-            list.innerHTML = html;
+            document.getElementById('meals-list').innerHTML = html;
         }
 
-        function selectDrinkType(id, element) {
-            selectedDrinkId = id;
-            document.querySelectorAll('.drink-type-btn').forEach(btn => btn.classList.remove('selected'));
-            element.classList.add('selected');
+        function selectDrinkType(id, el) { 
+            selectedDrinkId = id; 
+            document.querySelectorAll('.drink-type-btn').forEach(btn => btn.classList.remove('selected')); 
+            el.classList.add('selected'); 
         }
-
-        function selectVolume(ml, element) {
-            selectedVolumeValue = ml;
-            document.getElementById('custom-volume-input').value = '';
-            
-            document.querySelectorAll('.volume-btn').forEach(btn => btn.classList.remove('selected'));
-            element.classList.add('selected');
+        
+        function selectVolume(ml, el) { 
+            selectedVolumeValue = ml; 
+            document.getElementById('custom-volume-input').value = ''; 
+            document.querySelectorAll('.volume-btn').forEach(btn => btn.classList.remove('selected')); 
+            el.classList.add('selected'); 
         }
-
-        function clearVolumeButtons() {
-            document.querySelectorAll('.volume-btn').forEach(btn => btn.classList.remove('selected'));
-            selectedVolumeValue = parseInt(document.getElementById('custom-volume-input').value) || 0;
+        
+        function clearVolumeButtons() { 
+            document.querySelectorAll('.volume-btn').forEach(btn => btn.classList.remove('selected')); 
+            selectedVolumeValue = parseInt(document.getElementById('custom-volume-input').value) || 0; 
         }
 
         // ========================================================
-        // GESTION DE L'AUTHENTIFICATION FIREBASE
+        // AUTH
         // ========================================================
         auth.onAuthStateChanged(user => {
             if (user) {
                 document.getElementById('auth-screen').style.display = 'none';
-                
-                let displayName = user.email.split('@')[0];
-                if (user.displayName) {
-                    displayName = user.displayName.split(' ')[0];
-                }
-                document.getElementById('user-display-name').textContent = displayName;
-                
-                loadLocalData();
-                initDrinkGrid();
+                document.getElementById('user-display-name').textContent = user.displayName ? user.displayName.split(' ')[0] : user.email.split('@')[0];
+                loadLocalData(); 
+                initDrinkGrid(); 
                 initMealGrid();
             } else {
                 document.getElementById('auth-screen').style.display = 'flex';
@@ -1148,419 +979,270 @@
                 document.getElementById('setup').style.display = 'none';
             }
         });
-
-        function signInGoogle() { auth.signInWithPopup(googleProvider).catch(e => showToast(e.message)); }
-        function signInEmail() { auth.signInWithEmailAndPassword(document.getElementById('auth-email').value, document.getElementById('auth-pass').value).catch(e => showToast(e.message)); }
-        function signUpEmail() { auth.createUserWithEmailAndPassword(document.getElementById('auth-email').value, document.getElementById('auth-pass').value).catch(e => showToast(e.message)); }
-        function logOut() { auth.signOut(); }
-
-        // ========================================================
-        // LOGIQUE WIZARD & MODIFICATION PROFIL
-        // ========================================================
-        function selectGoal(goal, element) {
-            data.profile.goal = goal;
-            document.querySelectorAll('#step1 .choice-pill').forEach(el => el.classList.remove('selected'));
-            element.classList.add('selected');
+        
+        function signInGoogle() { 
+            auth.signInWithPopup(googleProvider).catch(e => showToast(e.message)); 
+        }
+        
+        function signInEmail() { 
+            auth.signInWithEmailAndPassword(document.getElementById('auth-email').value, document.getElementById('auth-pass').value).catch(e => showToast(e.message)); 
+        }
+        
+        function signUpEmail() { 
+            auth.createUserWithEmailAndPassword(document.getElementById('auth-email').value, document.getElementById('auth-pass').value).catch(e => showToast(e.message)); 
+        }
+        
+        function logOut() { 
+            auth.signOut(); 
         }
 
-        function nextStep(stepNumber) {
-            if(stepNumber === 3) {
-                data.profile.age = parseInt(document.getElementById('setup-age').value);
-                data.profile.height = parseInt(document.getElementById('setup-height').value);
-                data.profile.gender = document.getElementById('setup-gender').value;
-                data.profile.activity = parseFloat(document.getElementById('setup-activity').value);
-                
-                if (!data.profile.age || !data.profile.height) {
-                    return showToast('Complète les infos');
-                }
+        // ========================================================
+        // WIZARD & PROFIL
+        // ========================================================
+        function selectGoal(goal, el) { 
+            data.profile.goal = goal; 
+            document.querySelectorAll('#step1 .choice-pill').forEach(e => e.classList.remove('selected')); 
+            el.classList.add('selected'); 
+        }
+        
+        function nextStep(step) {
+            if(step === 3 && (!document.getElementById('setup-age').value || !document.getElementById('setup-height').value)) return showToast('Complète les infos');
+            if(step === 3) { 
+                data.profile.age = parseInt(document.getElementById('setup-age').value); 
+                data.profile.height = parseInt(document.getElementById('setup-height').value); 
+                data.profile.gender = document.getElementById('setup-gender').value; 
+                data.profile.activity = parseFloat(document.getElementById('setup-activity').value); 
             }
-            
-            document.querySelectorAll('.wizard-step').forEach(s => s.classList.remove('active'));
-            document.getElementById('step' + stepNumber).classList.add('active');
+            document.querySelectorAll('.wizard-step').forEach(s => s.classList.remove('active')); 
+            document.getElementById('step' + step).classList.add('active');
         }
-
+        
         function completeSetup() {
-            data.profile.weight = parseFloat(document.getElementById('setup-current-weight').value);
+            if (!document.getElementById('setup-current-weight').value) return showToast('Poids requis');
+            data.profile.weight = parseFloat(document.getElementById('setup-current-weight').value); 
             data.profile.target = parseFloat(document.getElementById('setup-target-weight').value);
-            
-            if (!data.profile.weight) return showToast('Poids requis');
-            
             calcGoals(); 
-            data.setup = true;
-            
+            data.setup = true; 
             document.getElementById('setup').style.display = 'none'; 
-            document.getElementById('app').style.display = 'block';
-            
+            document.getElementById('app').style.display = 'block'; 
             saveLocalData(); 
             render();
-            showToast('Profil enregistré ✅');
         }
-
+        
         function editProfile() {
-            document.getElementById('setup-age').value = data.profile.age;
-            document.getElementById('setup-height').value = data.profile.height;
-            document.getElementById('setup-gender').value = data.profile.gender;
-            document.getElementById('setup-activity').value = data.profile.activity;
-            document.getElementById('setup-current-weight').value = data.profile.weight;
+            document.getElementById('setup-age').value = data.profile.age; 
+            document.getElementById('setup-height').value = data.profile.height; 
+            document.getElementById('setup-gender').value = data.profile.gender; 
+            document.getElementById('setup-activity').value = data.profile.activity; 
+            document.getElementById('setup-current-weight').value = data.profile.weight; 
             document.getElementById('setup-target-weight').value = data.profile.target;
             
-            const goalMap = { 'lose': 0, 'maintain': 1, 'gain': 2 };
-            const pills = document.querySelectorAll('#step1 .choice-pill');
-            pills.forEach(p => p.classList.remove('selected'));
-            if (pills[goalMap[data.profile.goal]]) {
-                pills[goalMap[data.profile.goal]].classList.add('selected');
-            }
-
-            document.getElementById('cancel-setup-btn').style.display = 'block';
-            document.getElementById('app').style.display = 'none';
-            document.getElementById('setup').style.display = 'flex';
+            const goalMap = { 'lose': 0, 'maintain': 1, 'gain': 2 }; 
+            const pills = document.querySelectorAll('#step1 .choice-pill'); 
+            pills.forEach(p => p.classList.remove('selected')); 
+            if(pills[goalMap[data.profile.goal]]) pills[goalMap[data.profile.goal]].classList.add('selected');
             
-            document.querySelectorAll('.wizard-step').forEach(s => s.classList.remove('active'));
+            document.getElementById('cancel-setup-btn').style.display = 'block'; 
+            document.getElementById('app').style.display = 'none'; 
+            document.getElementById('setup').style.display = 'flex';
+            document.querySelectorAll('.wizard-step').forEach(s => s.classList.remove('active')); 
             document.getElementById('step1').classList.add('active');
         }
-
-        function cancelSetup() {
-            document.getElementById('setup').style.display = 'none';
-            document.getElementById('app').style.display = 'block';
-            document.getElementById('cancel-setup-btn').style.display = 'none';
+        
+        function cancelSetup() { 
+            document.getElementById('setup').style.display = 'none'; 
+            document.getElementById('app').style.display = 'block'; 
+            document.getElementById('cancel-setup-btn').style.display = 'none'; 
         }
-
-        function resetAllData() {
-            if(confirm("⚠️ ATTENTION ! Cela va effacer tout ton historique, tes repas et tes paramètres. C'est irréversible. Veux-tu vraiment continuer ?")) {
-                const uid = auth.currentUser ? auth.currentUser.uid : 'anonymous';
-                localStorage.removeItem('fit_' + uid);
+        
+        function resetAllData() { 
+            if(confirm("Effacer définitivement toutes les données ?")) { 
+                localStorage.removeItem('fit_' + (auth.currentUser ? auth.currentUser.uid : 'anonymous')); 
                 location.reload(); 
-            }
+            } 
         }
 
-        // ========================================================
-        // CALCULS (BMR + MACROS)
-        // ========================================================
         function calcGoals() {
             const w = data.profile.weight;
-            
-            let bmr = (10 * w) + (6.25 * data.profile.height) - (5 * data.profile.age);
-            bmr += (data.profile.gender === 'male') ? 5 : -161;
-            
+            let bmr = (10 * w) + (6.25 * data.profile.height) - (5 * data.profile.age) + (data.profile.gender === 'male' ? 5 : -161);
             let tdee = bmr * data.profile.activity;
-            
-            if(data.profile.goal === 'lose') tdee -= 400;
+            if(data.profile.goal === 'lose') tdee -= 400; 
             if(data.profile.goal === 'gain') tdee += 300;
             
-            data.goals.cal = Math.round(tdee);
+            data.goals.cal = Math.round(tdee); 
             data.goals.waterMl = Math.round(w * 35); 
-            
-            const protMultiplier = (data.profile.goal === 'maintain') ? 1.5 : 2.0;
-            data.goals.prot = Math.round(w * protMultiplier);
-            data.goals.fat = Math.round(w * 1);
-            
-            const remainingCal = data.goals.cal - (data.goals.prot * 4) - (data.goals.fat * 9);
-            data.goals.carb = Math.round(remainingCal / 4);
+            data.goals.prot = Math.round(w * (data.profile.goal === 'maintain' ? 1.5 : 2.0)); 
+            data.goals.fat = Math.round(w * 1); 
+            data.goals.carb = Math.round((data.goals.cal - (data.goals.prot * 4) - (data.goals.fat * 9)) / 4);
         }
 
         // ========================================================
-        // ACTIONS METIERS (Boissons, Repas, Historique)
+        // ACTIONS METIERS
         // ========================================================
         function addWaterllamaDrink() {
-            const drinkTemplate = drinksDb.find(d => d.id === selectedDrinkId);
-            const customInput = document.getElementById('custom-volume-input').value;
-            const volumeToLog = customInput ? parseInt(customInput) : selectedVolumeValue;
-
-            if (!volumeToLog || volumeToLog <= 0) {
-                return showToast('Veuillez entrer une quantité valide');
-            }
-
-            const hydrationValue = Math.round(volumeToLog * drinkTemplate.factor);
+            const dTmp = drinksDb.find(d => d.id === selectedDrinkId); 
+            const vol = document.getElementById('custom-volume-input').value ? parseInt(document.getElementById('custom-volume-input').value) : selectedVolumeValue;
+            if (!vol || vol <= 0) return showToast('Quantité invalide');
             
-            const newDrink = {
-                id: Date.now(),
-                typeId: drinkTemplate.id,
-                name: drinkTemplate.name,
-                icon: drinkTemplate.icon,
-                volume: volumeToLog,
-                netHydration: hydrationValue,
-                time: new Date().toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit'})
-            };
-
-            data.today.drinks.push(newDrink);
-            recalcWaterTotal();
-
-            saveLocalData();
-            render();
-            closeModal('water-llama-modal');
-            
-            if (hydrationValue < 0) {
-                showToast(`🧊 Oups, ça déshydrate un peu !`);
-            } else {
-                showToast(`💧 ${volumeToLog}ml ajoutés`);
-            }
+            const net = Math.round(vol * dTmp.factor);
+            data.today.drinks.push({ 
+                id: Date.now(), 
+                typeId: dTmp.id, 
+                name: dTmp.name, 
+                icon: dTmp.icon, 
+                volume: vol, 
+                netHydration: net, 
+                time: new Date().toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit'}) 
+            });
+            recalcWaterTotal(); 
+            saveLocalData(); 
+            render(); 
+            closeModal('water-llama-modal'); 
+            showToast(net < 0 ? '🧊 Oups, ça déshydrate !' : `💧 ${vol}ml ajoutés`);
         }
-
-        function deleteDrink(drinkId) {
-            data.today.drinks = data.today.drinks.filter(d => d.id !== drinkId);
-            recalcWaterTotal();
-            saveLocalData();
-            render();
+        
+        function deleteDrink(id) { 
+            data.today.drinks = data.today.drinks.filter(d => d.id !== id); 
+            recalcWaterTotal(); 
+            saveLocalData(); 
+            render(); 
         }
-
-        function recalcWaterTotal() {
-            let total = data.today.drinks.reduce((sum, drink) => sum + drink.netHydration, 0);
-            data.today.waterMl = Math.max(0, total);
+        
+        function recalcWaterTotal() { 
+            data.today.waterMl = Math.max(0, data.today.drinks.reduce((s, d) => s + d.netHydration, 0)); 
         }
-
-        function addFood(index) {
-            const f = mealsDb[index];
-            const time = new Date().toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit'});
-            
-            data.today.foods.push({...f, time});
-            data.today.cal += f.cal;
-            data.today.prot += f.prot;
-            data.today.carb += f.carb;
+        
+        function addFood(idx) {
+            const f = mealsDb[idx]; 
+            data.today.foods.push({...f, time: new Date().toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit'})});
+            data.today.cal += f.cal; 
+            data.today.prot += f.prot; 
+            data.today.carb += f.carb; 
             data.today.fat += f.fat;
-            
             saveLocalData(); 
             render(); 
             closeModal('meals-modal'); 
             showToast(`✅ ${f.name}`);
         }
-
+        
         function deleteFood(i) {
-            const f = data.today.foods[i];
-            
-            data.today.cal -= f.cal;
-            data.today.prot -= f.prot;
-            data.today.carb -= f.carb;
+            const f = data.today.foods[i]; 
+            data.today.cal -= f.cal; 
+            data.today.prot -= f.prot; 
+            data.today.carb -= f.carb; 
             data.today.fat -= f.fat;
-            
-            data.today.foods.splice(i, 1);
+            data.today.foods.splice(i, 1); 
             saveLocalData(); 
             render();
         }
-
-        function deleteHistoryEntry(index) {
-            if(confirm("Veux-tu vraiment supprimer cette journée de ton historique ?")) {
-                data.history.splice(index, 1);
-                saveLocalData();
-                render();
-            }
+        
+        function deleteHistoryEntry(i) { 
+            if(confirm("Supprimer ce jour ?")) { 
+                data.history.splice(i, 1); 
+                saveLocalData(); 
+                render(); 
+            } 
         }
-
-        function logSleep() {
-            const bed = document.getElementById('sleep-bed').value;
-            const wake = document.getElementById('sleep-wake').value;
-            
-            if (!bed || !wake) return showToast('Heures manquantes');
-            
-            const b = new Date(`2000-01-01T${bed}`); 
-            let w = new Date(`2000-01-01T${wake}`);
-            if (w < b) w = new Date(`2000-01-02T${wake}`); 
-            
-            const hrs = ((w - b) / 3600000).toFixed(1);
-            data.sleep.unshift({date: new Date().toLocaleDateString(), hrs});
-            
-            saveLocalData(); 
-            render(); 
-            closeModal('sleep-modal'); 
-            showToast('😴 Sommeil enregistré');
-        }
-
-        function syncData() {
-            const w = parseFloat(document.getElementById('sync-weight').value);
+        
+        function syncData() { 
+            const w = parseFloat(document.getElementById('sync-weight').value); 
             if (w) { 
                 data.profile.weight = w; 
                 calcGoals(); 
-            }
+                saveLocalData(); 
+                render(); 
+                closeModal('sync-modal'); 
+                showToast('✅ Poids mis à jour'); 
+            } 
+        }
+        
+        function logSleep() { 
+            const b = document.getElementById('sleep-bed').value, w = document.getElementById('sleep-wake').value; 
+            if (!b || !w) return; 
+            const start = new Date(`2000-01-01T${b}`); 
+            let end = new Date(`2000-01-01T${w}`); 
+            if (end < start) end = new Date(`2000-01-02T${w}`); 
+            data.sleep.unshift({date: new Date().toLocaleDateString(), hrs: ((end - start) / 3600000).toFixed(1)}); 
             saveLocalData(); 
             render(); 
-            closeModal('sync-modal'); 
-            showToast('✅ Poids mis à jour');
+            closeModal('sleep-modal'); 
+            showToast('😴 Nuit enregistrée'); 
         }
 
         // ========================================================
-        // FONCTION DE RENDU (Mise à jour de l'UI)
+        // RENDER (Mise à jour UI)
         // ========================================================
         function render() {
-            // 1. ONGLET ACCUEIL
-            // -----------------------------------------------------
-            document.getElementById('cal-now').textContent = data.today.cal;
+            // ACCUEIL
+            document.getElementById('cal-now').textContent = data.today.cal; 
             document.getElementById('cal-goal').textContent = data.goals.cal;
-            
-            const pPct = Math.min(100, (data.today.prot / data.goals.prot) * 100) || 0;
-            const cPct = Math.min(100, (data.today.carb / data.goals.carb) * 100) || 0;
-            const fPct = Math.min(100, (data.today.fat / data.goals.fat) * 100) || 0;
-            
-            document.getElementById('prot-fill').style.width = pPct + '%';
-            document.getElementById('carb-fill').style.width = cPct + '%';
-            document.getElementById('fat-fill').style.width = fPct + '%';
-            
-            document.getElementById('prot-text').textContent = `${data.today.prot}/${data.goals.prot}g`;
-            document.getElementById('carb-text').textContent = `${data.today.carb}/${data.goals.carb}g`;
+            document.getElementById('prot-fill').style.width = (Math.min(100, (data.today.prot / data.goals.prot) * 100) || 0) + '%'; 
+            document.getElementById('carb-fill').style.width = (Math.min(100, (data.today.carb / data.goals.carb) * 100) || 0) + '%'; 
+            document.getElementById('fat-fill').style.width = (Math.min(100, (data.today.fat / data.goals.fat) * 100) || 0) + '%';
+            document.getElementById('prot-text').textContent = `${data.today.prot}/${data.goals.prot}g`; 
+            document.getElementById('carb-text').textContent = `${data.today.carb}/${data.goals.carb}g`; 
             document.getElementById('fat-text').textContent = `${data.today.fat}/${data.goals.fat}g`;
+            
+            document.getElementById('water-now').textContent = data.today.waterMl; 
+            document.getElementById('water-goal').textContent = data.goals.waterMl; 
+            document.getElementById('water-wave').style.height = (Math.min(100, (data.today.waterMl / data.goals.waterMl) * 100) || 0) + '%';
+            document.getElementById('drink-log-mini-home').innerHTML = data.today.drinks.length ? data.today.drinks.slice(-5).map(d => `<div class="drink-log-item-mini">${d.icon}</div>`).join('') : '';
 
-            document.getElementById('water-now').textContent = data.today.waterMl;
-            document.getElementById('water-goal').textContent = data.goals.waterMl;
-            const wPct = Math.min(100, (data.today.waterMl / data.goals.waterMl) * 100) || 0;
-            document.getElementById('water-wave').style.height = wPct + '%';
+            // DONNEES (Journal détaillé)
+            document.getElementById('data-today-drinks').innerHTML = data.today.drinks.length ? data.today.drinks.map(d => `<div class="log-item"><div class="log-icon">${d.icon}</div><div class="log-details"><div class="log-name">${d.name}</div><div class="log-macros">${d.time}</div></div><div class="log-cal">${d.volume} ml</div><button class="delete-btn" onclick="deleteDrink(${d.id})">✕</button></div>`).reverse().join('') : `<div class="empty-state">Aucune boisson.</div>`;
+            document.getElementById('data-today-meals').innerHTML = data.today.foods.length ? data.today.foods.map((f, i) => `<div class="log-item"><div class="log-icon">${f.icon}</div><div class="log-details"><div class="log-name">${f.name}</div><div class="log-macros">P:${f.prot}g G:${f.carb}g L:${f.fat}g</div></div><div class="log-cal">${f.cal}</div><button class="delete-btn" onclick="deleteFood(${i})">✕</button></div>`).reverse().join('') : `<div class="empty-state">Aucun repas.</div>`;
+            document.getElementById('data-history-log').innerHTML = data.history.length ? data.history.map((h, i) => `<div class="log-item"><div class="log-details"><div class="log-name">${new Date(h.date).toLocaleDateString('fr-FR', {weekday:'short', day:'numeric', month:'short'})}</div><div class="log-macros">💧 ${h.waterMl}ml</div></div><div class="log-cal">${h.cal} kcal</div><button class="delete-btn" onclick="deleteHistoryEntry(${i})">✕</button></div>`).reverse().join('') : `<div class="empty-state">L'historique sera là demain.</div>`;
 
-            // Affichage très réduit des boissons sur l'accueil (juste des bulles)
-            if (data.today.drinks.length > 0) {
-                document.getElementById('drink-log-mini-home').innerHTML = data.today.drinks.map(d => `
-                    <div class="drink-log-item-mini">
-                        <span>${d.icon}</span>
-                    </div>
-                `).join('');
-            } else {
-                document.getElementById('drink-log-mini-home').innerHTML = '';
-            }
-
-            // 2. ONGLET DONNEES (Journal détaillé)
-            // -----------------------------------------------------
-            // Liste des Boissons (avec bouton supprimer)
-            if (data.today.drinks.length > 0) {
-                document.getElementById('data-today-drinks').innerHTML = data.today.drinks.map(d => `
-                    <div class="log-item">
-                        <div class="log-icon">${d.icon}</div>
-                        <div class="log-details">
-                            <div class="log-name">${d.name}</div>
-                            <div class="log-macros">${d.time}</div>
-                        </div>
-                        <div class="log-cal">${d.volume} ml</div>
-                        <button class="delete-btn" onclick="deleteDrink(${d.id})">🗑️</button>
-                    </div>
-                `).join('');
-            } else {
-                document.getElementById('data-today-drinks').innerHTML = `<p style="color:var(--text-light); font-weight:700; padding:12px 0;">Aucune boisson ajoutée aujourd'hui.</p>`;
-            }
-
-            // Liste des Repas (avec bouton supprimer)
-            if (data.today.foods.length > 0) {
-                document.getElementById('data-today-meals').innerHTML = data.today.foods.map((f, i) => `
-                    <div class="log-item">
-                        <div class="log-icon">${f.icon}</div>
-                        <div class="log-details">
-                            <div class="log-name">${f.name}</div>
-                            <div class="log-macros">P:${f.prot}g • G:${f.carb}g • L:${f.fat}g</div>
-                        </div>
-                        <div class="log-cal">${f.cal} kcal</div>
-                        <button class="delete-btn" onclick="deleteFood(${i})">🗑️</button>
-                    </div>
-                `).join('');
-            } else {
-                document.getElementById('data-today-meals').innerHTML = `<p style="color:var(--text-light); font-weight:700; padding:12px 0;">Aucun repas enregistré aujourd'hui.</p>`;
-            }
-
-            // Historique
-            if (data.history.length > 0) {
-                document.getElementById('data-history-log').innerHTML = data.history.map((h, i) => `
-                    <div class="log-item" style="box-shadow: none; border: 1px solid #E2E8F0; display:flex; align-items:center;">
-                        <div class="log-details" style="flex-grow:1;">
-                            <div class="log-name">${new Date(h.date).toLocaleDateString('fr-FR', {weekday:'long', day:'numeric', month:'short'})}</div>
-                            <div class="log-macros">💧 ${h.waterMl}ml bus</div>
-                        </div>
-                        <div class="log-cal" style="margin-right: 12px;">${h.cal} kcal</div>
-                        <button class="delete-btn" style="margin:0; font-size:18px;" onclick="deleteHistoryEntry(${i})">🗑️</button>
-                    </div>
-                `).reverse().join('');
-            } else {
-                document.getElementById('data-history-log').innerHTML = `<p style="text-align:center; color:var(--text-light); font-weight:700; padding:20px;">Ton historique apparaîtra ici demain.</p>`;
-            }
-
-            // 3. ONGLET PROFIL
-            // -----------------------------------------------------
-            const goalDict = { 'lose': 'Perte de poids', 'maintain': 'Maintien', 'gain': 'Prise de muscle' };
-            document.getElementById('profile-summary').innerHTML = `
-                <div class="profile-line"><span>Objectif</span><strong>${goalDict[data.profile.goal]}</strong></div>
-                <div class="profile-line"><span>Poids actuel</span><strong>${data.profile.weight} kg</strong></div>
-                <div class="profile-line"><span>Poids cible</span><strong>${data.profile.target} kg</strong></div>
-                <div class="profile-line"><span>Calories cibles</span><strong>${data.goals.cal} kcal / jour</strong></div>
-                <div class="profile-line"><span>Eau cible</span><strong>${data.goals.waterMl} ml / jour</strong></div>
-            `;
+            // PROFIL
+            const gd = { 'lose': 'Perte de poids', 'maintain': 'Maintien', 'gain': 'Prise de muscle' };
+            document.getElementById('profile-summary').innerHTML = `<div class="profile-line"><span>Objectif</span><strong>${gd[data.profile.goal]}</strong></div><div class="profile-line"><span>Poids</span><strong>${data.profile.weight} kg -> ${data.profile.target} kg</strong></div><div class="profile-line"><span>Cible</span><strong>${data.goals.cal} kcal / ${data.goals.waterMl} ml</strong></div>`;
         }
 
         // ========================================================
-        // FONCTIONS UTILITAIRES DE L'UI
+        // UTILS ET SAUVEGARDE
         // ========================================================
-        function switchTab(tabName, buttonElement) { 
+        function switchTab(n, b) { 
             document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active')); 
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active')); 
-            buttonElement.classList.add('active'); 
-            document.getElementById(tabName + '-tab').classList.add('active'); 
+            b.classList.add('active'); 
+            document.getElementById(n + '-tab').classList.add('active'); 
         }
         
-        function openModal(id) { 
-            document.getElementById(id).classList.add('active'); 
-            document.body.style.overflow = 'hidden';
-        }
-        
-        function closeModal(id) { 
-            document.getElementById(id).classList.remove('active'); 
-            document.body.style.overflow = '';
-        }
-        
-        function closeOnBackdrop(event, id) { 
-            if (event.target.id === id) {
-                closeModal(id); 
-            }
-        }
-        
-        function showToast(message) { 
-            const toast = document.getElementById('toast'); 
-            toast.textContent = message; 
-            toast.classList.add('show'); 
-            setTimeout(() => { toast.classList.remove('show'); }, 2500); 
-        }
+        function openModal(id) { document.getElementById(id).classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); document.body.style.overflow = ''; }
+        function closeOnBackdrop(e, id) { if (e.target.id === id) closeModal(id); }
+        function showToast(m) { const t = document.getElementById('toast'); t.textContent = m; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2500); }
 
-        // ========================================================
-        // SAUVEGARDE & CHARGEMENT
-        // ========================================================
-        async function saveLocalData() {
-            const uid = auth.currentUser ? auth.currentUser.uid : 'anonymous';
-            localStorage.setItem('fit_' + uid, JSON.stringify(data));
+        async function saveLocalData() { 
+            localStorage.setItem('fit_' + (auth.currentUser ? auth.currentUser.uid : 'anonymous'), JSON.stringify(data)); 
         }
-
+        
         async function loadLocalData() {
-            const uid = auth.currentUser ? auth.currentUser.uid : 'anonymous';
-            const raw = localStorage.getItem('fit_' + uid);
-            
+            const raw = localStorage.getItem('fit_' + (auth.currentUser ? auth.currentUser.uid : 'anonymous'));
             if (raw) {
-                const savedData = JSON.parse(raw);
-                data = { ...data, ...savedData };
-                
-                if(data.today.prot === undefined) data.today.prot = 0;
-                if(data.today.carb === undefined) data.today.carb = 0;
-                if(data.today.fat === undefined) data.today.fat = 0;
+                data = { ...data, ...JSON.parse(raw) };
+                if(data.today.prot === undefined) data.today.prot = 0; 
+                if(data.today.carb === undefined) data.today.carb = 0; 
+                if(data.today.fat === undefined) data.today.fat = 0; 
                 if(data.today.drinks === undefined) data.today.drinks = [];
                 
-                const currentDate = new Date().toDateString();
-                if (data.today.date !== currentDate) {
-                    if (data.today.cal > 0 || data.today.waterMl > 0) {
-                        data.history.push({...data.today});
+                const cur = new Date().toDateString();
+                if (data.today.date !== cur) { 
+                    if (data.today.cal > 0 || data.today.waterMl > 0) { 
+                        data.history.push({...data.today}); 
                         if (data.history.length > 30) data.history.shift(); 
-                    }
-                    
-                    data.today = {
-                        date: currentDate, 
-                        foods: [], 
-                        drinks: [],
-                        waterMl: 0, 
-                        cal: 0, 
-                        prot: 0, 
-                        carb: 0, 
-                        fat: 0
-                    };
-                    
-                    saveLocalData();
+                    } 
+                    data.today = { date: cur, foods: [], drinks: [], waterMl: 0, cal: 0, prot: 0, carb: 0, fat: 0 }; 
+                    saveLocalData(); 
                 }
             }
-            
             if (data.setup) { 
                 document.getElementById('app').style.display = 'block'; 
                 document.getElementById('setup').style.display = 'none'; 
-                document.getElementById('cancel-setup-btn').style.display = 'none';
+                document.getElementById('cancel-setup-btn').style.display = 'none'; 
                 render(); 
             } else { 
                 document.getElementById('setup').style.display = 'flex'; 
-                document.getElementById('cancel-setup-btn').style.display = 'none';
             }
         }
     </script>
