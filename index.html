@@ -39,7 +39,7 @@
             background: var(--bg); 
             color: var(--text-dark); 
             line-height: 1.5; 
-            padding-bottom: 120px; 
+            padding-bottom: 140px; /* Augmenté pour le nouveau menu */
             overflow-x: hidden; 
         }
 
@@ -586,37 +586,54 @@
             color: var(--primary); 
         }
 
-        /* TAB BAR (3 Onglets) */
+        /* --- NOUVEAU MENU DE NAVIGATION (Style Pilule) --- */
         .tab-bar { 
             position: fixed; 
-            bottom: 20px; 
-            left: 24px; 
-            right: 24px; 
-            background: white; 
-            border-radius: 100px; 
+            bottom: 24px; 
+            left: 20px; 
+            right: 20px; 
+            background: #F0F4F8; /* Fond légèrement grisé */
+            border-radius: 40px; 
             padding: 8px; 
             display: flex; 
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1); 
+            justify-content: space-between;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08); 
             z-index: 100; 
         }
 
         .tab-item { 
             flex: 1; 
-            padding: 12px 4px; 
+            padding: 12px 0; 
             border: none; 
             background: transparent; 
             color: var(--text-light); 
-            border-radius: 100px; 
+            border-radius: 30px; 
             font-weight: 800; 
             display: flex; 
+            flex-direction: column; /* Icône au-dessus du texte */
+            align-items: center; 
             justify-content: center; 
             gap: 6px; 
-            font-size: 13px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .tab-item .icon {
+            font-size: 24px;
+            filter: grayscale(100%) opacity(0.5); /* Icônes grisées par défaut */
+            transition: all 0.3s ease;
         }
 
         .tab-item.active { 
-            background: var(--bg); 
+            background: #FFFFFF; /* Pilule blanche pour l'onglet actif */
             color: var(--primary); 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .tab-item.active .icon {
+            filter: grayscale(0%) opacity(1); /* Icône colorée */
+            transform: translateY(-2px); /* Petit bond vers le haut */
         }
 
         .tab-content { 
@@ -925,9 +942,18 @@
     </div>
 
     <div class="tab-bar">
-        <button class="tab-item active" onclick="switchTab('home', this)">🏠 Accueil</button>
-        <button class="tab-item" onclick="switchTab('data', this)">📊 Données</button>
-        <button class="tab-item" onclick="switchTab('profile', this)">👤 Profil</button>
+        <button class="tab-item active" onclick="switchTab('home', this)">
+            <span class="icon">🏠</span>
+            <span>Accueil</span>
+        </button>
+        <button class="tab-item" onclick="switchTab('data', this)">
+            <span class="icon">📊</span>
+            <span>Données</span>
+        </button>
+        <button class="tab-item" onclick="switchTab('profile', this)">
+            <span class="icon">👤</span>
+            <span>Profil</span>
+        </button>
     </div>
 
     <div class="toast" id="toast"></div>
