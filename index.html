@@ -89,6 +89,9 @@
             font-size: 18px; 
             font-weight: 800; 
             margin: 24px 0 16px; 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .card { 
@@ -203,29 +206,33 @@
             margin-bottom: 4px; 
         }
 
-        .water-drinks { 
-            display: flex; 
-            gap: 12px; 
-            margin-top: 16px; 
+        /* Liste des boissons bues */
+        .drink-log-mini {
+            margin-top: 16px;
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 8px;
         }
 
-        .drink-btn { 
-            background: var(--bg); 
-            border: none; 
-            width: 50px; 
-            height: 50px; 
-            border-radius: 16px; 
-            font-size: 24px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            cursor: pointer; 
-            transition: transform 0.2s; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05); 
+        .drink-log-item {
+            background: var(--bg);
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
         }
 
-        .drink-btn:active { 
-            transform: scale(0.9); 
+        .delete-drink-btn {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 14px;
+            cursor: pointer;
         }
 
         /* --- BOUTONS ACTIONS --- */
@@ -256,7 +263,21 @@
             margin-bottom: 12px; 
         }
 
-        /* --- JOURNAL --- */
+        .action-btn-water {
+            width: 100%; 
+            padding: 16px; 
+            background: var(--water-grad); 
+            color: white; 
+            border: none; 
+            border-radius: 100px; 
+            font-size: 16px; 
+            font-weight: 800; 
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0, 198, 255, 0.2);
+            margin-top: 12px;
+        }
+
+        /* --- JOURNAL ALIMENTAIRE --- */
         .log-item { 
             display: flex; 
             align-items: center; 
@@ -301,6 +322,17 @@
             font-weight: 900; 
             color: var(--text-dark); 
             font-size: 18px; 
+        }
+
+        .delete-btn { 
+            background: none; 
+            border: none; 
+            color: #FF3B30; 
+            font-size: 24px; 
+            margin-left: 12px; 
+            padding: 8px; 
+            cursor: pointer; 
+            opacity: 0.5; 
         }
 
         /* --- MODALES & FORMS --- */
@@ -355,7 +387,7 @@
         .modal-content { 
             background: var(--surface); 
             width: 100%; 
-            max-height: 85vh; 
+            max-height: 90vh; 
             border-radius: 32px 32px 0 0; 
             padding: 32px 24px 40px; 
             transform: translateY(100%); 
@@ -382,6 +414,96 @@
             border-radius: 18px; 
             font-weight: bold; 
             cursor: pointer; 
+        }
+
+        /* --- WATERLLAMA SPECIFICS --- */
+        .drink-type-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .drink-type-btn {
+            background: var(--bg);
+            border: 2px solid transparent;
+            border-radius: 16px;
+            padding: 12px 4px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .drink-type-btn.selected {
+            border-color: var(--water);
+            background: #E8F4F8;
+        }
+
+        .drink-type-icon {
+            font-size: 32px;
+        }
+
+        .drink-type-name {
+            font-size: 11px;
+            font-weight: 800;
+            text-align: center;
+        }
+
+        .volume-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .volume-btn {
+            background: var(--bg);
+            border: 2px solid transparent;
+            padding: 12px 4px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .volume-btn.selected {
+            border-color: var(--water);
+            background: #E8F4F8;
+            color: var(--water);
+        }
+
+        .custom-volume-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--bg);
+            border-radius: 16px;
+            padding: 4px 16px;
+        }
+
+        .custom-volume-wrapper input {
+            margin: 0;
+            border: none;
+            background: transparent;
+            padding: 12px 0;
+            font-size: 18px;
+        }
+
+        .choice-card { 
+            background: var(--bg); 
+            padding: 16px 20px; 
+            border-radius: 20px; 
+            display: flex; 
+            align-items: center; 
+            gap: 16px; 
+            cursor: pointer; 
+        }
+
+        .choice-card:active { 
+            background: #E2E8F0; 
         }
 
         /* --- SETUP WIZARD --- */
@@ -639,25 +761,30 @@
                     </button>
                 </div>
 
-                <div class="water-widget">
-                    <div class="water-visual">
-                        <div class="water-wave" id="water-wave" style="height: 0%;"></div>
-                    </div>
-                    <div class="water-info">
-                        <div class="water-title"><span id="water-now">0</span> ml</div>
-                        <div style="color:var(--text-light); font-weight:700; font-size:14px;">
-                            Objectif : <span id="water-goal">2000</span> ml
+                <div class="water-widget" style="display: block;">
+                    <div style="display: flex; gap: 20px; align-items: center;">
+                        <div class="water-visual">
+                            <div class="water-wave" id="water-wave" style="height: 0%;"></div>
                         </div>
-                        
-                        <div class="water-drinks">
-                            <button class="drink-btn" onclick="addDrink('eau', 250)" title="Verre d'eau">💧</button>
-                            <button class="drink-btn" onclick="addDrink('the', 300)" title="Thé">🍵</button>
-                            <button class="drink-btn" onclick="addDrink('cafe', 150)" title="Café">☕</button>
+                        <div class="water-info">
+                            <div class="water-title"><span id="water-now">0</span> ml</div>
+                            <div style="color:var(--text-light); font-weight:700; font-size:14px;">
+                                Objectif : <span id="water-goal">2000</span> ml
+                            </div>
+                            <button class="action-btn-water" onclick="openModal('water-llama-modal')">
+                                + Ajouter une boisson
+                            </button>
                         </div>
                     </div>
+                    
+                    <div class="drink-log-mini" id="drink-log-mini">
+                        </div>
                 </div>
 
-                <div class="section-title">Journal du jour</div>
+                <div class="section-title">
+                    <span>Journal du jour</span>
+                    <span style="font-size:24px; cursor:pointer;" onclick="openModal('sleep-modal')">😴</span>
+                </div>
                 <div id="today-log"></div>
             </div>
 
@@ -665,9 +792,38 @@
                 <div class="section-title">Suivi</div>
                 <button class="action-btn-outline" onclick="openModal('sync-modal')">⚖️ Mettre à jour mon poids</button>
                 
-                <div class="section-title">Historique</div>
+                <div class="section-title" style="margin-top: 32px;">Historique</div>
                 <div id="history-log"></div>
             </div>
+        </div>
+    </div>
+
+    <div id="water-llama-modal" class="modal" onclick="closeOnBackdrop(event, 'water-llama-modal')">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 style="font-weight:900; font-size:24px;">Que bois-tu ?</h3>
+                <button class="close-btn" onclick="closeModal('water-llama-modal')">✕</button>
+            </div>
+            
+            <label>Type de boisson</label>
+            <div class="drink-type-grid" id="drink-type-grid">
+                </div>
+
+            <label>Quantité</label>
+            <div class="volume-grid">
+                <button class="volume-btn selected" onclick="selectVolume(250, this)">250ml</button>
+                <button class="volume-btn" onclick="selectVolume(330, this)">330ml</button>
+                <button class="volume-btn" onclick="selectVolume(500, this)">500ml</button>
+                <button class="volume-btn" onclick="selectVolume(1000, this)">1L</button>
+            </div>
+            
+            <div class="custom-volume-wrapper">
+                <span style="font-size:20px;">✏️</span>
+                <input type="number" id="custom-volume-input" placeholder="Ou saisis ta quantité..." oninput="clearVolumeButtons()">
+                <span style="font-weight:800; color:var(--text-light)">ml</span>
+            </div>
+
+            <button class="action-btn-water" style="margin-top:24px;" onclick="addWaterllamaDrink()">Valider</button>
         </div>
     </div>
 
@@ -678,6 +834,20 @@
                 <button class="close-btn" onclick="closeModal('meals-modal')">✕</button>
             </div>
             <div id="meals-list" style="display: grid; gap: 12px;"></div>
+        </div>
+    </div>
+
+    <div id="sleep-modal" class="modal" onclick="closeOnBackdrop(event, 'sleep-modal')">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 style="font-weight:900; font-size:24px;">Sommeil</h3>
+                <button class="close-btn" onclick="closeModal('sleep-modal')">✕</button>
+            </div>
+            <label>Heure de coucher</label>
+            <input type="time" id="sleep-bed">
+            <label>Heure de réveil</label>
+            <input type="time" id="sleep-wake">
+            <button class="action-btn-main" style="margin-top:16px;" onclick="logSleep()">Enregistrer</button>
         </div>
     </div>
 
@@ -702,7 +872,7 @@
 
     <script>
         // ========================================================
-        // CONFIGURATION FIREBASE (Avec tes clés)
+        // CONFIGURATION FIREBASE
         // ========================================================
         const firebaseConfig = {
             apiKey: "AIzaSyDaIqBkYViw1Vad553tkT6r7-o_qVW_GYU",
@@ -718,7 +888,7 @@
         const googleProvider = new firebase.auth.GoogleAuthProvider();
 
         // ========================================================
-        // BASE DE DONNEES REPAS (Inspirée Foodvisor)
+        // BASE DE DONNEES REPAS
         // ========================================================
         const mealsDb = [
             {name: 'Petit-déjeuner équilibré', icon: '🥣', cal: 450, prot: 20, carb: 55, fat: 15},
@@ -728,6 +898,23 @@
             {name: 'Shaker Protéiné', icon: '🥤', cal: 150, prot: 30, carb: 5, fat: 2},
             {name: 'Fruit / En-cas', icon: '🍎', cal: 100, prot: 1, carb: 25, fat: 0}
         ];
+
+        // ========================================================
+        // BASE DE DONNEES BOISSONS (Style Waterllama avec Facteur d'hydratation)
+        // ========================================================
+        const drinksDb = [
+            { id: 'water', name: 'Eau', icon: '💧', factor: 1.0 },
+            { id: 'tea', name: 'Thé', icon: '🍵', factor: 1.0 },
+            { id: 'coffee', name: 'Café', icon: '☕', factor: 0.8 },
+            { id: 'milk', name: 'Lait', icon: '🥛', factor: 1.0 },
+            { id: 'juice', name: 'Jus', icon: '🧃', factor: 0.9 },
+            { id: 'soda', name: 'Soda', icon: '🥤', factor: 0.8 },
+            { id: 'beer', name: 'Bière', icon: '🍺', factor: -0.5 }, // Déshydratant
+            { id: 'wine', name: 'Vin', icon: '🍷', factor: -0.8 }    // Fortement déshydratant
+        ];
+
+        let selectedDrinkId = 'water';
+        let selectedVolumeValue = 250;
 
         // ========================================================
         // STRUCTURE DES DONNEES
@@ -754,34 +941,65 @@
             today: {
                 date: new Date().toDateString(), 
                 foods: [], 
-                waterMl: 0, 
+                drinks: [], // NOUVEAU: Historique des boissons
+                waterMl: 0, // Résultat net d'hydratation
                 cal: 0, 
                 prot: 0, 
                 carb: 0, 
                 fat: 0
             },
+            sleep: [],
             streak: 0
         };
+
+        // ========================================================
+        // INITIALISATION DES MODALES
+        // ========================================================
+        function initDrinkGrid() {
+            const grid = document.getElementById('drink-type-grid');
+            grid.innerHTML = drinksDb.map(d => `
+                <div class="drink-type-btn ${d.id === selectedDrinkId ? 'selected' : ''}" onclick="selectDrinkType('${d.id}', this)">
+                    <div class="drink-type-icon">${d.icon}</div>
+                    <div class="drink-type-name">${d.name}</div>
+                </div>
+            `).join('');
+        }
+
+        function selectDrinkType(id, element) {
+            selectedDrinkId = id;
+            document.querySelectorAll('.drink-type-btn').forEach(btn => btn.classList.remove('selected'));
+            element.classList.add('selected');
+        }
+
+        function selectVolume(ml, element) {
+            selectedVolumeValue = ml;
+            document.getElementById('custom-volume-input').value = '';
+            
+            document.querySelectorAll('.volume-btn').forEach(btn => btn.classList.remove('selected'));
+            element.classList.add('selected');
+        }
+
+        function clearVolumeButtons() {
+            document.querySelectorAll('.volume-btn').forEach(btn => btn.classList.remove('selected'));
+            selectedVolumeValue = parseInt(document.getElementById('custom-volume-input').value) || 0;
+        }
 
         // ========================================================
         // GESTION DE L'AUTHENTIFICATION FIREBASE
         // ========================================================
         auth.onAuthStateChanged(user => {
             if (user) {
-                // Utilisateur connecté
                 document.getElementById('auth-screen').style.display = 'none';
                 
-                // Formater l'affichage du nom
                 let displayName = user.email.split('@')[0];
                 if (user.displayName) {
                     displayName = user.displayName.split(' ')[0];
                 }
                 document.getElementById('user-display-name').textContent = displayName;
                 
-                // Charger les données
                 loadLocalData();
+                initDrinkGrid();
             } else {
-                // Utilisateur déconnecté
                 document.getElementById('auth-screen').style.display = 'flex';
                 document.getElementById('app').style.display = 'none';
                 document.getElementById('setup').style.display = 'none';
@@ -813,19 +1031,12 @@
         // ========================================================
         function selectGoal(goal, element) {
             data.profile.goal = goal;
-            
-            // Retirer la sélection précédente
-            document.querySelectorAll('#step1 .choice-pill').forEach(el => {
-                el.classList.remove('selected');
-            });
-            
-            // Ajouter la nouvelle sélection
+            document.querySelectorAll('#step1 .choice-pill').forEach(el => el.classList.remove('selected'));
             element.classList.add('selected');
         }
 
         function nextStep(stepNumber) {
             if(stepNumber === 3) {
-                // Sauvegarder les données de l'étape 2
                 data.profile.age = parseInt(document.getElementById('setup-age').value);
                 data.profile.height = parseInt(document.getElementById('setup-height').value);
                 data.profile.gender = document.getElementById('setup-gender').value;
@@ -836,10 +1047,7 @@
                 }
             }
             
-            // Changer l'étape visible
-            document.querySelectorAll('.wizard-step').forEach(s => {
-                s.classList.remove('active');
-            });
+            document.querySelectorAll('.wizard-step').forEach(s => s.classList.remove('active'));
             document.getElementById('step' + stepNumber).classList.add('active');
         }
 
@@ -867,46 +1075,86 @@
         function calcGoals() {
             const w = data.profile.weight;
             
-            // 1. Calcul du BMR (Formule Mifflin-St Jeor)
             let bmr = (10 * w) + (6.25 * data.profile.height) - (5 * data.profile.age);
             bmr += (data.profile.gender === 'male') ? 5 : -161;
             
-            // 2. Calcul du TDEE (Dépense énergétique totale)
             let tdee = bmr * data.profile.activity;
             
-            // 3. Ajustement selon l'objectif choisi à l'étape 1
-            if(data.profile.goal === 'lose') {
-                tdee -= 400; // Déficit
-            } else if(data.profile.goal === 'gain') {
-                tdee += 300; // Surplus
-            }
+            if(data.profile.goal === 'lose') tdee -= 400;
+            if(data.profile.goal === 'gain') tdee += 300;
             
             data.goals.cal = Math.round(tdee);
-            data.goals.waterMl = Math.round(w * 35); // 35ml par kg
+            data.goals.waterMl = Math.round(w * 35); 
             
-            // 4. Répartition Macros (style Foodvisor)
-            // Protéines: ~2g/kg (lose/gain) ou 1.5g/kg (maintain)
             const protMultiplier = (data.profile.goal === 'maintain') ? 1.5 : 2.0;
             data.goals.prot = Math.round(w * protMultiplier);
-            
-            // Lipides: ~1g/kg
             data.goals.fat = Math.round(w * 1);
             
-            // Glucides: Le reste des calories (1g prot = 4kcal, 1g fat = 9kcal, 1g carb = 4kcal)
             const remainingCal = data.goals.cal - (data.goals.prot * 4) - (data.goals.fat * 9);
             data.goals.carb = Math.round(remainingCal / 4);
         }
 
         // ========================================================
-        // ACTIONS METIERS
+        // ACTIONS METIERS (Waterllama Logic)
         // ========================================================
-        function addDrink(type, ml) {
-            data.today.waterMl += ml;
-            saveLocalData(); 
+        function addWaterllamaDrink() {
+            const drinkTemplate = drinksDb.find(d => d.id === selectedDrinkId);
+            
+            // Prendre la valeur de l'input texte si elle existe, sinon le bouton sélectionné
+            const customInput = document.getElementById('custom-volume-input').value;
+            const volumeToLog = customInput ? parseInt(customInput) : selectedVolumeValue;
+
+            if (!volumeToLog || volumeToLog <= 0) {
+                return showToast('Veuillez entrer une quantité valide');
+            }
+
+            // Calcul de l'hydratation nette
+            const hydrationValue = Math.round(volumeToLog * drinkTemplate.factor);
+            
+            const newDrink = {
+                id: Date.now(),
+                typeId: drinkTemplate.id,
+                name: drinkTemplate.name,
+                icon: drinkTemplate.icon,
+                volume: volumeToLog,
+                netHydration: hydrationValue,
+                time: new Date().toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit'})
+            };
+
+            data.today.drinks.push(newDrink);
+            
+            // On recalcule le total d'hydratation
+            recalcWaterTotal();
+
+            saveLocalData();
             render();
-            showToast(`+${ml}ml de ${type}`);
+            closeModal('water-llama-modal');
+            
+            if (hydrationValue < 0) {
+                showToast(`🧊 Oups, ça déshydrate un peu !`);
+            } else {
+                showToast(`💧 ${volumeToLog}ml ajoutés`);
+            }
         }
 
+        function deleteDrink(drinkId) {
+            data.today.drinks = data.today.drinks.filter(d => d.id !== drinkId);
+            recalcWaterTotal();
+            saveLocalData();
+            render();
+        }
+
+        function recalcWaterTotal() {
+            // Additionner l'hydratation nette de chaque boisson
+            let total = data.today.drinks.reduce((sum, drink) => sum + drink.netHydration, 0);
+            
+            // L'affichage visuel ne peut pas être inférieur à zéro
+            data.today.waterMl = Math.max(0, total);
+        }
+
+        // ========================================================
+        // ACTIONS METIERS (Food & Sleep)
+        // ========================================================
         function addFood(index) {
             const f = mealsDb[index];
             const time = new Date().toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit'});
@@ -935,6 +1183,25 @@
             
             saveLocalData(); 
             render();
+        }
+
+        function logSleep() {
+            const bed = document.getElementById('sleep-bed').value;
+            const wake = document.getElementById('sleep-wake').value;
+            
+            if (!bed || !wake) return showToast('Heures manquantes');
+            
+            const b = new Date(`2000-01-01T${bed}`); 
+            let w = new Date(`2000-01-01T${wake}`);
+            if (w < b) w = new Date(`2000-01-02T${wake}`); 
+            
+            const hrs = ((w - b) / 3600000).toFixed(1);
+            data.sleep.unshift({date: new Date().toLocaleDateString(), hrs});
+            
+            saveLocalData(); 
+            render(); 
+            closeModal('sleep-modal'); 
+            showToast('😴 Sommeil enregistré');
         }
 
         function syncData() {
@@ -976,15 +1243,27 @@
             const wPct = Math.min(100, (data.today.waterMl / data.goals.waterMl) * 100) || 0;
             document.getElementById('water-wave').style.height = wPct + '%';
 
+            // -- Historique des boissons (Sous le widget Eau) --
+            if (data.today.drinks && data.today.drinks.length > 0) {
+                document.getElementById('drink-log-mini').innerHTML = data.today.drinks.map(d => `
+                    <div class="drink-log-item">
+                        <span>${d.icon} ${d.volume}ml</span>
+                        <button class="delete-drink-btn" onclick="deleteDrink(${d.id})">✕</button>
+                    </div>
+                `).join('');
+            } else {
+                document.getElementById('drink-log-mini').innerHTML = '';
+            }
+
             // -- Liste des repas dans la modale --
             document.getElementById('meals-list').innerHTML = mealsDb.map((m, i) => `
-                <div class="log-item" style="cursor:pointer; margin-bottom:0;" onclick="addFood(${i})">
-                    <div class="log-icon" style="font-size:32px;">${m.icon}</div>
-                    <div class="log-details">
-                        <div class="log-name">${m.name}</div>
-                        <div class="log-macros">P:${m.prot}g • G:${m.carb}g • L:${m.fat}g</div>
+                <div class="choice-card" onclick="addFood(${i})">
+                    <div style="font-size:32px">${m.icon}</div>
+                    <div>
+                        <div style="font-weight:700">${m.name}</div>
+                        <div style="color:var(--text-light); font-size:14px">P:${m.prot}g • G:${m.carb}g • L:${m.fat}g</div>
                     </div>
-                    <div class="log-cal">${m.cal} kcal</div>
+                    <div style="margin-left: auto; font-weight:800; color:var(--primary)">${m.cal}</div>
                 </div>
             `).join('');
 
@@ -997,7 +1276,7 @@
                             <div class="log-name">${f.name}</div>
                             <div class="log-macros">P:${f.prot}g • G:${f.carb}g • L:${f.fat}g</div>
                         </div>
-                        <div class="log-cal">${f.cal} kcal</div>
+                        <div class="log-cal">${f.cal}</div>
                         <button class="delete-btn" onclick="deleteFood(${i})">✕</button>
                     </div>
                 `).join('');
@@ -1012,7 +1291,7 @@
             // -- Historique sur l'onglet Données --
             if (data.history.length > 0) {
                 document.getElementById('history-log').innerHTML = data.history.map(h => `
-                    <div class="log-item">
+                    <div class="log-item" style="box-shadow: none; border: 1px solid #E2E8F0;">
                         <div class="log-details">
                             <div class="log-name">${new Date(h.date).toLocaleDateString('fr-FR', {weekday:'long', day:'numeric', month:'short'})}</div>
                             <div class="log-macros">💧 ${h.waterMl}ml bus</div>
@@ -1033,27 +1312,20 @@
         // FONCTIONS UTILITAIRES DE L'UI
         // ========================================================
         function switchTab(tabName, buttonElement) { 
-            // Retirer la classe active de tous les onglets
-            document.querySelectorAll('.tab-item').forEach(t => {
-                t.classList.remove('active');
-            }); 
-            
-            // Cacher tout le contenu
-            document.querySelectorAll('.tab-content').forEach(t => {
-                t.classList.remove('active');
-            }); 
-            
-            // Activer le bon onglet et contenu
+            document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active')); 
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active')); 
             buttonElement.classList.add('active'); 
             document.getElementById(tabName + '-tab').classList.add('active'); 
         }
         
         function openModal(id) { 
             document.getElementById(id).classList.add('active'); 
+            document.body.style.overflow = 'hidden';
         }
         
         function closeModal(id) { 
             document.getElementById(id).classList.remove('active'); 
+            document.body.style.overflow = '';
         }
         
         function closeOnBackdrop(event, id) { 
@@ -1066,17 +1338,13 @@
             const toast = document.getElementById('toast'); 
             toast.textContent = message; 
             toast.classList.add('show'); 
-            
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 2500); 
+            setTimeout(() => { toast.classList.remove('show'); }, 2500); 
         }
 
         // ========================================================
         // SAUVEGARDE & CHARGEMENT
         // ========================================================
         async function saveLocalData() {
-            // Lier les données à l'utilisateur connecté via Firebase Auth
             const uid = auth.currentUser ? auth.currentUser.uid : 'anonymous';
             localStorage.setItem('fit_' + uid, JSON.stringify(data));
         }
@@ -1089,22 +1357,24 @@
                 const savedData = JSON.parse(raw);
                 data = { ...data, ...savedData };
                 
-                // Assurer la compatibilité avec les anciens comptes
+                // Mises à jour de structure pour anciens comptes
                 if(data.today.prot === undefined) data.today.prot = 0;
                 if(data.today.carb === undefined) data.today.carb = 0;
                 if(data.today.fat === undefined) data.today.fat = 0;
+                if(data.today.drinks === undefined) data.today.drinks = [];
                 
                 // Gestion du changement de jour
                 const currentDate = new Date().toDateString();
                 if (data.today.date !== currentDate) {
-                    if (data.today.cal > 0) {
+                    if (data.today.cal > 0 || data.today.waterMl > 0) {
                         data.history.push({...data.today});
+                        if (data.history.length > 30) data.history.shift(); 
                     }
                     
-                    // Reset de la journée
                     data.today = {
                         date: currentDate, 
                         foods: [], 
+                        drinks: [],
                         waterMl: 0, 
                         cal: 0, 
                         prot: 0, 
@@ -1116,7 +1386,6 @@
                 }
             }
             
-            // Afficher l'application ou l'onboarding
             if (data.setup) { 
                 document.getElementById('app').style.display = 'block'; 
                 document.getElementById('setup').style.display = 'none'; 
