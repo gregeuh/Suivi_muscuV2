@@ -207,7 +207,7 @@
             margin-bottom: 4px; 
         }
 
-        /* Historique des boissons */
+        /* Historique des boissons rapide (Accueil) */
         .drink-log-mini {
             margin-top: 16px;
             display: flex;
@@ -216,7 +216,7 @@
             padding-bottom: 8px;
         }
 
-        .drink-log-item {
+        .drink-log-item-mini {
             background: var(--bg);
             padding: 6px 12px;
             border-radius: 12px;
@@ -226,14 +226,6 @@
             align-items: center;
             gap: 6px;
             white-space: nowrap;
-        }
-
-        .delete-drink-btn {
-            background: none;
-            border: none;
-            color: var(--text-light);
-            font-size: 14px;
-            cursor: pointer;
         }
 
         /* --- BOUTONS ACTIONS --- */
@@ -296,7 +288,7 @@
             margin-top: 12px;
         }
 
-        /* --- JOURNAL ALIMENTAIRE --- */
+        /* --- JOURNAL ALIMENTAIRE & DONNEES --- */
         .log-item { 
             display: flex; 
             align-items: center; 
@@ -594,7 +586,7 @@
             color: var(--primary); 
         }
 
-        /* TAB BAR */
+        /* TAB BAR (3 Onglets) */
         .tab-bar { 
             position: fixed; 
             bottom: 20px; 
@@ -610,7 +602,7 @@
 
         .tab-item { 
             flex: 1; 
-            padding: 12px; 
+            padding: 12px 4px; 
             border: none; 
             background: transparent; 
             color: var(--text-light); 
@@ -618,7 +610,8 @@
             font-weight: 800; 
             display: flex; 
             justify-content: center; 
-            gap: 8px; 
+            gap: 6px; 
+            font-size: 13px;
         }
 
         .tab-item.active { 
@@ -656,6 +649,25 @@
 
         .toast.show { 
             transform: translateX(-50%) translateY(0); 
+        }
+
+        /* Lignes d'informations dans Profil */
+        .profile-line {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--bg);
+        }
+        .profile-line:last-child {
+            border-bottom: none;
+        }
+        .profile-line span {
+            color: var(--text-light);
+            font-weight: 700;
+        }
+        .profile-line strong {
+            color: var(--text-dark);
+            font-size: 16px;
         }
     </style>
 
@@ -698,7 +710,6 @@
             <div class="choice-pill" onclick="selectGoal('gain', this)">💪 Prendre du muscle</div>
             
             <button class="action-btn-main" style="margin-top:24px;" onclick="nextStep(2)">Continuer</button>
-            
             <button class="action-btn-outline" id="cancel-setup-btn" style="display: none; border: none; color: var(--text-light);" onclick="cancelSetup()">Annuler</button>
         </div>
 
@@ -775,31 +786,16 @@
                     
                     <div class="macro-row">
                         <div class="macro-col">
-                            <div class="macro-label">
-                                <span>Protéines</span>
-                                <span id="prot-text">0/0g</span>
-                            </div>
-                            <div class="macro-track">
-                                <div class="macro-fill" id="prot-fill" style="background: var(--prot); width: 0%;"></div>
-                            </div>
+                            <div class="macro-label"><span>Protéines</span><span id="prot-text">0/0g</span></div>
+                            <div class="macro-track"><div class="macro-fill" id="prot-fill" style="background: var(--prot); width: 0%;"></div></div>
                         </div>
                         <div class="macro-col">
-                            <div class="macro-label">
-                                <span>Glucides</span>
-                                <span id="carb-text">0/0g</span>
-                            </div>
-                            <div class="macro-track">
-                                <div class="macro-fill" id="carb-fill" style="background: var(--carb); width: 0%;"></div>
-                            </div>
+                            <div class="macro-label"><span>Glucides</span><span id="carb-text">0/0g</span></div>
+                            <div class="macro-track"><div class="macro-fill" id="carb-fill" style="background: var(--carb); width: 0%;"></div></div>
                         </div>
                         <div class="macro-col">
-                            <div class="macro-label">
-                                <span>Lipides</span>
-                                <span id="fat-text">0/0g</span>
-                            </div>
-                            <div class="macro-track">
-                                <div class="macro-fill" id="fat-fill" style="background: var(--fat); width: 0%;"></div>
-                            </div>
+                            <div class="macro-label"><span>Lipides</span><span id="fat-text">0/0g</span></div>
+                            <div class="macro-track"><div class="macro-fill" id="fat-fill" style="background: var(--fat); width: 0%;"></div></div>
                         </div>
                     </div>
                     
@@ -824,26 +820,37 @@
                         </div>
                     </div>
                     
-                    <div class="drink-log-mini" id="drink-log-mini">
+                    <div class="drink-log-mini" id="drink-log-mini-home">
                         </div>
                 </div>
 
                 <div class="section-title">
-                    <span>Journal du jour</span>
+                    <span>Actions rapides</span>
                     <span style="font-size:24px; cursor:pointer;" onclick="openModal('sleep-modal')" title="Ajouter le sommeil">😴</span>
                 </div>
-                <div id="today-log"></div>
+                <button class="action-btn-outline" onclick="openModal('sync-modal')">⚖️ Mettre à jour mon poids</button>
             </div>
 
             <div id="data-tab" class="tab-content">
-                <div class="section-title">Paramètres & Profil</div>
+                <div class="section-title" style="margin-top: 0;">Boissons du jour</div>
+                <div id="data-today-drinks"></div>
+
+                <div class="section-title">Repas du jour</div>
+                <div id="data-today-meals"></div>
+                
+                <div class="section-title" style="margin-top: 32px;">Jours précédents</div>
+                <div id="data-history-log"></div>
+            </div>
+
+            <div id="profile-tab" class="tab-content">
+                <div class="section-title" style="margin-top: 0;">Mon Profil</div>
+                <div class="card" id="profile-summary">
+                    </div>
+
                 <button class="action-btn-outline" onclick="editProfile()">⚙️ Modifier mon profil</button>
                 <button class="action-btn-danger" onclick="resetAllData()">🗑️ Effacer toutes mes données</button>
                 
-                <div class="section-title" style="margin-top: 32px;">Historique des jours précédents</div>
-                <div id="history-log"></div>
-
-                <div style="height: 24px;"></div>
+                <div style="height: 32px;"></div>
                 <button class="action-btn-outline" onclick="logOut()" style="border: none; color: var(--text-light);">
                     Se déconnecter
                 </button>
@@ -905,9 +912,22 @@
         </div>
     </div>
 
+    <div id="sync-modal" class="modal" onclick="closeOnBackdrop(event, 'sync-modal')">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Nouveau poids</h3>
+                <button class="close-btn" onclick="closeModal('sync-modal')">✕</button>
+            </div>
+            <label>Poids (kg)</label>
+            <input type="number" id="sync-weight" step="0.1">
+            <button class="action-btn-main" onclick="syncData()">Enregistrer</button>
+        </div>
+    </div>
+
     <div class="tab-bar">
-        <button class="tab-item active" onclick="switchTab('home', this)">🏠 Aujourd'hui</button>
-        <button class="tab-item" onclick="switchTab('data', this)">📊 Données & Paramètres</button>
+        <button class="tab-item active" onclick="switchTab('home', this)">🏠 Accueil</button>
+        <button class="tab-item" onclick="switchTab('data', this)">📊 Données</button>
+        <button class="tab-item" onclick="switchTab('profile', this)">👤 Profil</button>
     </div>
 
     <div class="toast" id="toast"></div>
@@ -963,7 +983,6 @@
             {name: 'Gâteau au Chocolat', icon: '🍰', cal: 350, prot: 5, carb: 40, fat: 20, cat: 'Desserts'}
         ];
 
-        // Titres des catégories pour l'affichage
         const mealCategories = {
             'Matin': '☕ Petit-déjeuner',
             'Plats': '🍽️ Plats Traditionnels',
@@ -982,11 +1001,11 @@
             { id: 'milk', name: 'Lait', icon: '🥛', factor: 1.0 },
             { id: 'juice', name: 'Jus', icon: '🧃', factor: 0.9 },
             { id: 'soda', name: 'Soda', icon: '🥤', factor: 0.8 },
-            { id: 'beer', name: 'Bière', icon: '🍺', factor: -0.5 } // Déshydratant
+            { id: 'beer', name: 'Bière', icon: '🍺', factor: -0.5 } 
         ];
 
         let selectedDrinkId = 'water';
-        let selectedVolumeValue = 250; // Tasse standard
+        let selectedVolumeValue = 250; 
 
         // ========================================================
         // STRUCTURE DES DONNEES LOCALES
@@ -1043,11 +1062,9 @@
             
             for(let cat in mealCategories) {
                 html += `<div class="category-header">${mealCategories[cat]}</div>`;
-                
                 const catMeals = mealsDb.filter(m => m.cat === cat);
                 
                 catMeals.forEach(m => {
-                    // Trouver l'index original dans mealsDb
                     const originalIndex = mealsDb.indexOf(m);
                     html += `
                         <div class="choice-card" onclick="addFood(${originalIndex})">
@@ -1106,25 +1123,10 @@
             }
         });
 
-        function signInGoogle() { 
-            auth.signInWithPopup(googleProvider).catch(e => showToast(e.message)); 
-        }
-        
-        function signInEmail() { 
-            const email = document.getElementById('auth-email').value;
-            const pass = document.getElementById('auth-pass').value;
-            auth.signInWithEmailAndPassword(email, pass).catch(e => showToast(e.message)); 
-        }
-        
-        function signUpEmail() { 
-            const email = document.getElementById('auth-email').value;
-            const pass = document.getElementById('auth-pass').value;
-            auth.createUserWithEmailAndPassword(email, pass).catch(e => showToast(e.message)); 
-        }
-        
-        function logOut() { 
-            auth.signOut(); 
-        }
+        function signInGoogle() { auth.signInWithPopup(googleProvider).catch(e => showToast(e.message)); }
+        function signInEmail() { auth.signInWithEmailAndPassword(document.getElementById('auth-email').value, document.getElementById('auth-pass').value).catch(e => showToast(e.message)); }
+        function signUpEmail() { auth.createUserWithEmailAndPassword(document.getElementById('auth-email').value, document.getElementById('auth-pass').value).catch(e => showToast(e.message)); }
+        function logOut() { auth.signOut(); }
 
         // ========================================================
         // LOGIQUE WIZARD & MODIFICATION PROFIL
@@ -1155,9 +1157,7 @@
             data.profile.weight = parseFloat(document.getElementById('setup-current-weight').value);
             data.profile.target = parseFloat(document.getElementById('setup-target-weight').value);
             
-            if (!data.profile.weight) {
-                return showToast('Poids requis');
-            }
+            if (!data.profile.weight) return showToast('Poids requis');
             
             calcGoals(); 
             data.setup = true;
@@ -1170,9 +1170,7 @@
             showToast('Profil enregistré ✅');
         }
 
-        // --- NOUVEAU : Modifier le profil existant ---
         function editProfile() {
-            // Remplir les champs avec les données actuelles
             document.getElementById('setup-age').value = data.profile.age;
             document.getElementById('setup-height').value = data.profile.height;
             document.getElementById('setup-gender').value = data.profile.gender;
@@ -1180,7 +1178,6 @@
             document.getElementById('setup-current-weight').value = data.profile.weight;
             document.getElementById('setup-target-weight').value = data.profile.target;
             
-            // Sélectionner la bonne pilule d'objectif
             const goalMap = { 'lose': 0, 'maintain': 1, 'gain': 2 };
             const pills = document.querySelectorAll('#step1 .choice-pill');
             pills.forEach(p => p.classList.remove('selected'));
@@ -1188,14 +1185,10 @@
                 pills[goalMap[data.profile.goal]].classList.add('selected');
             }
 
-            // Afficher le bouton annuler
             document.getElementById('cancel-setup-btn').style.display = 'block';
-            
-            // Afficher le setup et cacher l'app
             document.getElementById('app').style.display = 'none';
             document.getElementById('setup').style.display = 'flex';
             
-            // Revenir à l'étape 1
             document.querySelectorAll('.wizard-step').forEach(s => s.classList.remove('active'));
             document.getElementById('step1').classList.add('active');
         }
@@ -1206,13 +1199,10 @@
             document.getElementById('cancel-setup-btn').style.display = 'none';
         }
 
-        // --- NOUVEAU : Réinitialiser toutes les données ---
         function resetAllData() {
             if(confirm("⚠️ ATTENTION ! Cela va effacer tout ton historique, tes repas et tes paramètres. C'est irréversible. Veux-tu vraiment continuer ?")) {
                 const uid = auth.currentUser ? auth.currentUser.uid : 'anonymous';
                 localStorage.removeItem('fit_' + uid);
-                
-                // On recharge la page pour simuler un nouveau départ
                 location.reload(); 
             }
         }
@@ -1317,12 +1307,10 @@
             data.today.fat -= f.fat;
             
             data.today.foods.splice(i, 1);
-            
             saveLocalData(); 
             render();
         }
 
-        // --- NOUVEAU : Supprimer une ligne d'historique passé ---
         function deleteHistoryEntry(index) {
             if(confirm("Veux-tu vraiment supprimer cette journée de ton historique ?")) {
                 data.history.splice(index, 1);
@@ -1350,15 +1338,27 @@
             showToast('😴 Sommeil enregistré');
         }
 
+        function syncData() {
+            const w = parseFloat(document.getElementById('sync-weight').value);
+            if (w) { 
+                data.profile.weight = w; 
+                calcGoals(); 
+            }
+            saveLocalData(); 
+            render(); 
+            closeModal('sync-modal'); 
+            showToast('✅ Poids mis à jour');
+        }
+
         // ========================================================
         // FONCTION DE RENDU (Mise à jour de l'UI)
         // ========================================================
         function render() {
-            // -- Mise à jour des Calories --
+            // 1. ONGLET ACCUEIL
+            // -----------------------------------------------------
             document.getElementById('cal-now').textContent = data.today.cal;
             document.getElementById('cal-goal').textContent = data.goals.cal;
             
-            // -- Mise à jour des Barres de Macros --
             const pPct = Math.min(100, (data.today.prot / data.goals.prot) * 100) || 0;
             const cPct = Math.min(100, (data.today.carb / data.goals.carb) * 100) || 0;
             const fPct = Math.min(100, (data.today.fat / data.goals.fat) * 100) || 0;
@@ -1371,27 +1371,44 @@
             document.getElementById('carb-text').textContent = `${data.today.carb}/${data.goals.carb}g`;
             document.getElementById('fat-text').textContent = `${data.today.fat}/${data.goals.fat}g`;
 
-            // -- Mise à jour de l'Eau (Effet Waterllama) --
             document.getElementById('water-now').textContent = data.today.waterMl;
             document.getElementById('water-goal').textContent = data.goals.waterMl;
             const wPct = Math.min(100, (data.today.waterMl / data.goals.waterMl) * 100) || 0;
             document.getElementById('water-wave').style.height = wPct + '%';
 
-            // -- Historique des boissons (Sous le widget Eau) --
-            if (data.today.drinks && data.today.drinks.length > 0) {
-                document.getElementById('drink-log-mini').innerHTML = data.today.drinks.map(d => `
-                    <div class="drink-log-item">
-                        <span>${d.icon} ${d.volume}ml</span>
-                        <button class="delete-drink-btn" onclick="deleteDrink(${d.id})">✕</button>
+            // Affichage très réduit des boissons sur l'accueil (juste des bulles)
+            if (data.today.drinks.length > 0) {
+                document.getElementById('drink-log-mini-home').innerHTML = data.today.drinks.map(d => `
+                    <div class="drink-log-item-mini">
+                        <span>${d.icon}</span>
                     </div>
                 `).join('');
             } else {
-                document.getElementById('drink-log-mini').innerHTML = '';
+                document.getElementById('drink-log-mini-home').innerHTML = '';
             }
 
-            // -- Journal du jour sur l'accueil --
+            // 2. ONGLET DONNEES (Journal détaillé)
+            // -----------------------------------------------------
+            // Liste des Boissons (avec bouton supprimer)
+            if (data.today.drinks.length > 0) {
+                document.getElementById('data-today-drinks').innerHTML = data.today.drinks.map(d => `
+                    <div class="log-item">
+                        <div class="log-icon">${d.icon}</div>
+                        <div class="log-details">
+                            <div class="log-name">${d.name}</div>
+                            <div class="log-macros">${d.time}</div>
+                        </div>
+                        <div class="log-cal">${d.volume} ml</div>
+                        <button class="delete-btn" onclick="deleteDrink(${d.id})">🗑️</button>
+                    </div>
+                `).join('');
+            } else {
+                document.getElementById('data-today-drinks').innerHTML = `<p style="color:var(--text-light); font-weight:700; padding:12px 0;">Aucune boisson ajoutée aujourd'hui.</p>`;
+            }
+
+            // Liste des Repas (avec bouton supprimer)
             if (data.today.foods.length > 0) {
-                document.getElementById('today-log').innerHTML = data.today.foods.map((f, i) => `
+                document.getElementById('data-today-meals').innerHTML = data.today.foods.map((f, i) => `
                     <div class="log-item">
                         <div class="log-icon">${f.icon}</div>
                         <div class="log-details">
@@ -1403,17 +1420,12 @@
                     </div>
                 `).join('');
             } else {
-                document.getElementById('today-log').innerHTML = `
-                    <p style="text-align:center; color:var(--text-light); font-weight:700; padding:20px;">
-                        Aucun repas enregistré pour le moment.
-                    </p>
-                `;
+                document.getElementById('data-today-meals').innerHTML = `<p style="color:var(--text-light); font-weight:700; padding:12px 0;">Aucun repas enregistré aujourd'hui.</p>`;
             }
 
-            // -- Historique sur l'onglet Données --
+            // Historique
             if (data.history.length > 0) {
-                // L'index passé dans deleteHistoryEntry doit correspondre à l'index d'origine du tableau.
-                document.getElementById('history-log').innerHTML = data.history.map((h, i) => `
+                document.getElementById('data-history-log').innerHTML = data.history.map((h, i) => `
                     <div class="log-item" style="box-shadow: none; border: 1px solid #E2E8F0; display:flex; align-items:center;">
                         <div class="log-details" style="flex-grow:1;">
                             <div class="log-name">${new Date(h.date).toLocaleDateString('fr-FR', {weekday:'long', day:'numeric', month:'short'})}</div>
@@ -1424,12 +1436,19 @@
                     </div>
                 `).reverse().join('');
             } else {
-                document.getElementById('history-log').innerHTML = `
-                    <p style="text-align:center; color:var(--text-light); font-weight:700; padding:20px;">
-                        Ton historique apparaîtra ici demain.
-                    </p>
-                `;
+                document.getElementById('data-history-log').innerHTML = `<p style="text-align:center; color:var(--text-light); font-weight:700; padding:20px;">Ton historique apparaîtra ici demain.</p>`;
             }
+
+            // 3. ONGLET PROFIL
+            // -----------------------------------------------------
+            const goalDict = { 'lose': 'Perte de poids', 'maintain': 'Maintien', 'gain': 'Prise de muscle' };
+            document.getElementById('profile-summary').innerHTML = `
+                <div class="profile-line"><span>Objectif</span><strong>${goalDict[data.profile.goal]}</strong></div>
+                <div class="profile-line"><span>Poids actuel</span><strong>${data.profile.weight} kg</strong></div>
+                <div class="profile-line"><span>Poids cible</span><strong>${data.profile.target} kg</strong></div>
+                <div class="profile-line"><span>Calories cibles</span><strong>${data.goals.cal} kcal / jour</strong></div>
+                <div class="profile-line"><span>Eau cible</span><strong>${data.goals.waterMl} ml / jour</strong></div>
+            `;
         }
 
         // ========================================================
