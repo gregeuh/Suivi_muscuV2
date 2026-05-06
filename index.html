@@ -2,466 +2,239 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FitTrack - Ton Coach Personnel</title>
-    <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Supreme:wght@300;400;500&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>FitTrack Pro</title>
     <style>
         :root {
-            --primary: #0A84FF;
-            --primary-dark: #0051D5;
+            --primary: #007AFF;
+            --primary-light: #5AC8FA;
             --success: #34C759;
             --warning: #FF9500;
             --danger: #FF3B30;
-            --bg-main: #F5F7FA;
-            --bg-card: #FFFFFF;
-            --text-primary: #1C1C1E;
-            --text-secondary: #8E8E93;
-            --border: #E5E5EA;
-            --shadow: rgba(0, 0, 0, 0.08);
+            --bg: #F2F2F7;
+            --bg-secondary: #FFFFFF;
+            --surface: rgba(255, 255, 255, 0.8);
+            --text-primary: #000000;
+            --text-secondary: #3C3C43;
+            --text-tertiary: #8E8E93;
+            --divider: rgba(60, 60, 67, 0.18);
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 12px 48px rgba(0, 0, 0, 0.12);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            font-family: 'Supreme', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-main);
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', system-ui, sans-serif;
+            background: var(--bg);
             color: var(--text-primary);
-            line-height: 1.6;
+            line-height: 1.47;
             -webkit-font-smoothing: antialiased;
+            padding-bottom: env(safe-area-inset-bottom);
         }
 
         header {
-            background: var(--bg-card);
-            border-bottom: 1px solid var(--border);
+            background: var(--surface);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 0.5px solid var(--divider);
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 2px 8px var(--shadow);
+            padding: env(safe-area-inset-top) 0 0;
         }
 
         .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem 1.5rem;
+            padding: 12px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         h1 {
-            font-family: 'Clash Display', sans-serif;
-            font-size: 1.75rem;
+            font-size: 22px;
             font-weight: 700;
-            background: linear-gradient(135deg, var(--primary), #00C7BE);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            letter-spacing: -0.4px;
         }
 
         .streak {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-secondary);
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
-
-        .streak-flame {
-            font-size: 1.25rem;
-        }
-
-        nav {
-            background: var(--bg-card);
-            border-bottom: 1px solid var(--border);
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        nav::-webkit-scrollbar {
-            display: none;
-        }
-
-        .nav-tabs {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            gap: 0.5rem;
-            padding: 0 1.5rem;
-        }
-
-        .nav-tab {
-            padding: 0.875rem 1.25rem;
-            border: none;
-            background: transparent;
-            color: var(--text-secondary);
-            font-weight: 500;
-            cursor: pointer;
-            border-bottom: 3px solid transparent;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-            font-size: 0.95rem;
-        }
-
-        .nav-tab:hover {
-            color: var(--text-primary);
-        }
-
-        .nav-tab.active {
-            color: var(--primary);
-            border-bottom-color: var(--primary);
+            gap: 4px;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 600px;
             margin: 0 auto;
-            padding: 2rem 1.5rem;
-        }
-
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.4s ease;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            padding: 16px 20px 100px;
         }
 
         .card {
-            background: var(--bg-card);
+            background: var(--bg-secondary);
             border-radius: 16px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 2px 12px var(--shadow);
-            border: 1px solid var(--border);
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.25rem;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: var(--shadow-sm);
+            border: 0.5px solid var(--divider);
         }
 
         .card-title {
-            font-family: 'Clash Display', sans-serif;
-            font-size: 1.25rem;
+            font-size: 17px;
             font-weight: 600;
+            margin-bottom: 12px;
+            letter-spacing: -0.4px;
         }
 
-        .dashboard-grid {
+        .quick-add {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            color: white;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .quick-add-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .quick-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .quick-btn {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            border: none;
+            border-radius: 14px;
+            padding: 16px;
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .quick-btn:active {
+            transform: scale(0.95);
+            background: rgba(255, 255, 255, 0.35);
+        }
+
+        .quick-icon {
+            font-size: 28px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
         }
 
         .stat-card {
-            background: linear-gradient(135deg, var(--primary), #00C7BE);
-            color: white;
+            background: var(--bg-secondary);
             border-radius: 16px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 16px rgba(10, 132, 255, 0.2);
+            padding: 16px;
+            box-shadow: var(--shadow-sm);
+            border: 0.5px solid var(--divider);
         }
 
         .stat-label {
-            font-size: 0.875rem;
-            opacity: 0.9;
+            font-size: 13px;
+            color: var(--text-tertiary);
+            margin-bottom: 4px;
             font-weight: 500;
         }
 
         .stat-value {
-            font-family: 'Clash Display', sans-serif;
-            font-size: 2.25rem;
+            font-size: 28px;
             font-weight: 700;
-            margin: 0.5rem 0;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
         }
 
-        .stat-unit {
-            font-size: 0.875rem;
-            opacity: 0.8;
-        }
-
-        .progress-bar {
-            background: rgba(255,255,255,0.3);
-            border-radius: 8px;
-            height: 8px;
+        .stat-progress {
+            height: 6px;
+            background: rgba(0, 0, 0, 0.06);
+            border-radius: 3px;
             overflow: hidden;
-            margin-top: 1rem;
         }
 
-        .progress-fill {
-            background: white;
+        .stat-fill {
             height: 100%;
-            border-radius: 8px;
-            transition: width 0.5s ease;
+            background: var(--primary);
+            border-radius: 3px;
+            /* Animation de progression fluide */
+            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .btn {
-            padding: 0.75rem 1.5rem;
+            padding: 14px 20px;
             border: none;
             border-radius: 12px;
+            font-size: 17px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.95rem;
+            transition: all 0.2s;
+            letter-spacing: -0.4px;
         }
 
         .btn-primary {
             background: var(--primary);
             color: white;
-            box-shadow: 0 4px 12px rgba(10, 132, 255, 0.3);
         }
 
-        .btn-primary:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(10, 132, 255, 0.4);
+        .btn-primary:active {
+            transform: scale(0.98);
+            opacity: 0.8;
         }
 
         .btn-secondary {
-            background: var(--bg-main);
+            background: var(--bg);
             color: var(--text-primary);
-            border: 1px solid var(--border);
         }
 
-        .btn-secondary:hover {
-            background: var(--border);
-        }
-
-        .btn-small {
-            padding: 0.5rem 1rem;
-            font-size: 0.875rem;
+        input, select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 0.5px solid var(--divider);
+            border-radius: 10px;
+            font-size: 17px;
+            background: var(--bg-secondary);
+            transition: all 0.2s;
+            font-family: inherit;
         }
 
         .form-group {
-            margin-bottom: 1.25rem;
+            margin-bottom: 16px;
         }
 
         label {
             display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: var(--text-primary);
-            font-size: 0.9rem;
-        }
-
-        input, select, textarea {
-            width: 100%;
-            padding: 0.875rem;
-            border: 2px solid var(--border);
-            border-radius: 12px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            font-family: inherit;
-        }
-
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.1);
-        }
-
-        .quick-sync {
-            background: linear-gradient(135deg, #5856D6, #AF52DE);
-            color: white;
-            border-radius: 16px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .sync-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .sync-input {
-            background: rgba(255, 255, 255, 0.2);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            color: white;
-            text-align: center;
+            font-size: 13px;
             font-weight: 600;
-            font-size: 1.1rem;
-        }
-
-        .sync-input::placeholder {
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        .sync-input:focus {
-            background: rgba(255, 255, 255, 0.3);
-            border-color: rgba(255, 255, 255, 0.5);
-        }
-
-        .sync-label {
-            font-size: 0.875rem;
-            margin-bottom: 0.5rem;
-            opacity: 0.9;
-        }
-
-        .water-glasses {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
-            gap: 1rem;
-            margin: 1.5rem 0;
-        }
-
-        .water-glass {
-            aspect-ratio: 1;
-            border: 3px solid var(--primary);
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            background: var(--bg-main);
-        }
-
-        .water-glass::after {
-            content: '💧';
-            position: absolute;
-            bottom: -100%;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 2rem;
-            transition: bottom 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        }
-
-        .water-glass.filled {
-            background: linear-gradient(135deg, var(--primary), #00C7BE);
-            border-color: var(--primary);
-        }
-
-        .water-glass.filled::after {
-            bottom: 50%;
-            transform: translate(-50%, 50%);
-        }
-
-        .food-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .food-item:last-child {
-            border-bottom: none;
-        }
-
-        .food-info {
-            flex: 1;
-        }
-
-        .food-name {
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
-
-        .food-calories {
             color: var(--text-secondary);
-            font-size: 0.875rem;
-        }
-
-        .food-photo {
-            width: 60px;
-            height: 60px;
-            border-radius: 8px;
-            object-fit: cover;
-            margin-right: 1rem;
-            cursor: pointer;
-        }
-
-        .delete-btn {
-            background: var(--danger);
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            margin-left: 0.5rem;
-        }
-
-        .delete-btn:hover {
-            background: #D70015;
-            transform: scale(1.05);
-        }
-
-        .sleep-input-group {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-
-        .sleep-quality {
-            display: flex;
-            gap: 0.75rem;
-            margin-top: 1rem;
-        }
-
-        .quality-btn {
-            flex: 1;
-            padding: 0.875rem;
-            border: 2px solid var(--border);
-            border-radius: 12px;
-            background: var(--bg-main);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-        }
-
-        .quality-btn:hover {
-            border-color: var(--primary);
-        }
-
-        .quality-btn.selected {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-
-        .exercise-list {
-            display: grid;
-            gap: 1rem;
-        }
-
-        .exercise-item {
-            padding: 1rem;
-            background: var(--bg-main);
-            border-radius: 12px;
-            border: 2px solid var(--border);
-        }
-
-        .exercise-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.75rem;
-        }
-
-        .exercise-name {
-            font-weight: 600;
-            font-size: 1.05rem;
-        }
-
-        .sets-info {
-            display: flex;
-            gap: 1rem;
-            color: var(--text-secondary);
-            font-size: 0.875rem;
+            margin-bottom: 8px;
         }
 
         .modal {
@@ -471,11 +244,12 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0, 0, 0, 0.4);
             z-index: 1000;
             align-items: center;
             justify-content: center;
-            padding: 1rem;
+            padding: 20px;
+            backdrop-filter: blur(10px);
         }
 
         .modal.active {
@@ -483,337 +257,151 @@
         }
 
         .modal-content {
-            background: var(--bg-card);
-            border-radius: 16px;
-            padding: 2rem;
-            max-width: 500px;
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            padding: 24px;
+            max-width: 400px;
             width: 100%;
-            max-height: 90vh;
+            max-height: 80vh;
             overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            box-shadow: var(--shadow-lg);
+            animation: modalSlide 0.3s ease;
+        }
+
+        @keyframes modalSlide {
+            from { opacity: 0; transform: translateY(20px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 20px;
         }
 
         .close-modal {
             background: none;
             border: none;
-            font-size: 1.5rem;
+            font-size: 28px;
+            color: var(--text-tertiary);
             cursor: pointer;
-            color: var(--text-secondary);
-            transition: color 0.3s ease;
+            line-height: 1;
         }
 
-        .close-modal:hover {
-            color: var(--text-primary);
-        }
-
-        .quick-actions {
+        .meal-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1.5rem;
+            gap: 12px;
         }
 
-        .quick-action {
-            background: var(--bg-main);
-            border: 2px solid var(--border);
-            border-radius: 12px;
-            padding: 1.25rem;
-            text-align: center;
+        .meal-card {
+            background: var(--bg);
+            border-radius: 14px;
+            padding: 16px;
             cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .quick-action:hover {
-            border-color: var(--primary);
-            transform: translateY(-2px);
-        }
-
-        .quick-action-icon {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .quick-action-label {
-            font-weight: 600;
-            font-size: 0.875rem;
-        }
-
-        .meal-types {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin: 1.5rem 0;
-        }
-
-        .meal-type-card {
-            background: var(--bg-main);
-            border: 2px solid var(--border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .meal-type-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-2px);
-        }
-
-        .meal-type-icon {
-            font-size: 3rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .meal-type-name {
-            font-weight: 600;
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .meal-type-cals {
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-        }
-
-        .portion-selector {
-            display: flex;
-            gap: 1rem;
-            margin: 1rem 0;
-            justify-content: center;
-        }
-
-        .portion-btn {
-            flex: 1;
-            padding: 1rem;
-            border: 2px solid var(--border);
-            border-radius: 12px;
-            background: var(--bg-main);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-
-        .portion-btn:hover {
-            border-color: var(--primary);
-        }
-
-        .portion-btn.selected {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-
-        .portion-emoji {
-            font-size: 2rem;
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-
-        .portion-label {
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .dishes-grid {
-            display: grid;
-            gap: 0.75rem;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
-        .dish-card {
+            transition: all 0.2s;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem;
-            background: var(--bg-main);
-            border-radius: 12px;
+        }
+
+        .meal-card:active {
+            transform: scale(0.98);
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .voice-btn {
+            position: fixed;
+            bottom: calc(80px + env(safe-area-inset-bottom));
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            border-radius: 28px;
+            background: var(--primary);
+            border: none;
+            color: white;
+            font-size: 24px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            box-shadow: var(--shadow-lg);
+            z-index: 99;
         }
 
-        .dish-card:hover {
-            background: var(--border);
+        .voice-btn.listening {
+            animation: pulse 1.5s infinite;
+            background: var(--danger);
         }
 
-        .dish-info h4 {
-            font-weight: 600;
-            margin-bottom: 0.25rem;
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
         }
 
-        .dish-cals {
-            color: var(--text-secondary);
-            font-size: 0.875rem;
+        .tab-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--surface);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-top: 0.5px solid var(--divider);
+            padding: 8px 0 calc(8px + env(safe-area-inset-bottom));
+            z-index: 100;
+            display: flex;
+            justify-content: space-around;
         }
 
-        .search-box {
-            position: relative;
-            margin-bottom: 1rem;
+        .tab-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            background: none;
+            border: none;
+            color: var(--text-tertiary);
+            font-size: 10px;
+            font-weight: 500;
         }
 
-        .search-box input {
-            padding-left: 2.5rem;
-        }
+        .tab-item.active { color: var(--primary); }
 
-        .search-icon {
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-secondary);
-        }
+        .tab-icon { font-size: 24px; }
 
-        .photo-upload {
-            border: 2px dashed var(--border);
-            border-radius: 12px;
-            padding: 2rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin: 1rem 0;
-        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
 
-        .photo-upload:hover {
-            border-color: var(--primary);
-            background: rgba(10, 132, 255, 0.05);
-        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .photo-upload input {
-            display: none;
+        .list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 0.5px solid var(--divider);
         }
 
         .notification {
             position: fixed;
-            top: 5rem;
-            right: 1rem;
-            background: var(--bg-card);
-            padding: 1rem 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-            border-left: 4px solid var(--primary);
+            top: calc(60px + env(safe-area-inset-top));
+            left: 20px;
+            right: 20px;
+            background: var(--bg-secondary);
+            padding: 16px;
+            border-radius: 14px;
+            box-shadow: var(--shadow-lg);
             z-index: 1001;
-            animation: slideIn 0.3s ease;
-            display: none;
-        }
-
-        .notification.show {
-            display: block;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateX(400px);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        .photo-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-            gap: 0.5rem;
-            margin-top: 1rem;
-        }
-
-        .gallery-photo {
-            aspect-ratio: 1;
-            border-radius: 8px;
-            object-fit: cover;
-            cursor: pointer;
+            transform: translateY(-200%);
             transition: transform 0.3s ease;
         }
 
-        .gallery-photo:hover {
-            transform: scale(1.05);
-        }
+        .notification.show { transform: translateY(0); }
 
-        .metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .metric-card {
-            background: var(--bg-main);
-            padding: 1rem;
+        .history-item {
+            padding: 12px;
+            background: var(--bg);
             border-radius: 12px;
-            text-align: center;
-        }
-
-        .metric-value {
-            font-family: 'Clash Display', sans-serif;
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .metric-label {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-            margin-top: 0.25rem;
-        }
-
-        .setup-wizard {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .wizard-step {
-            display: none;
-        }
-
-        .wizard-step.active {
-            display: block;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 1rem;
-            }
-
-            h1 {
-                font-size: 1.5rem;
-            }
-
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .stat-value {
-                font-size: 2rem;
-            }
-
-            .sleep-input-group {
-                grid-template-columns: 1fr;
-            }
-
-            .modal-content {
-                padding: 1.5rem;
-            }
-
-            .meal-types {
-                grid-template-columns: 1fr;
-            }
-
-            .portion-selector {
-                flex-direction: column;
-            }
-
-            .sync-grid {
-                grid-template-columns: 1fr 1fr;
-            }
+            margin-bottom: 8px;
         }
     </style>
 </head>
@@ -821,34 +409,15 @@
     <header>
         <div class="header-content">
             <h1>FitTrack</h1>
-            <div class="streak">
-                <span class="streak-flame">🔥</span>
-                <span id="streak-count">0 jours</span>
-            </div>
+            <div class="streak">🔥 <span id="streak-count">0</span></div>
         </div>
     </header>
 
-    <nav id="main-nav" style="display: none;">
-        <div class="nav-tabs">
-            <button class="nav-tab active" onclick="switchTab('dashboard')">📊 Accueil</button>
-            <button class="nav-tab" onclick="switchTab('nutrition')">🍎 Nutrition</button>
-            <button class="nav-tab" onclick="switchTab('hydration')">💧 Hydratation</button>
-            <button class="nav-tab" onclick="switchTab('sleep')">😴 Sommeil</button>
-            <button class="nav-tab" onclick="switchTab('workout')">💪 Sport</button>
-            <button class="nav-tab" onclick="switchTab('data')">📊 Données</button>
-        </div>
-    </nav>
-
     <div class="container">
-        <!-- Setup Wizard -->
-        <div id="setup" class="setup-wizard">
+        <div id="setup" class="setup" style="max-width: 400px; margin: 40px auto;">
             <div class="wizard-step active" id="step1">
                 <div class="card">
-                    <div class="card-header">
-                        <h2 class="card-title">👋 Bienvenue sur FitTrack !</h2>
-                    </div>
-                    <p style="margin-bottom: 2rem; color: var(--text-secondary);">Quelques infos rapides pour personnaliser ton expérience.</p>
-                    
+                    <h2 class="card-title" style="font-size: 24px;">Bienvenue</h2>
                     <div class="form-group">
                         <label>Sexe</label>
                         <select id="setup-gender">
@@ -856,499 +425,374 @@
                             <option value="female">Femme</option>
                         </select>
                     </div>
-
                     <div class="form-group">
-                        <label>Âge (années)</label>
-                        <input type="number" id="setup-age" placeholder="30" min="18" max="100">
+                        <label>Âge</label>
+                        <input type="number" id="setup-age" placeholder="27">
                     </div>
-
                     <div class="form-group">
                         <label>Taille (cm)</label>
-                        <input type="number" id="setup-height" placeholder="175" min="140" max="220">
+                        <input type="number" id="setup-height" placeholder="175">
                     </div>
-
                     <div class="form-group">
-                        <label>Niveau d'activité</label>
+                        <label>Activité</label>
                         <select id="setup-activity">
-                            <option value="sedentary">Sédentaire (peu d'activité)</option>
-                            <option value="light">Légèrement actif (1-3x/semaine)</option>
-                            <option value="moderate">Modérément actif (3-5x/semaine)</option>
-                            <option value="active">Très actif (6-7x/semaine)</option>
-                            <option value="extra">Extrêmement actif (sport intense quotidien)</option>
+                            <option value="sedentary">Sédentaire</option>
+                            <option value="light">Léger (1-3x/sem)</option>
+                            <option value="moderate">Modéré (3-5x/sem)</option>
+                            <option value="active">Actif (6-7x/sem)</option>
                         </select>
                     </div>
-
-                    <button class="btn btn-primary" style="width: 100%;" onclick="nextStep()">Continuer →</button>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="nextStep()">Suivant</button>
                 </div>
             </div>
 
-            <div class="wizard-step" id="step2">
+            <div class="wizard-step" id="step2" style="display: none;">
                 <div class="card">
-                    <div class="card-header">
-                        <h2 class="card-title">🎯 Ton objectif</h2>
-                    </div>
-                    
+                    <h2 class="card-title">Objectif</h2>
                     <div class="form-group">
                         <label>Poids actuel (kg)</label>
-                        <input type="number" id="setup-current-weight" placeholder="75.0" step="0.1" min="40" max="200">
+                        <input type="number" id="setup-current-weight" step="0.1">
                     </div>
-
                     <div class="form-group">
                         <label>Poids cible (kg)</label>
-                        <input type="number" id="setup-target-weight" placeholder="70.0" step="0.1" min="40" max="200">
+                        <input type="number" id="setup-target-weight" step="0.1">
                     </div>
-
                     <div class="form-group">
-                        <label>Rythme de perte de poids</label>
+                        <label>Rythme</label>
                         <select id="setup-pace">
-                            <option value="slow">Lent (-0.25kg/semaine) - Recommandé</option>
-                            <option value="moderate" selected>Modéré (-0.5kg/semaine)</option>
-                            <option value="fast">Rapide (-0.75kg/semaine)</option>
+                            <option value="slow">Lent (-0.25kg/sem)</option>
+                            <option value="moderate" selected>Modéré (-0.5kg/sem)</option>
+                            <option value="fast">Rapide (-0.75kg/sem)</option>
                         </select>
                     </div>
-
-                    <div id="calculated-info" style="background: var(--bg-main); padding: 1rem; border-radius: 12px; margin-top: 1rem; display: none;">
-                        <p style="font-weight: 600; margin-bottom: 0.5rem;">📊 Résumé automatique :</p>
-                        <p style="color: var(--text-secondary); font-size: 0.9rem;" id="summary-text"></p>
+                    <div id="summary" style="background: var(--bg); padding: 12px; border-radius: 12px; margin-bottom: 16px; display: none;">
+                        <p id="summary-text" style="font-size: 14px; color: var(--text-secondary);"></p>
                     </div>
-
-                    <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="completeSetup()">C'est parti ! 🚀</button>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="completeSetup()">Commencer</button>
                 </div>
             </div>
         </div>
 
-        <!-- Dashboard Tab -->
-        <div id="dashboard" class="tab-content" style="display: none;">
-            <!-- Quick Sync Widget -->
-            <div class="quick-sync">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <h3 style="font-family: 'Clash Display', sans-serif; font-size: 1.25rem;">⚡ Sync rapide du jour</h3>
-                    <span style="opacity: 0.8; font-size: 0.875rem;" id="last-sync">Jamais synchronisé</span>
-                </div>
-                <div class="sync-grid">
-                    <div>
-                        <div class="sync-label">Poids (kg)</div>
-                        <input type="number" class="sync-input" id="sync-weight" placeholder="75.2" step="0.1">
-                    </div>
-                    <div>
-                        <div class="sync-label">Masse grasse (%)</div>
-                        <input type="number" class="sync-input" id="sync-fat" placeholder="22" step="0.1">
-                    </div>
-                    <div>
-                        <div class="sync-label">Calories brûlées</div>
-                        <input type="number" class="sync-input" id="sync-burned" placeholder="2800">
-                    </div>
-                    <div>
-                        <div class="sync-label">Pas</div>
-                        <input type="number" class="sync-input" id="sync-steps" placeholder="8500">
-                    </div>
-                </div>
-                <button class="btn" style="width: 100%; margin-top: 1rem; background: white; color: #5856D6;" onclick="syncData()">
-                    Synchroniser les données
-                </button>
-            </div>
-
-            <div class="dashboard-grid">
-                <div class="stat-card">
-                    <div class="stat-label">Calories aujourd'hui</div>
-                    <div class="stat-value"><span id="today-calories">0</span> <span class="stat-unit">kcal</span></div>
-                    <div class="stat-unit">Objectif: <span id="calorie-goal-display">2000</span> kcal</div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="calorie-progress" style="width: 0%"></div>
-                    </div>
-                    <div style="margin-top: 0.5rem; font-size: 0.875rem;" id="calories-remaining"></div>
-                </div>
-
-                <div class="stat-card" style="background: linear-gradient(135deg, #34C759, #00D4A1);">
-                    <div class="stat-label">Hydratation</div>
-                    <div class="stat-value"><span id="today-water">0</span> <span class="stat-unit">/ <span id="water-goal">8</span></span></div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="water-progress" style="width: 0%"></div>
+        <div id="app" style="display: none;">
+            <div id="home-tab" class="tab-content active">
+                <div class="quick-add">
+                    <div class="quick-add-title">Actions rapides</div>
+                    <div class="quick-grid">
+                        <button class="quick-btn" onclick="openModal('meals-modal')">
+                            <span class="quick-icon">🍽️</span> Repas
+                        </button>
+                        <button class="quick-btn" onclick="addWater(this)" oncontextmenu="event.preventDefault(); openModal('water-modal');">
+                            <span class="quick-icon">💧</span> <span id="water-container-label">Verre</span>
+                        </button>
+                        <button class="quick-btn" onclick="openModal('sleep-modal')">
+                            <span class="quick-icon">😴</span> Sommeil
+                        </button>
+                        <button class="quick-btn" onclick="openModal('sync-modal')">
+                            <span class="quick-icon">⚖️</span> Poids
+                        </button>
                     </div>
                 </div>
 
-                <div class="stat-card" style="background: linear-gradient(135deg, #5856D6, #AF52DE);">
-                    <div class="stat-label">Sommeil</div>
-                    <div class="stat-value"><span id="last-sleep">-</span> <span class="stat-unit">heures</span></div>
-                    <div class="stat-unit">Objectif: 7-9h</div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Calories</div>
+                        <div class="stat-value"><span id="cal-now">0</span>/<span id="cal-goal">0</span></div>
+                        <div class="stat-progress"><div class="stat-fill" id="cal-fill" style="width: 0%"></div></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Hydratation</div>
+                        <div class="stat-value" style="font-size: 18px;"><span id="water-now">0</span>/<span id="water-goal">2000</span>ml</div>
+                        <div class="stat-progress"><div class="stat-fill" id="water-fill" style="width: 0%; background: var(--success)"></div></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Sommeil</div>
+                        <div class="stat-value" id="sleep-value">-</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Poids</div>
+                        <div class="stat-value" id="weight-value">-</div>
+                    </div>
                 </div>
 
-                <div class="stat-card" style="background: linear-gradient(135deg, #FF9500, #FF6B00);">
-                    <div class="stat-label">Poids actuel</div>
-                    <div class="stat-value"><span id="current-weight-display">-</span> <span class="stat-unit">kg</span></div>
-                    <div class="stat-unit">Objectif: <span id="weight-goal-display">-</span> kg</div>
+                <div class="card">
+                    <div class="card-title">Journal d'aujourd'hui</div>
+                    <div id="today-log"></div>
                 </div>
             </div>
 
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">Actions rapides</h2>
-                </div>
-                <div class="quick-actions">
-                    <div class="quick-action" onclick="openModal('meal-types-modal')">
-                        <div class="quick-action-icon">🍽️</div>
-                        <div class="quick-action-label">Repas type</div>
-                    </div>
-                    <div class="quick-action" onclick="switchTab('hydration')">
-                        <div class="quick-action-icon">💧</div>
-                        <div class="quick-action-label">Boire eau</div>
-                    </div>
-                    <div class="quick-action" onclick="switchTab('sleep')">
-                        <div class="quick-action-icon">😴</div>
-                        <div class="quick-action-label">Logger sommeil</div>
-                    </div>
-                    <div class="quick-action" onclick="switchTab('workout')">
-                        <div class="quick-action-icon">💪</div>
-                        <div class="quick-action-label">Entraînement</div>
+            <div id="data-tab" class="tab-content">
+                <div class="card">
+                    <div class="card-title">Historique & Stats</div>
+                    <div id="stats-content"></div>
+                    <div style="margin-top: 20px;">
+                        <h4 style="margin-bottom: 12px; font-size: 15px; color: var(--text-tertiary);">Jours précédents</h4>
+                        <div id="history-log"></div>
                     </div>
                 </div>
-            </div>
-
-            <div class="card" id="suggestion-card" style="display: none;">
-                <div class="card-header">
-                    <h2 class="card-title">💡 Suggestion intelligente</h2>
-                </div>
-                <p id="suggestion-text" style="color: var(--text-secondary);"></p>
-            </div>
-        </div>
-
-        <!-- Nutrition Tab -->
-        <div id="nutrition" class="tab-content">
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">Ajouter un aliment</h2>
-                </div>
-                <div class="quick-actions">
-                    <div class="quick-action" onclick="openModal('meal-types-modal')">
-                        <div class="quick-action-icon">🍽️</div>
-                        <div class="quick-action-label">Repas type</div>
-                    </div>
-                    <div class="quick-action" onclick="openModal('dishes-modal')">
-                        <div class="quick-action-icon">🥘</div>
-                        <div class="quick-action-label">Plats courants</div>
-                    </div>
-                    <div class="quick-action" onclick="openModal('barcode-modal')">
-                        <div class="quick-action-icon">📱</div>
-                        <div class="quick-action-label">Scanner</div>
-                    </div>
-                    <div class="quick-action" onclick="openModal('quick-add-modal')">
-                        <div class="quick-action-icon">⚡</div>
-                        <div class="quick-action-label">Ajout rapide</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">Journal alimentaire</h2>
-                    <span style="color: var(--text-secondary); font-weight: 500;"><span id="total-calories">0</span> kcal</span>
-                </div>
-                <div id="food-log"></div>
-            </div>
-        </div>
-
-        <!-- Hydration Tab -->
-        <div id="hydration" class="tab-content">
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">Hydratation du jour</h2>
-                    <span style="color: var(--text-secondary); font-weight: 500;"><span id="water-count">0</span> / <span id="water-goal-display">8</span> verres</span>
-                </div>
-                <div class="water-glasses" id="water-glasses"></div>
-                <button class="btn btn-secondary" style="width: 100%; margin-top: 1rem;" onclick="resetWater()">Réinitialiser</button>
-            </div>
-        </div>
-
-        <!-- Sleep Tab -->
-        <div id="sleep" class="tab-content">
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">Logger mon sommeil</h2>
-                </div>
-                <div class="sleep-input-group">
-                    <div class="form-group">
-                        <label>Heure de coucher</label>
-                        <input type="time" id="sleep-bedtime">
-                    </div>
-                    <div class="form-group">
-                        <label>Heure de réveil</label>
-                        <input type="time" id="sleep-waketime">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Qualité du sommeil</label>
-                    <div class="sleep-quality">
-                        <button class="quality-btn" data-quality="Mauvaise" onclick="selectQuality(this)">😴</button>
-                        <button class="quality-btn" data-quality="Moyenne" onclick="selectQuality(this)">😐</button>
-                        <button class="quality-btn" data-quality="Bonne" onclick="selectQuality(this)">😊</button>
-                        <button class="quality-btn" data-quality="Excellente" onclick="selectQuality(this)">🌟</button>
-                    </div>
-                </div>
-                <button class="btn btn-primary" style="width: 100%;" onclick="logSleep()">Enregistrer</button>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">Historique du sommeil</h2>
-                </div>
-                <div id="sleep-history"></div>
-            </div>
-        </div>
-
-        <!-- Workout Tab -->
-        <div id="workout" class="tab-content">
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">Nouvelle séance</h2>
-                </div>
-                <div class="form-group">
-                    <label>Type d'entraînement</label>
-                    <select id="workout-type">
-                        <option value="Push">Push (Poitrine, Épaules, Triceps)</option>
-                        <option value="Pull">Pull (Dos, Biceps)</option>
-                        <option value="Legs">Legs (Jambes)</option>
-                        <option value="Full Body">Full Body</option>
-                        <option value="Cardio">Cardio</option>
-                    </select>
-                </div>
-                <button class="btn btn-primary" onclick="openModal('add-exercise-modal')">➕ Ajouter un exercice</button>
-                <div id="current-workout" class="exercise-list" style="margin-top: 1.5rem;"></div>
-                <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="saveWorkout()" id="save-workout-btn" disabled>Terminer la séance</button>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">Historique des entraînements</h2>
-                </div>
-                <div id="workout-history"></div>
-            </div>
-        </div>
-
-        <!-- Data Tab -->
-        <div id="data" class="tab-content">
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">📊 Mes statistiques</h2>
-                </div>
-                <div class="metrics-grid">
-                    <div class="metric-card">
-                        <div class="metric-value" id="metric-weight">-</div>
-                        <div class="metric-label">Poids (kg)</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" id="metric-fat">-</div>
-                        <div class="metric-label">Masse grasse (%)</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" id="metric-muscle">-</div>
-                        <div class="metric-label">Masse musculaire (kg)</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" id="metric-bmi">-</div>
-                        <div class="metric-label">IMC</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" id="metric-steps">-</div>
-                        <div class="metric-label">Pas moyens/jour</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" id="metric-burned">-</div>
-                        <div class="metric-label">Calories brûlées</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">Galerie de mes repas</h2>
-                </div>
-                <div id="photo-gallery" class="photo-gallery"></div>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">⚙️ Paramètres</h2>
-                </div>
-                <button class="btn btn-secondary" style="width: 100%;" onclick="resetSetup()">Modifier mes informations</button>
             </div>
         </div>
     </div>
 
-    <!-- Modals (same as before) -->
-    <div id="meal-types-modal" class="modal">
+    <div id="meals-modal" class="modal"><div class="modal-content"><div class="modal-header"><h3 class="card-title">Ajouter un repas</h3><button class="close-modal" onclick="closeModal('meals-modal')">×</button></div><div class="meal-grid" id="meals-list"></div></div></div>
+    <div id="water-modal" class="modal"><div class="modal-content"><div class="modal-header"><h3 class="card-title">Contenant</h3><button class="close-modal" onclick="closeModal('water-modal')">×</button></div><div class="meal-grid" id="water-containers"></div></div></div>
+    
+    <div id="sleep-modal" class="modal">
         <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="card-title">Repas type</h2>
-                <button class="close-modal" onclick="closeModal('meal-types-modal')">✕</button>
-            </div>
-            <div class="meal-types">
-                <div class="meal-type-card" onclick="selectMealType('Petit-déjeuner classique', 350)">
-                    <div class="meal-type-icon">☕</div>
-                    <div class="meal-type-name">Petit-déj classique</div>
-                    <div class="meal-type-cals">~350 kcal</div>
+            <div class="modal-header"><h3 class="card-title">Sommeil</h3><button class="close-modal" onclick="closeModal('sleep-modal')">×</button></div>
+            <div class="form-group"><label>Coucher</label><input type="time" id="sleep-bed"></div>
+            <div class="form-group"><label>Réveil</label><input type="time" id="sleep-wake"></div>
+            <button class="btn btn-primary" style="width: 100%;" onclick="logSleep()">Enregistrer</button>
+        </div>
+    </div>
+
+    <div id="sync-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header"><h3 class="card-title">Sync données</h3><button class="close-modal" onclick="closeModal('sync-modal')">×</button></div>
+            <div class="form-group"><label>Poids (kg)</label><input type="number" id="sync-weight" step="0.1"></div>
+            <button class="btn btn-primary" style="width: 100%;" onclick="syncData()">Synchroniser</button>
+        </div>
+    </div>
+
+    <button class="voice-btn" id="voice-btn" onclick="toggleVoice()">🎤</button>
+
+    <div class="tab-bar">
+        <button class="tab-item active" onclick="switchTab('home', this)"><span class="tab-icon">🏠</span><span>Accueil</span></button>
+        <button class="tab-item" onclick="switchTab('data', this)"><span class="tab-icon">📊</span><span>Données</span></button>
+    </div>
+
+    <div class="notification" id="notification"></div>
+
+    <script>
+        const meals = [
+            {name: 'Petit-déj léger', icon: '🥐', cal: 200},
+            {name: 'Petit-déj complet', icon: '☕', cal: 350},
+            {name: 'Déjeuner léger', icon: '🥗', cal: 450},
+            {name: 'Déjeuner complet', icon: '🍱', cal: 700},
+            {name: 'Dîner léger', icon: '🥙', cal: 400},
+            {name: 'Dîner complet', icon: '🍽️', cal: 650},
+            {name: 'Snack', icon: '🍎', cal: 150}
+        ];
+
+        const waterContainers = [
+            {name: 'Verre', icon: '🥤', ml: 250},
+            {name: 'Petite gourde', icon: '🧃', ml: 500},
+            {name: 'Grande gourde', icon: '💧', ml: 750},
+            {name: 'Bouteille', icon: '🍾', ml: 1000}
+        ];
+
+        let data = {
+            setup: false,
+            profile: {gender: 'male', age: 27, height: 175, activity: 'moderate', weight: 75, target: 70, pace: 'moderate'},
+            goals: {cal: 2000, waterMl: 2000},
+            history: [], // Stockage des jours passés
+            today: {date: new Date().toDateString(), foods: [], waterMl: 0, cal: 0},
+            waterContainer: {name: 'Verre', icon: '🥤', ml: 250},
+            metrics: {weight: [], fat: []},
+            sleep: [],
+            streak: 0
+        };
+
+        function calcBMR() {
+            const {gender, age, height, weight} = data.profile;
+            return gender === 'male' ? (10 * weight) + (6.25 * height) - (5 * age) + 5 : (10 * weight) + (6.25 * height) - (5 * age) - 161;
+        }
+
+        function calcTDEE() {
+            const mult = {sedentary: 1.2, light: 1.375, moderate: 1.55, active: 1.725};
+            return Math.round(calcBMR() * (mult[data.profile.activity] || 1.2));
+        }
+
+        function calcGoal() {
+            const def = {slow: 250, moderate: 500, fast: 750};
+            return Math.round(calcTDEE() - def[data.profile.pace]);
+        }
+
+        function addWater(btn) {
+            data.today.waterMl += data.waterContainer.ml;
+            save();
+            render();
+            
+            // Feedback visuel sur le bouton passé en paramètre
+            if(btn) {
+                btn.style.transform = 'scale(0.9)';
+                setTimeout(() => btn.style.transform = 'scale(1)', 150);
+            }
+            notify(`💧 +${data.waterContainer.ml}ml`);
+        }
+
+        function selectContainer(container) {
+            data.waterContainer = container;
+            save();
+            render();
+            closeModal('water-modal');
+            notify(`${container.icon} ${container.name} sélectionné`);
+        }
+
+        function nextStep() {
+            data.profile.age = parseInt($('setup-age').value);
+            data.profile.height = parseInt($('setup-height').value);
+            if (!data.profile.age || !data.profile.height) return notify('Remplis tous les champs');
+            
+            $('step1').style.display = 'none';
+            $('step2').style.display = 'block';
+        }
+
+        function completeSetup() {
+            data.profile.weight = parseFloat($('setup-current-weight').value);
+            data.profile.target = parseFloat($('setup-target-weight').value);
+            if (!data.profile.weight) return notify('Poids requis');
+            
+            data.goals.cal = calcGoal();
+            data.goals.waterMl = Math.round(data.profile.weight * 30);
+            data.setup = true;
+            
+            $('setup').style.display = 'none';
+            $('app').style.display = 'block';
+            save();
+            render();
+        }
+
+        function addFood(name, cal) {
+            data.today.foods.push({name, cal, time: new Date().toLocaleTimeString().slice(0,5)});
+            data.today.cal += cal;
+            save();
+            render();
+            closeModal('meals-modal');
+            notify(`✅ ${name} ajouté`);
+        }
+
+        function logSleep() {
+            const bed = $('sleep-bed').value;
+            const wake = $('sleep-wake').value;
+            if (!bed || !wake) return notify('Champs vides');
+            const b = new Date(`2000-01-01T${bed}`);
+            let w = new Date(`2000-01-01T${wake}`);
+            if (w < b) w = new Date(`2000-01-02T${wake}`);
+            const hrs = ((w - b) / 3600000).toFixed(1);
+            data.sleep.unshift({date: new Date().toLocaleDateString(), hrs});
+            save();
+            render();
+            closeModal('sleep-modal');
+        }
+
+        function syncData() {
+            const w = parseFloat($('sync-weight').value);
+            if (w) {
+                data.metrics.weight.push({date: new Date().toDateString(), val: w});
+                data.profile.weight = w;
+            }
+            save();
+            render();
+            closeModal('sync-modal');
+            notify('✅ Poids mis à jour');
+        }
+
+        function render() {
+            // Stats Accueil
+            $('cal-now').textContent = data.today.cal;
+            $('cal-goal').textContent = data.goals.cal;
+            $('cal-fill').style.width = Math.min(100, (data.today.cal / data.goals.cal) * 100) + '%';
+            
+            $('water-now').textContent = data.today.waterMl;
+            $('water-goal').textContent = data.goals.waterMl;
+            $('water-fill').style.width = Math.min(100, (data.today.waterMl / data.goals.waterMl) * 100) + '%';
+            
+            $('sleep-value').textContent = data.sleep[0] ? data.sleep[0].hrs + 'h' : '-';
+            $('weight-value').textContent = data.profile.weight + 'kg';
+            $('streak-count').textContent = data.streak;
+            $('water-container-label').textContent = data.waterContainer.name;
+
+            // Journal
+            $('today-log').innerHTML = data.today.foods.length ? data.today.foods.map((f, i) => `
+                <div class="list-item">
+                    <div><strong>${f.name}</strong><br><span style="font-size:13px; color:var(--text-tertiary)">${f.cal} kcal • ${f.time}</span></div>
+                    <button style="color:var(--danger); background:none; border:none; font-size:20px;" onclick="deleteFood(${i})">×</button>
                 </div>
-                <div class="meal-type-card" onclick="selectMealType('Petit-déjeuner léger', 200)">
-                    <div class="meal-type-icon">🥐</div>
-                    <div class="meal-type-name">Petit-déj léger</div>
-                    <div class="meal-type-cals">~200 kcal</div>
-                </div>
-                <div class="meal-type-card" onclick="selectMealType('Déjeuner complet', 700)">
-                    <div class="meal-type-icon">🍱</div>
-                    <div class="meal-type-name">Déjeuner complet</div>
-                    <div class="meal-type-cals">~700 kcal</div>
-                </div>
-                <div class="meal-type-card" onclick="selectMealType('Déjeuner léger', 450)">
-                    <div class="meal-type-icon">🥗</div>
-                    <div class="meal-type-name">Déjeuner léger</div>
-                    <div class="meal-type-cals">~450 kcal</div>
-                </div>
-                <div class="meal-type-card" onclick="selectMealType('Dîner complet', 650)">
-                    <div class="meal-type-icon">🍽️</div>
-                    <div class="meal-type-name">Dîner complet</div>
-                    <div class="meal-type-cals">~650 kcal</div>
-                </div>
-                <div class="meal-type-card" onclick="selectMealType('Dîner léger', 400)">
-                    <div class="meal-type-icon">🥙</div>
-                    <div class="meal-type-name">Dîner léger</div>
-                    <div class="meal-type-cals">~400 kcal</div>
-                </div>
-                <div class="meal-type-card" onclick="selectMealType('Snack', 150)">
-                    <div class="meal-type-icon">🍎</div>
-                    <div class="meal-type-name">Snack</div>
-                    <div class="meal-type-cals">~150 kcal</div>
-                </div>
-            </div>
-            <div style="margin-top: 1.5rem;">
-                <label style="cursor: pointer;">
-                    <input type="file" accept="image/*" capture="environment" style="display: none;" onchange="handlePhotoUpload(event, 'meal-type')">
-                    <div class="photo-upload">
-                        <div style="font-size: 3rem; margin-bottom: 0.5rem;">📸</div>
-                        <div style="font-weight: 600; color: var(--primary);">Prendre une photo (optionnel)</div>
+            `).join('') : '<p style="text-align:center; color:var(--text-tertiary); padding:20px;">Rien pour le moment</p>';
+
+            // Listes modales
+            $('meals-list').innerHTML = meals.map(m => `<div class="meal-card" onclick="addFood('${m.name}', ${m.cal})"><div><strong>${m.name}</strong><br>${m.cal} kcal</div><div style="font-size:24px">${m.icon}</div></div>`).join('');
+            $('water-containers').innerHTML = waterContainers.map(c => `<div class="meal-card" onclick='selectContainer(${JSON.stringify(c)})'><div><strong>${c.name}</strong><br>${c.ml}ml</div><div style="font-size:24px">${c.icon}</div></div>`).join('');
+
+            // Onglet Données - Stats
+            $('stats-content').innerHTML = `
+                <div class="list-item"><span>Poids actuel</span><strong>${data.profile.weight} kg</strong></div>
+                <div class="list-item"><span>Objectif eau</span><strong>${data.goals.waterMl} ml</strong></div>
+                <div class="list-item"><span>Objectif calories</span><strong>${data.goals.cal} kcal</strong></div>
+            `;
+
+            // Onglet Données - Historique
+            $('history-log').innerHTML = data.history.length ? data.history.map(h => `
+                <div class="history-item">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                        <strong>${new Date(h.date).toLocaleDateString('fr-FR', {day:'numeric', month:'short'})}</strong>
+                        <span style="color:var(--primary); font-weight:bold;">${h.cal} kcal</span>
                     </div>
-                </label>
-            </div>
-        </div>
-    </div>
-
-    <div id="dishes-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="card-title">Plats courants</h2>
-                <button class="close-modal" onclick="closeModal('dishes-modal')">✕</button>
-            </div>
-            <div class="search-box">
-                <span class="search-icon">🔍</span>
-                <input type="text" id="dish-search" placeholder="Rechercher un plat..." oninput="filterDishes()">
-            </div>
-            <div class="dishes-grid" id="dishes-grid"></div>
-        </div>
-    </div>
-
-    <div id="portion-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="card-title" id="portion-dish-name">Choisir la portion</h2>
-                <button class="close-modal" onclick="closeModal('portion-modal')">✕</button>
-            </div>
-            <div class="portion-selector">
-                <div class="portion-btn" onclick="selectPortion('small')">
-                    <span class="portion-emoji">🍽️</span>
-                    <div class="portion-label">Petite</div>
-                    <div class="portion-cals" id="small-cals"></div>
+                    <div style="font-size:12px; color:var(--text-secondary)">💧 ${h.waterMl}ml</div>
                 </div>
-                <div class="portion-btn selected" onclick="selectPortion('medium')">
-                    <span class="portion-emoji">🍽️🍽️</span>
-                    <div class="portion-label">Moyenne</div>
-                    <div class="portion-cals" id="medium-cals"></div>
-                </div>
-                <div class="portion-btn" onclick="selectPortion('large')">
-                    <span class="portion-emoji">🍽️🍽️🍽️</span>
-                    <div class="portion-label">Grande</div>
-                    <div class="portion-cals" id="large-cals"></div>
-                </div>
-            </div>
-            <div style="margin-top: 1.5rem;">
-                <label style="cursor: pointer;">
-                    <input type="file" accept="image/*" capture="environment" style="display: none;" onchange="handlePhotoUpload(event, 'portion')">
-                    <div class="photo-upload">
-                        <div style="font-size: 3rem; margin-bottom: 0.5rem;">📸</div>
-                        <div style="font-weight: 600; color: var(--primary);">Prendre une photo (optionnel)</div>
-                    </div>
-                </label>
-            </div>
-            <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="addDishWithPortion()">Ajouter</button>
-        </div>
-    </div>
+            `).reverse().join('') : '<p style="text-align:center; color:var(--text-tertiary);">Aucun historique</p>';
+        }
 
-    <div id="barcode-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="card-title">Scanner un code-barre</h2>
-                <button class="close-modal" onclick="closeModal('barcode-modal')">✕</button>
-            </div>
-            <div class="form-group">
-                <label>Code-barre (ou nom de produit)</label>
-                <input type="text" id="barcode-input" placeholder="3017620422003">
-            </div>
-            <button class="btn btn-primary" style="width: 100%;" onclick="searchBarcode()">Rechercher</button>
-            <div id="barcode-result" style="display: none;"></div>
-        </div>
-    </div>
+        function deleteFood(i) {
+            data.today.cal -= data.today.foods[i].cal;
+            data.today.foods.splice(i, 1);
+            save();
+            render();
+        }
 
-    <div id="quick-add-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="card-title">Ajout rapide</h2>
-                <button class="close-modal" onclick="closeModal('quick-add-modal')">✕</button>
-            </div>
-            <div class="form-group">
-                <label>Calories (kcal)</label>
-                <input type="number" id="quick-calories" placeholder="500">
-            </div>
-            <button class="btn btn-primary" style="width: 100%;" onclick="quickAddCalories()">Ajouter</button>
-        </div>
-    </div>
+        function switchTab(name, el) {
+            document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            el.classList.add('active');
+            $(`${name}-tab`).classList.add('active');
+        }
 
-    <div id="add-exercise-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="card-title">Ajouter un exercice</h2>
-                <button class="close-modal" onclick="closeModal('add-exercise-modal')">✕</button>
-            </div>
-            <div class="form-group">
-                <label>Exercice</label>
-                <input type="text" id="exercise-name" placeholder="Ex: Développé couché">
-            </div>
-            <div class="form-group">
-                <label>Nombre de séries</label>
-                <input type="number" id="exercise-sets" value="3" min="1">
-            </div>
-            <div class="form-group">
-                <label>Répétitions par série</label>
-                <input type="number" id="exercise-reps" value="10" min="1">
-            </div>
-            <div class="form-group">
-                <label>Poids (kg) - optionnel</label>
-                <input type="number" id="exercise-weight" step="0.5" placeholder="20">
-            </div>
-            <button class="btn btn-primary" style="width: 100%;" onclick="addExercise()">Ajouter</button>
-        </div>
-    </div>
+        function openModal(id) { $(id).classList.add('active'); }
+        function closeModal(id) { $(id).classList.remove('active'); }
 
-    <div id="photo-viewer-modal" class="modal">
-        <div class="modal-content" style="max-width: 800px;">
-            <div class="modal-header">
-                <h2 class="card-title" id="photo-viewer-title"></h2>
-                <button class="close-modal" onclick="closeModal('photo-viewer-modal')">✕</button>
-            </div>
-            <img id="photo-viewer-img" style="width: 100%; border-radius: 12px;">
-        </div>
-    </div>
+        function notify(msg) {
+            const n = $('notification');
+            n.textContent = msg;
+            n.classList.add('show');
+            setTimeout(() => n.classList.remove('show'), 2000);
+        }
 
-    <div id="notification" class="notification">
-        <div id="notification-text"></div>
-    </div>
+        async function save() {
+            try { await window.storage.set('fit', JSON.stringify(data)); } catch (e) {}
+        }
 
-    <script src="fittrack-app.js"></script>
+        async function load() {
+            try {
+                const s = await window.storage.get('fit');
+                if (s?.value) {
+                    data = JSON.parse(s.value);
+                    if (!data.history) data.history = [];
+                    
+                    // Gestion du changement de jour
+                    const currentDate = new Date().toDateString();
+                    if (data.today.date !== currentDate) {
+                        // Archivage si la journée n'était pas vide
+                        if (data.today.cal > 0 || data.today.waterMl > 0) {
+                            data.history.push({...data.today});
+                            // On garde seulement les 30 derniers jours pour ne pas saturer la mémoire
+                            if (data.history.length > 30) data.history.shift();
+                        }
+                        // Reset
+                        data.today = {date: currentDate, foods: [], waterMl: 0, cal: 0};
+                        save();
+                    }
+
+                    if (data.setup) {
+                        $('setup').style.display = 'none';
+                        $('app').style.display = 'block';
+                        render();
+                    }
+                }
+            } catch (e) {}
+        }
+
+        const $ = id => document.getElementById(id);
+        load();
+    </script>
 </body>
 </html>
