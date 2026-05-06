@@ -41,7 +41,7 @@
             background: var(--bg); 
             color: var(--text-dark); 
             line-height: 1.4; 
-            padding-bottom: 90px; 
+            padding-bottom: 120px; /* Espace pour le menu flottant */
             overflow-x: hidden; 
             font-size: 15px;
         }
@@ -113,7 +113,7 @@
             border: 1px solid rgba(0,0,0,0.02);
         }
 
-        /* --- WIDGET MACROS --- */
+        /* --- WIDGET MACROS (Style Foodvisor) --- */
         .macro-dashboard { 
             background: white; 
             border-radius: var(--radius-lg); 
@@ -159,7 +159,9 @@
             margin-top: 16px; 
         }
         
-        .macro-col { flex: 1; }
+        .macro-col { 
+            flex: 1; 
+        }
         
         .macro-label { 
             font-size: 11px; 
@@ -183,7 +185,7 @@
             transition: width 0.5s ease; 
         }
 
-        /* --- WIDGET EAU --- */
+        /* --- WIDGET EAU (Style Waterllama) --- */
         .water-widget { 
             background: white; 
             border-radius: var(--radius-lg); 
@@ -214,7 +216,9 @@
             transition: height 0.8s ease; 
         }
         
-        .water-info { flex: 1; }
+        .water-info { 
+            flex: 1; 
+        }
         
         .water-title { 
             font-weight: 800; 
@@ -315,7 +319,9 @@
             border-radius: 10px; 
         }
         
-        .log-details { flex-grow: 1; }
+        .log-details { 
+            flex-grow: 1; 
+        }
         
         .log-name { 
             font-weight: 700; 
@@ -431,7 +437,7 @@
             color: var(--text-light); 
         }
 
-        /* --- DRINK SELECTOR --- */
+        /* --- WATERLLAMA SPECIFICS --- */
         .drink-type-grid { 
             display: grid; 
             grid-template-columns: repeat(4, 1fr); 
@@ -456,8 +462,14 @@
             background: #F0F9FF; 
         }
         
-        .drink-type-icon { font-size: 24px; }
-        .drink-type-name { font-size: 10px; font-weight: 600; }
+        .drink-type-icon { 
+            font-size: 24px; 
+        }
+        
+        .drink-type-name { 
+            font-size: 10px; 
+            font-weight: 600; 
+        }
 
         .volume-grid { 
             display: grid; 
@@ -508,55 +520,72 @@
             font-size: 16px; 
         }
 
-        /* --- COMPACT BOTTOM NAV --- */
+        /* --- LE NOUVEAU MENU FLOTTANT (Style Image) --- */
         .tab-bar { 
             position: fixed; 
-            bottom: 0; 
-            left: 0; 
-            right: 0; 
-            background: rgba(255, 255, 255, 0.9); 
-            backdrop-filter: blur(10px); 
-            border-top: 1px solid rgba(0,0,0,0.05);
-            padding: 8px 12px calc(8px + env(safe-area-inset-bottom)); 
+            bottom: 24px; 
+            left: 20px; 
+            right: 20px; 
+            background: rgba(248, 249, 250, 0.95); /* Fond très clair */
+            backdrop-filter: blur(10px);
+            border-radius: 40px; 
+            padding: 8px 12px; 
             display: flex; 
-            justify-content: space-around; 
+            justify-content: space-between;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08); 
             z-index: 100; 
+            border: 1px solid rgba(0,0,0,0.05);
         }
-        
+
         .tab-item { 
             flex: 1; 
-            padding: 4px 0; 
+            padding: 10px 0; 
             border: none; 
             background: transparent; 
             color: var(--text-light); 
-            font-weight: 600; 
+            border-radius: 30px; 
+            font-weight: 700; 
             display: flex; 
-            flex-direction: column; 
+            flex-direction: column; /* Icône au-dessus du texte */
             align-items: center; 
-            gap: 4px; 
-            font-size: 10px; 
-            cursor: pointer; 
+            justify-content: center; 
+            gap: 6px; 
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        
-        .tab-item .icon { 
-            font-size: 20px; 
-            transition: transform 0.2s; 
-            filter: grayscale(100%) opacity(0.6); 
+
+        .tab-item .icon {
+            font-size: 20px;
+            filter: grayscale(100%) opacity(0.6); /* Grisé par défaut */
+            transition: all 0.3s ease;
         }
-        
+
         .tab-item.active { 
-            color: var(--primary); 
+            background: #FFFFFF; /* Pilule blanche */
+            color: var(--primary); /* Texte en couleur principale */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
-        
-        .tab-item.active .icon { 
-            filter: grayscale(0%) opacity(1); 
-            transform: translateY(-2px); 
+
+        .tab-item.active .icon {
+            filter: grayscale(0%) opacity(1); /* Retire le filtre gris */
+            transform: translateY(-2px);
         }
 
         /* --- UTILS --- */
-        .tab-content { display: none; }
-        .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .tab-content { 
+            display: none; 
+        }
+        
+        .tab-content.active { 
+            display: block; 
+            animation: fadeIn 0.3s ease; 
+        }
+        
+        @keyframes fadeIn { 
+            from { opacity: 0; } 
+            to { opacity: 1; } 
+        }
 
         .toast { 
             position: fixed; 
@@ -592,8 +621,13 @@
             overflow-y: auto; 
         }
         
-        .wizard-step { display: none; }
-        .wizard-step.active { display: block; }
+        .wizard-step { 
+            display: none; 
+        }
+        
+        .wizard-step.active { 
+            display: block; 
+        }
         
         .choice-pill { 
             border: 1px solid #E2E8F0; 
@@ -621,10 +655,24 @@
             font-size: 14px; 
         }
         
-        .profile-line:last-child { border-bottom: none; }
-        .profile-line span { color: var(--text-light); }
-        .profile-line strong { font-weight: 700; }
-        .empty-state { text-align: center; color: var(--text-light); font-size: 13px; padding: 24px; }
+        .profile-line:last-child { 
+            border-bottom: none; 
+        }
+        
+        .profile-line span { 
+            color: var(--text-light); 
+        }
+        
+        .profile-line strong { 
+            font-weight: 700; 
+        }
+        
+        .empty-state { 
+            text-align: center; 
+            color: var(--text-light); 
+            font-size: 13px; 
+            padding: 24px; 
+        }
     </style>
 
     <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-app-compat.js"></script>
@@ -649,7 +697,7 @@
             <label>Mot de passe</label>
             <input type="password" id="auth-pass">
             <button class="action-btn-main" onclick="signInEmail()">Connexion</button>
-            <button class="action-btn-outline" onclick="signUpEmail()" style="border:none; margin-top:8px;">Créer un compte</button>
+            <button class="action-btn-outline" onclick="signUpEmail()" style="border:none;">Créer un compte</button>
         </div>
     </div>
 
@@ -711,6 +759,7 @@
         </header>
 
         <div class="container">
+            
             <div id="home-tab" class="tab-content active">
                 
                 <div class="macro-dashboard">
@@ -736,6 +785,7 @@
                             <div class="macro-track"><div class="macro-fill" id="fat-fill" style="background: var(--fat); width: 0%;"></div></div>
                         </div>
                     </div>
+                    
                     <div class="btn-group">
                         <button class="action-btn-outline" style="font-size: 13px;" onclick="openModal('meals-modal')">🍽️ Ajouter un repas</button>
                         <button class="action-btn-outline" style="font-size: 13px;" onclick="openModal('sync-modal')">⚖️ Pesée</button>
@@ -754,12 +804,13 @@
                         </div>
                     </div>
                 </div>
+                
                 <div class="drink-log-mini" id="drink-log-mini-home"></div>
-
             </div>
 
             <div id="data-tab" class="tab-content">
-                <div class="section-title" style="margin-top: 0;">Repas & Boissons</div>
+                <div class="section-title" style="margin-top: 0;">Repas & Boissons du jour</div>
+                
                 <div id="data-today-drinks"></div>
                 <div id="data-today-meals"></div>
                 
@@ -779,12 +830,16 @@
                 <button class="action-btn-danger" onclick="resetAllData()">🗑️ Réinitialiser mes données</button>
                 <button class="action-btn-outline" style="border: none; margin-top: 16px;" onclick="logOut()">Déconnexion</button>
             </div>
+            
         </div>
     </div>
 
     <div id="water-llama-modal" class="modal" onclick="closeOnBackdrop(event, 'water-llama-modal')">
         <div class="modal-content">
-            <div class="modal-header"><h3>Ajouter une boisson</h3><button class="close-btn" onclick="closeModal('water-llama-modal')">✕</button></div>
+            <div class="modal-header">
+                <h3>Ajouter une boisson</h3>
+                <button class="close-btn" onclick="closeModal('water-llama-modal')">✕</button>
+            </div>
             
             <div class="drink-type-grid" id="drink-type-grid"></div>
             
@@ -808,14 +863,20 @@
 
     <div id="meals-modal" class="modal" onclick="closeOnBackdrop(event, 'meals-modal')">
         <div class="modal-content">
-            <div class="modal-header"><h3>Ajouter un repas</h3><button class="close-btn" onclick="closeModal('meals-modal')">✕</button></div>
+            <div class="modal-header">
+                <h3>Ajouter un repas</h3>
+                <button class="close-btn" onclick="closeModal('meals-modal')">✕</button>
+            </div>
             <div id="meals-list"></div>
         </div>
     </div>
 
     <div id="sync-modal" class="modal" onclick="closeOnBackdrop(event, 'sync-modal')">
         <div class="modal-content">
-            <div class="modal-header"><h3>Nouvelle pesée</h3><button class="close-btn" onclick="closeModal('sync-modal')">✕</button></div>
+            <div class="modal-header">
+                <h3>Nouvelle pesée</h3>
+                <button class="close-btn" onclick="closeModal('sync-modal')">✕</button>
+            </div>
             <input type="number" id="sync-weight" step="0.1" placeholder="Poids en kg">
             <button class="action-btn-main" onclick="syncData()">Mettre à jour</button>
         </div>
@@ -823,9 +884,14 @@
 
     <div id="sleep-modal" class="modal" onclick="closeOnBackdrop(event, 'sleep-modal')">
         <div class="modal-content">
-            <div class="modal-header"><h3>Ma nuit</h3><button class="close-btn" onclick="closeModal('sleep-modal')">✕</button></div>
-            <label>Coucher</label><input type="time" id="sleep-bed">
-            <label>Réveil</label><input type="time" id="sleep-wake">
+            <div class="modal-header">
+                <h3>Ma nuit</h3>
+                <button class="close-btn" onclick="closeModal('sleep-modal')">✕</button>
+            </div>
+            <label>Coucher</label>
+            <input type="time" id="sleep-bed">
+            <label>Réveil</label>
+            <input type="time" id="sleep-wake">
             <button class="action-btn-main" onclick="logSleep()">Enregistrer</button>
         </div>
     </div>
@@ -833,15 +899,15 @@
     <div class="tab-bar">
         <button class="tab-item active" onclick="switchTab('home', this)">
             <span class="icon">🏠</span>
-            Accueil
+            <span>Accueil</span>
         </button>
         <button class="tab-item" onclick="switchTab('data', this)">
             <span class="icon">📊</span>
-            Journal
+            <span>Journal</span>
         </button>
         <button class="tab-item" onclick="switchTab('profile', this)">
             <span class="icon">👤</span>
-            Profil
+            <span>Profil</span>
         </button>
     </div>
 
@@ -964,7 +1030,7 @@
         }
 
         // ========================================================
-        // AUTH
+        // AUTHENTIFICATION FIREBASE
         // ========================================================
         auth.onAuthStateChanged(user => {
             if (user) {
@@ -1006,7 +1072,9 @@
         }
         
         function nextStep(step) {
-            if(step === 3 && (!document.getElementById('setup-age').value || !document.getElementById('setup-height').value)) return showToast('Complète les infos');
+            if(step === 3 && (!document.getElementById('setup-age').value || !document.getElementById('setup-height').value)) {
+                return showToast('Complète les infos');
+            }
             if(step === 3) { 
                 data.profile.age = parseInt(document.getElementById('setup-age').value); 
                 data.profile.height = parseInt(document.getElementById('setup-height').value); 
@@ -1018,13 +1086,18 @@
         }
         
         function completeSetup() {
-            if (!document.getElementById('setup-current-weight').value) return showToast('Poids requis');
+            if (!document.getElementById('setup-current-weight').value) {
+                return showToast('Poids requis');
+            }
             data.profile.weight = parseFloat(document.getElementById('setup-current-weight').value); 
             data.profile.target = parseFloat(document.getElementById('setup-target-weight').value);
+            
             calcGoals(); 
             data.setup = true; 
+            
             document.getElementById('setup').style.display = 'none'; 
             document.getElementById('app').style.display = 'block'; 
+            
             saveLocalData(); 
             render();
         }
@@ -1040,11 +1113,14 @@
             const goalMap = { 'lose': 0, 'maintain': 1, 'gain': 2 }; 
             const pills = document.querySelectorAll('#step1 .choice-pill'); 
             pills.forEach(p => p.classList.remove('selected')); 
-            if(pills[goalMap[data.profile.goal]]) pills[goalMap[data.profile.goal]].classList.add('selected');
+            if(pills[goalMap[data.profile.goal]]) {
+                pills[goalMap[data.profile.goal]].classList.add('selected');
+            }
             
             document.getElementById('cancel-setup-btn').style.display = 'block'; 
             document.getElementById('app').style.display = 'none'; 
             document.getElementById('setup').style.display = 'flex';
+            
             document.querySelectorAll('.wizard-step').forEach(s => s.classList.remove('active')); 
             document.getElementById('step1').classList.add('active');
         }
@@ -1066,6 +1142,7 @@
             const w = data.profile.weight;
             let bmr = (10 * w) + (6.25 * data.profile.height) - (5 * data.profile.age) + (data.profile.gender === 'male' ? 5 : -161);
             let tdee = bmr * data.profile.activity;
+            
             if(data.profile.goal === 'lose') tdee -= 400; 
             if(data.profile.goal === 'gain') tdee += 300;
             
@@ -1082,6 +1159,7 @@
         function addWaterllamaDrink() {
             const dTmp = drinksDb.find(d => d.id === selectedDrinkId); 
             const vol = document.getElementById('custom-volume-input').value ? parseInt(document.getElementById('custom-volume-input').value) : selectedVolumeValue;
+            
             if (!vol || vol <= 0) return showToast('Quantité invalide');
             
             const net = Math.round(vol * dTmp.factor);
@@ -1094,6 +1172,7 @@
                 netHydration: net, 
                 time: new Date().toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit'}) 
             });
+            
             recalcWaterTotal(); 
             saveLocalData(); 
             render(); 
@@ -1119,6 +1198,7 @@
             data.today.prot += f.prot; 
             data.today.carb += f.carb; 
             data.today.fat += f.fat;
+            
             saveLocalData(); 
             render(); 
             closeModal('meals-modal'); 
@@ -1132,6 +1212,7 @@
             data.today.carb -= f.carb; 
             data.today.fat -= f.fat;
             data.today.foods.splice(i, 1); 
+            
             saveLocalData(); 
             render();
         }
@@ -1157,11 +1238,15 @@
         }
         
         function logSleep() { 
-            const b = document.getElementById('sleep-bed').value, w = document.getElementById('sleep-wake').value; 
+            const b = document.getElementById('sleep-bed').value;
+            const w = document.getElementById('sleep-wake').value; 
+            
             if (!b || !w) return; 
+            
             const start = new Date(`2000-01-01T${b}`); 
             let end = new Date(`2000-01-01T${w}`); 
             if (end < start) end = new Date(`2000-01-02T${w}`); 
+            
             data.sleep.unshift({date: new Date().toLocaleDateString(), hrs: ((end - start) / 3600000).toFixed(1)}); 
             saveLocalData(); 
             render(); 
@@ -1170,15 +1255,17 @@
         }
 
         // ========================================================
-        // RENDER (Mise à jour UI)
+        // RENDER (AFFICHAGE DE L'INTERFACE)
         // ========================================================
         function render() {
             // ACCUEIL
             document.getElementById('cal-now').textContent = data.today.cal; 
             document.getElementById('cal-goal').textContent = data.goals.cal;
+            
             document.getElementById('prot-fill').style.width = (Math.min(100, (data.today.prot / data.goals.prot) * 100) || 0) + '%'; 
             document.getElementById('carb-fill').style.width = (Math.min(100, (data.today.carb / data.goals.carb) * 100) || 0) + '%'; 
             document.getElementById('fat-fill').style.width = (Math.min(100, (data.today.fat / data.goals.fat) * 100) || 0) + '%';
+            
             document.getElementById('prot-text').textContent = `${data.today.prot}/${data.goals.prot}g`; 
             document.getElementById('carb-text').textContent = `${data.today.carb}/${data.goals.carb}g`; 
             document.getElementById('fat-text').textContent = `${data.today.fat}/${data.goals.fat}g`;
@@ -1186,20 +1273,56 @@
             document.getElementById('water-now').textContent = data.today.waterMl; 
             document.getElementById('water-goal').textContent = data.goals.waterMl; 
             document.getElementById('water-wave').style.height = (Math.min(100, (data.today.waterMl / data.goals.waterMl) * 100) || 0) + '%';
+            
             document.getElementById('drink-log-mini-home').innerHTML = data.today.drinks.length ? data.today.drinks.slice(-5).map(d => `<div class="drink-log-item-mini">${d.icon}</div>`).join('') : '';
 
             // DONNEES (Journal détaillé)
-            document.getElementById('data-today-drinks').innerHTML = data.today.drinks.length ? data.today.drinks.map(d => `<div class="log-item"><div class="log-icon">${d.icon}</div><div class="log-details"><div class="log-name">${d.name}</div><div class="log-macros">${d.time}</div></div><div class="log-cal">${d.volume} ml</div><button class="delete-btn" onclick="deleteDrink(${d.id})">✕</button></div>`).reverse().join('') : `<div class="empty-state">Aucune boisson.</div>`;
-            document.getElementById('data-today-meals').innerHTML = data.today.foods.length ? data.today.foods.map((f, i) => `<div class="log-item"><div class="log-icon">${f.icon}</div><div class="log-details"><div class="log-name">${f.name}</div><div class="log-macros">P:${f.prot}g G:${f.carb}g L:${f.fat}g</div></div><div class="log-cal">${f.cal}</div><button class="delete-btn" onclick="deleteFood(${i})">✕</button></div>`).reverse().join('') : `<div class="empty-state">Aucun repas.</div>`;
-            document.getElementById('data-history-log').innerHTML = data.history.length ? data.history.map((h, i) => `<div class="log-item"><div class="log-details"><div class="log-name">${new Date(h.date).toLocaleDateString('fr-FR', {weekday:'short', day:'numeric', month:'short'})}</div><div class="log-macros">💧 ${h.waterMl}ml</div></div><div class="log-cal">${h.cal} kcal</div><button class="delete-btn" onclick="deleteHistoryEntry(${i})">✕</button></div>`).reverse().join('') : `<div class="empty-state">L'historique sera là demain.</div>`;
+            document.getElementById('data-today-drinks').innerHTML = data.today.drinks.length ? data.today.drinks.map(d => `
+                <div class="log-item">
+                    <div class="log-icon">${d.icon}</div>
+                    <div class="log-details">
+                        <div class="log-name">${d.name}</div>
+                        <div class="log-macros">${d.time}</div>
+                    </div>
+                    <div class="log-cal">${d.volume} ml</div>
+                    <button class="delete-btn" onclick="deleteDrink(${d.id})">✕</button>
+                </div>
+            `).reverse().join('') : `<div class="empty-state">Aucune boisson.</div>`;
+            
+            document.getElementById('data-today-meals').innerHTML = data.today.foods.length ? data.today.foods.map((f, i) => `
+                <div class="log-item">
+                    <div class="log-icon">${f.icon}</div>
+                    <div class="log-details">
+                        <div class="log-name">${f.name}</div>
+                        <div class="log-macros">P:${f.prot}g G:${f.carb}g L:${f.fat}g</div>
+                    </div>
+                    <div class="log-cal">${f.cal}</div>
+                    <button class="delete-btn" onclick="deleteFood(${i})">✕</button>
+                </div>
+            `).reverse().join('') : `<div class="empty-state">Aucun repas.</div>`;
+            
+            document.getElementById('data-history-log').innerHTML = data.history.length ? data.history.map((h, i) => `
+                <div class="log-item">
+                    <div class="log-details">
+                        <div class="log-name">${new Date(h.date).toLocaleDateString('fr-FR', {weekday:'short', day:'numeric', month:'short'})}</div>
+                        <div class="log-macros">💧 ${h.waterMl}ml</div>
+                    </div>
+                    <div class="log-cal">${h.cal} kcal</div>
+                    <button class="delete-btn" onclick="deleteHistoryEntry(${i})">✕</button>
+                </div>
+            `).reverse().join('') : `<div class="empty-state">L'historique sera là demain.</div>`;
 
             // PROFIL
             const gd = { 'lose': 'Perte de poids', 'maintain': 'Maintien', 'gain': 'Prise de muscle' };
-            document.getElementById('profile-summary').innerHTML = `<div class="profile-line"><span>Objectif</span><strong>${gd[data.profile.goal]}</strong></div><div class="profile-line"><span>Poids</span><strong>${data.profile.weight} kg -> ${data.profile.target} kg</strong></div><div class="profile-line"><span>Cible</span><strong>${data.goals.cal} kcal / ${data.goals.waterMl} ml</strong></div>`;
+            document.getElementById('profile-summary').innerHTML = `
+                <div class="profile-line"><span>Objectif</span><strong>${gd[data.profile.goal]}</strong></div>
+                <div class="profile-line"><span>Poids</span><strong>${data.profile.weight} kg -> ${data.profile.target} kg</strong></div>
+                <div class="profile-line"><span>Cible</span><strong>${data.goals.cal} kcal / ${data.goals.waterMl} ml</strong></div>
+            `;
         }
 
         // ========================================================
-        // UTILS ET SAUVEGARDE
+        // UTILS
         // ========================================================
         function switchTab(n, b) { 
             document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active')); 
@@ -1208,10 +1331,26 @@
             document.getElementById(n + '-tab').classList.add('active'); 
         }
         
-        function openModal(id) { document.getElementById(id).classList.add('active'); document.body.style.overflow = 'hidden'; }
-        function closeModal(id) { document.getElementById(id).classList.remove('active'); document.body.style.overflow = ''; }
-        function closeOnBackdrop(e, id) { if (e.target.id === id) closeModal(id); }
-        function showToast(m) { const t = document.getElementById('toast'); t.textContent = m; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2500); }
+        function openModal(id) { 
+            document.getElementById(id).classList.add('active'); 
+            document.body.style.overflow = 'hidden'; 
+        }
+        
+        function closeModal(id) { 
+            document.getElementById(id).classList.remove('active'); 
+            document.body.style.overflow = ''; 
+        }
+        
+        function closeOnBackdrop(e, id) { 
+            if (e.target.id === id) closeModal(id); 
+        }
+        
+        function showToast(m) { 
+            const t = document.getElementById('toast'); 
+            t.textContent = m; 
+            t.classList.add('show'); 
+            setTimeout(() => t.classList.remove('show'), 2500); 
+        }
 
         async function saveLocalData() { 
             localStorage.setItem('fit_' + (auth.currentUser ? auth.currentUser.uid : 'anonymous'), JSON.stringify(data)); 
