@@ -21,6 +21,7 @@
             --surface: #FFFFFF;
             --text-dark: #2D3436;
             --text-light: #A0AEC0;
+            --danger: #FF3B30;
             --shadow-soft: 0 10px 40px rgba(0, 0, 0, 0.05);
             --radius-lg: 28px;
             --radius-md: 20px;
@@ -263,6 +264,24 @@
             margin-bottom: 12px; 
         }
 
+        .action-btn-danger { 
+            width: 100%; 
+            padding: 18px; 
+            background: transparent; 
+            color: var(--danger); 
+            border: 2px solid rgba(255, 59, 48, 0.3); 
+            border-radius: 100px; 
+            font-size: 16px; 
+            font-weight: 800; 
+            cursor: pointer; 
+            margin-bottom: 12px; 
+            transition: 0.2s;
+        }
+
+        .action-btn-danger:active {
+            background: rgba(255, 59, 48, 0.1);
+        }
+
         .action-btn-water {
             width: 100%; 
             padding: 16px; 
@@ -327,12 +346,17 @@
         .delete-btn { 
             background: none; 
             border: none; 
-            color: #FF3B30; 
-            font-size: 24px; 
+            color: var(--text-light); 
+            font-size: 20px; 
             margin-left: 12px; 
             padding: 8px; 
             cursor: pointer; 
-            opacity: 0.5; 
+            transition: 0.2s;
+        }
+
+        .delete-btn:active {
+            color: var(--danger);
+            transform: scale(0.9);
         }
 
         /* --- MODALES & FORMS --- */
@@ -674,6 +698,8 @@
             <div class="choice-pill" onclick="selectGoal('gain', this)">💪 Prendre du muscle</div>
             
             <button class="action-btn-main" style="margin-top:24px;" onclick="nextStep(2)">Continuer</button>
+            
+            <button class="action-btn-outline" id="cancel-setup-btn" style="display: none; border: none; color: var(--text-light);" onclick="cancelSetup()">Annuler</button>
         </div>
 
         <div class="wizard-step" id="step2">
@@ -716,7 +742,7 @@
                 <label>Poids cible (kg)</label>
                 <input type="number" id="setup-target-weight" step="0.1">
             </div>
-            <button class="action-btn-main" onclick="completeSetup()">Calculer mon plan !</button>
+            <button class="action-btn-main" onclick="completeSetup()">Enregistrer le profil</button>
         </div>
     </div>
 
@@ -727,7 +753,7 @@
                     <div class="greeting">Bonjour <span id="user-display-name">!</span> 👋</div>
                     <h1>Aujourd'hui</h1>
                 </div>
-                <div class="streak-badge" onclick="logOut()">
+                <div class="streak-badge">
                     🔥 <span id="streak-count">0</span>
                 </div>
             </div>
@@ -804,17 +830,23 @@
 
                 <div class="section-title">
                     <span>Journal du jour</span>
-                    <span style="font-size:24px; cursor:pointer;" onclick="openModal('sleep-modal')">😴</span>
+                    <span style="font-size:24px; cursor:pointer;" onclick="openModal('sleep-modal')" title="Ajouter le sommeil">😴</span>
                 </div>
                 <div id="today-log"></div>
             </div>
 
             <div id="data-tab" class="tab-content">
-                <div class="section-title">Suivi</div>
-                <button class="action-btn-outline" onclick="openModal('sync-modal')">⚖️ Mettre à jour mon poids</button>
+                <div class="section-title">Paramètres & Profil</div>
+                <button class="action-btn-outline" onclick="editProfile()">⚙️ Modifier mon profil</button>
+                <button class="action-btn-danger" onclick="resetAllData()">🗑️ Effacer toutes mes données</button>
                 
-                <div class="section-title" style="margin-top: 32px;">Historique</div>
+                <div class="section-title" style="margin-top: 32px;">Historique des jours précédents</div>
                 <div id="history-log"></div>
+
+                <div style="height: 24px;"></div>
+                <button class="action-btn-outline" onclick="logOut()" style="border: none; color: var(--text-light);">
+                    Se déconnecter
+                </button>
             </div>
         </div>
     </div>
@@ -873,21 +905,9 @@
         </div>
     </div>
 
-    <div id="sync-modal" class="modal" onclick="closeOnBackdrop(event, 'sync-modal')">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Nouveau poids</h3>
-                <button class="close-btn" onclick="closeModal('sync-modal')">✕</button>
-            </div>
-            <label>Poids (kg)</label>
-            <input type="number" id="sync-weight" step="0.1">
-            <button class="action-btn-main" onclick="syncData()">Enregistrer</button>
-        </div>
-    </div>
-
     <div class="tab-bar">
         <button class="tab-item active" onclick="switchTab('home', this)">🏠 Aujourd'hui</button>
-        <button class="tab-item" onclick="switchTab('data', this)">📊 Historique</button>
+        <button class="tab-item" onclick="switchTab('data', this)">📊 Données & Paramètres</button>
     </div>
 
     <div class="toast" id="toast"></div>
@@ -943,7 +963,7 @@
             {name: 'Gâteau au Chocolat', icon: '🍰', cal: 350, prot: 5, carb: 40, fat: 20, cat: 'Desserts'}
         ];
 
-        // Catégories pour l'affichage
+        // Titres des catégories pour l'affichage
         const mealCategories = {
             'Matin': '☕ Petit-déjeuner',
             'Plats': '🍽️ Plats Traditionnels',
@@ -952,13 +972,13 @@
         };
 
         // ========================================================
-        // BASE DE DONNEES BOISSONS (Avec Chocolat Chaud)
+        // BASE DE DONNEES BOISSONS
         // ========================================================
         const drinksDb = [
             { id: 'water', name: 'Eau', icon: '💧', factor: 1.0 },
             { id: 'tea', name: 'Thé', icon: '🍵', factor: 1.0 },
             { id: 'coffee', name: 'Café', icon: '☕', factor: 0.8 },
-            { id: 'hot_choco', name: 'Chocolat', icon: '🍫', factor: 0.9 }, // NOUVEAU
+            { id: 'hot_choco', name: 'Chocolat', icon: '🍫', factor: 0.9 },
             { id: 'milk', name: 'Lait', icon: '🥛', factor: 1.0 },
             { id: 'juice', name: 'Jus', icon: '🧃', factor: 0.9 },
             { id: 'soda', name: 'Soda', icon: '🥤', factor: 0.8 },
@@ -966,10 +986,10 @@
         ];
 
         let selectedDrinkId = 'water';
-        let selectedVolumeValue = 250; // Tasse standard par défaut
+        let selectedVolumeValue = 250; // Tasse standard
 
         // ========================================================
-        // STRUCTURE DES DONNEES
+        // STRUCTURE DES DONNEES LOCALES
         // ========================================================
         let data = {
             setup: false,
@@ -1027,7 +1047,7 @@
                 const catMeals = mealsDb.filter(m => m.cat === cat);
                 
                 catMeals.forEach(m => {
-                    // Trouver l'index original dans mealsDb pour la fonction addFood
+                    // Trouver l'index original dans mealsDb
                     const originalIndex = mealsDb.indexOf(m);
                     html += `
                         <div class="choice-card" onclick="addFood(${originalIndex})">
@@ -1107,7 +1127,7 @@
         }
 
         // ========================================================
-        // LOGIQUE WIZARD / ONBOARDING
+        // LOGIQUE WIZARD & MODIFICATION PROFIL
         // ========================================================
         function selectGoal(goal, element) {
             data.profile.goal = goal;
@@ -1147,6 +1167,54 @@
             
             saveLocalData(); 
             render();
+            showToast('Profil enregistré ✅');
+        }
+
+        // --- NOUVEAU : Modifier le profil existant ---
+        function editProfile() {
+            // Remplir les champs avec les données actuelles
+            document.getElementById('setup-age').value = data.profile.age;
+            document.getElementById('setup-height').value = data.profile.height;
+            document.getElementById('setup-gender').value = data.profile.gender;
+            document.getElementById('setup-activity').value = data.profile.activity;
+            document.getElementById('setup-current-weight').value = data.profile.weight;
+            document.getElementById('setup-target-weight').value = data.profile.target;
+            
+            // Sélectionner la bonne pilule d'objectif
+            const goalMap = { 'lose': 0, 'maintain': 1, 'gain': 2 };
+            const pills = document.querySelectorAll('#step1 .choice-pill');
+            pills.forEach(p => p.classList.remove('selected'));
+            if (pills[goalMap[data.profile.goal]]) {
+                pills[goalMap[data.profile.goal]].classList.add('selected');
+            }
+
+            // Afficher le bouton annuler
+            document.getElementById('cancel-setup-btn').style.display = 'block';
+            
+            // Afficher le setup et cacher l'app
+            document.getElementById('app').style.display = 'none';
+            document.getElementById('setup').style.display = 'flex';
+            
+            // Revenir à l'étape 1
+            document.querySelectorAll('.wizard-step').forEach(s => s.classList.remove('active'));
+            document.getElementById('step1').classList.add('active');
+        }
+
+        function cancelSetup() {
+            document.getElementById('setup').style.display = 'none';
+            document.getElementById('app').style.display = 'block';
+            document.getElementById('cancel-setup-btn').style.display = 'none';
+        }
+
+        // --- NOUVEAU : Réinitialiser toutes les données ---
+        function resetAllData() {
+            if(confirm("⚠️ ATTENTION ! Cela va effacer tout ton historique, tes repas et tes paramètres. C'est irréversible. Veux-tu vraiment continuer ?")) {
+                const uid = auth.currentUser ? auth.currentUser.uid : 'anonymous';
+                localStorage.removeItem('fit_' + uid);
+                
+                // On recharge la page pour simuler un nouveau départ
+                location.reload(); 
+            }
         }
 
         // ========================================================
@@ -1175,7 +1243,7 @@
         }
 
         // ========================================================
-        // ACTIONS METIERS (Waterllama Logic)
+        // ACTIONS METIERS (Boissons, Repas, Historique)
         // ========================================================
         function addWaterllamaDrink() {
             const drinkTemplate = drinksDb.find(d => d.id === selectedDrinkId);
@@ -1224,9 +1292,6 @@
             data.today.waterMl = Math.max(0, total);
         }
 
-        // ========================================================
-        // ACTIONS METIERS (Food & Sleep)
-        // ========================================================
         function addFood(index) {
             const f = mealsDb[index];
             const time = new Date().toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit'});
@@ -1257,6 +1322,15 @@
             render();
         }
 
+        // --- NOUVEAU : Supprimer une ligne d'historique passé ---
+        function deleteHistoryEntry(index) {
+            if(confirm("Veux-tu vraiment supprimer cette journée de ton historique ?")) {
+                data.history.splice(index, 1);
+                saveLocalData();
+                render();
+            }
+        }
+
         function logSleep() {
             const bed = document.getElementById('sleep-bed').value;
             const wake = document.getElementById('sleep-wake').value;
@@ -1274,18 +1348,6 @@
             render(); 
             closeModal('sleep-modal'); 
             showToast('😴 Sommeil enregistré');
-        }
-
-        function syncData() {
-            const w = parseFloat(document.getElementById('sync-weight').value);
-            if (w) { 
-                data.profile.weight = w; 
-                calcGoals(); 
-            }
-            saveLocalData(); 
-            render(); 
-            closeModal('sync-modal'); 
-            showToast('✅ Poids mis à jour');
         }
 
         // ========================================================
@@ -1337,7 +1399,7 @@
                             <div class="log-macros">P:${f.prot}g • G:${f.carb}g • L:${f.fat}g</div>
                         </div>
                         <div class="log-cal">${f.cal} kcal</div>
-                        <button class="delete-btn" onclick="deleteFood(${i})">✕</button>
+                        <button class="delete-btn" onclick="deleteFood(${i})">🗑️</button>
                     </div>
                 `).join('');
             } else {
@@ -1350,13 +1412,15 @@
 
             // -- Historique sur l'onglet Données --
             if (data.history.length > 0) {
-                document.getElementById('history-log').innerHTML = data.history.map(h => `
-                    <div class="log-item" style="box-shadow: none; border: 1px solid #E2E8F0;">
-                        <div class="log-details">
+                // L'index passé dans deleteHistoryEntry doit correspondre à l'index d'origine du tableau.
+                document.getElementById('history-log').innerHTML = data.history.map((h, i) => `
+                    <div class="log-item" style="box-shadow: none; border: 1px solid #E2E8F0; display:flex; align-items:center;">
+                        <div class="log-details" style="flex-grow:1;">
                             <div class="log-name">${new Date(h.date).toLocaleDateString('fr-FR', {weekday:'long', day:'numeric', month:'short'})}</div>
                             <div class="log-macros">💧 ${h.waterMl}ml bus</div>
                         </div>
-                        <div class="log-cal">${h.cal} kcal</div>
+                        <div class="log-cal" style="margin-right: 12px;">${h.cal} kcal</div>
+                        <button class="delete-btn" style="margin:0; font-size:18px;" onclick="deleteHistoryEntry(${i})">🗑️</button>
                     </div>
                 `).reverse().join('');
             } else {
@@ -1447,9 +1511,11 @@
             if (data.setup) { 
                 document.getElementById('app').style.display = 'block'; 
                 document.getElementById('setup').style.display = 'none'; 
+                document.getElementById('cancel-setup-btn').style.display = 'none';
                 render(); 
             } else { 
                 document.getElementById('setup').style.display = 'flex'; 
+                document.getElementById('cancel-setup-btn').style.display = 'none';
             }
         }
     </script>
