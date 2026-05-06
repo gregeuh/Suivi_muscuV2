@@ -10,13 +10,11 @@
         @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
 
         :root {
-            /* Palette chaleureuse et moderne */
             --primary: #FF6B6B;
             --primary-grad: linear-gradient(135deg, #FF8E53, #FF6B6B);
-            --water: #48C774; /* Vert menthe frais au lieu d'un bleu froid */
+            --water: #48C774;
             --water-grad: linear-gradient(135deg, #20E2D7, #48C774);
-            --sleep: #8A2BE2;
-            --bg: #F7F9FC; /* Fond très légèrement bleuté/gris, plus doux que le blanc pur */
+            --bg: #F7F9FC;
             --surface: #FFFFFF;
             --text-dark: #2D3436;
             --text-light: #A0AEC0;
@@ -42,7 +40,7 @@
             overflow-x: hidden;
         }
 
-        /* --- HEADER ACCUEILLANT --- */
+        /* --- HEADER --- */
         header {
             padding: calc(24px + env(safe-area-inset-top)) 24px 16px;
             background: var(--bg);
@@ -81,6 +79,7 @@
             display: flex;
             align-items: center;
             gap: 6px;
+            cursor: pointer;
         }
 
         .container {
@@ -96,7 +95,6 @@
             padding: 24px;
             margin-bottom: 20px;
             box-shadow: var(--shadow-soft);
-            border: none;
         }
 
         .section-title {
@@ -106,7 +104,6 @@
             color: var(--text-dark);
         }
 
-        /* Grille Actions Rapides */
         .action-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -125,7 +122,7 @@
             gap: 8px;
             box-shadow: var(--shadow-soft);
             cursor: pointer;
-            transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.2s;
         }
 
         .action-btn:active {
@@ -149,7 +146,7 @@
             color: var(--text-light);
         }
 
-        /* Grosses cartes de stats */
+        /* --- STATS --- */
         .main-stats {
             display: grid;
             grid-template-columns: 1fr;
@@ -162,8 +159,6 @@
             border-radius: var(--radius-lg);
             padding: 20px;
             box-shadow: var(--shadow-soft);
-            position: relative;
-            overflow: hidden;
         }
 
         .stat-widget.primary {
@@ -184,9 +179,6 @@
             font-weight: 700;
         }
 
-        .widget-title { font-size: 15px; opacity: 0.9; }
-        .widget-icon { font-size: 20px; }
-        
         .widget-value {
             font-size: 32px;
             font-weight: 800;
@@ -204,8 +196,8 @@
             height: 8px;
             background: rgba(255, 255, 255, 0.3);
             border-radius: 4px;
-            overflow: hidden;
             margin-top: 16px;
+            overflow: hidden;
         }
 
         .progress-fill {
@@ -215,7 +207,7 @@
             transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* --- JOURNAL & LISTES --- */
+        /* --- JOURNAL --- */
         .log-item {
             display: flex;
             align-items: center;
@@ -229,16 +221,31 @@
             font-size: 24px;
             margin-right: 16px;
             background: white;
-            width: 44px; height: 44px;
-            display: flex; align-items: center; justify-content: center;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             border-radius: 14px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.03);
         }
 
-        .log-details { flex-grow: 1; }
-        .log-name { font-weight: 700; font-size: 16px; margin-bottom: 2px; }
-        .log-meta { font-size: 13px; color: var(--text-light); font-weight: 600; }
-        
+        .log-details {
+            flex-grow: 1;
+        }
+
+        .log-name {
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 2px;
+        }
+
+        .log-meta {
+            font-size: 13px;
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
         .log-cal {
             font-weight: 800;
             color: var(--primary);
@@ -266,9 +273,9 @@
             font-weight: 600;
             background: var(--bg);
             color: var(--text-dark);
-            transition: all 0.2s;
             margin-bottom: 16px;
             -webkit-appearance: none;
+            transition: all 0.2s;
         }
 
         input:focus, select:focus {
@@ -301,18 +308,40 @@
             transition: transform 0.2s;
         }
 
-        .btn-main:active { transform: translateY(2px); }
+        .btn-main:active {
+            transform: translateY(2px);
+        }
 
-        /* --- MODALES BOTTOM SHEET (ERGONOMIE) --- */
+        .btn-secondary {
+            width: 100%;
+            padding: 18px;
+            background: var(--surface);
+            color: var(--text-dark);
+            border: 2px solid var(--bg);
+            border-radius: 100px;
+            font-size: 16px;
+            font-weight: 800;
+            cursor: pointer;
+            margin-bottom: 12px;
+            transition: background 0.2s;
+        }
+
+        .btn-secondary:active {
+            background: var(--bg);
+        }
+
+        /* --- MODALES BOTTOM SHEET --- */
         .modal {
             display: flex;
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: rgba(30, 35, 45, 0.4);
             backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
             z-index: 1000;
-            align-items: flex-end; /* Colle le contenu en bas */
+            align-items: flex-end;
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.3s ease;
@@ -327,7 +356,7 @@
             background: var(--surface);
             width: 100%;
             max-height: 85vh;
-            border-radius: 32px 32px 0 0; /* Arrondi seulement en haut */
+            border-radius: 32px 32px 0 0;
             padding: 32px 24px calc(24px + env(safe-area-inset-bottom));
             transform: translateY(100%);
             transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -339,7 +368,8 @@
         }
 
         .modal-drag {
-            width: 40px; height: 5px;
+            width: 40px;
+            height: 5px;
             background: #E2E8F0;
             border-radius: 3px;
             margin: -10px auto 24px;
@@ -352,20 +382,25 @@
             margin-bottom: 24px;
         }
 
-        .modal-title { font-size: 22px; font-weight: 800; }
+        .modal-title {
+            font-size: 22px;
+            font-weight: 800;
+        }
+
         .close-btn {
             background: var(--bg);
             border: none;
-            width: 36px; height: 36px;
+            width: 36px;
+            height: 36px;
             border-radius: 18px;
             font-size: 20px;
             color: var(--text-light);
             cursor: pointer;
         }
 
-        /* Choix dans les modales */
         .choice-grid {
-            display: grid; gap: 12px;
+            display: grid;
+            gap: 12px;
         }
 
         .choice-card {
@@ -376,16 +411,18 @@
             align-items: center;
             gap: 16px;
             cursor: pointer;
-            transition: background 0.2s;
         }
 
-        .choice-card:active { background: #E2E8F0; }
+        .choice-card:active {
+            background: #E2E8F0;
+        }
         
         /* --- NAVIGATION FLOTTANTE --- */
         .tab-bar {
             position: fixed;
             bottom: calc(20px + env(safe-area-inset-bottom));
-            left: 24px; right: 24px;
+            left: 24px;
+            right: 24px;
             background: var(--surface);
             border-radius: 100px;
             padding: 8px;
@@ -407,7 +444,6 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            transition: all 0.3s ease;
         }
 
         .tab-item.active {
@@ -415,15 +451,21 @@
             color: var(--primary);
         }
 
-        .tab-content { display: none; }
-        .tab-content.active { display: block; animation: fadeUp 0.4s ease; }
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeUp 0.4s ease;
+        }
 
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- NOTIFICATION --- */
+        /* --- NOTIFICATION TOAST --- */
         .toast {
             position: fixed;
             top: 20px;
@@ -435,28 +477,38 @@
             border-radius: 100px;
             font-weight: 700;
             font-size: 14px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             z-index: 2000;
-            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-            display: flex; align-items: center; gap: 8px;
+            transition: transform 0.4s;
         }
 
-        .toast.show { transform: translateX(-50%) translateY(0); }
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
 
-        /* Setup / Bienvenue */
-        .setup-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg); z-index: 3000;
-            display: flex; flex-direction: column; justify-content: center;
+        /* --- ECRANS PLEIN ECRAN --- */
+        .fullscreen-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg);
+            z-index: 3000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
             padding: 24px;
+            overflow-y: auto;
         }
 
-        .setup-illustration {
-            font-size: 72px; text-align: center; margin-bottom: 24px;
+        .wizard-step {
+            display: none;
+            animation: fadeUp 0.4s ease;
         }
 
-        .wizard-step { display: none; animation: fadeUp 0.4s ease; }
-        .wizard-step.active { display: block; }
+        .wizard-step.active {
+            display: block;
+        }
 
         .empty-state {
             text-align: center;
@@ -464,14 +516,84 @@
             color: var(--text-light);
             font-weight: 600;
         }
-        .empty-emoji { font-size: 40px; margin-bottom: 12px; display: block; }
+
+        .empty-emoji {
+            font-size: 40px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        /* --- LOADER --- */
+        .loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--surface);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
     </style>
+
+    <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.1/firebase-auth-compat.js"></script>
 </head>
 <body>
 
-    <div id="setup" class="setup-screen" style="display: none;">
+    <div id="loader" class="loader-overlay">
+        <div class="spinner"></div>
+    </div>
+
+    <div id="auth-screen" class="fullscreen-screen" style="display: none;">
+        <div style="text-align: center; margin-bottom: 40px;">
+            <div style="font-size: 64px; margin-bottom: 16px;">🔥</div>
+            <h1 style="font-size: 32px;">FitTrack</h1>
+            <p style="color: var(--text-light); font-weight: 600;">Tes données, partout avec toi.</p>
+        </div>
+
+        <button class="btn-secondary" onclick="signInGoogle()" style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 32px;">
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20" alt="Google">
+            Continuer avec Google
+        </button>
+
+        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px;">
+            <div style="flex: 1; height: 2px; background: #E2E8F0; border-radius: 2px;"></div>
+            <span style="color: var(--text-light); font-weight: 700; font-size: 14px;">OU</span>
+            <div style="flex: 1; height: 2px; background: #E2E8F0; border-radius: 2px;"></div>
+        </div>
+
+        <div class="card" style="padding: 20px;">
+            <label>Email</label>
+            <input type="email" id="auth-email" placeholder="ton@email.com">
+            <label>Mot de passe</label>
+            <input type="password" id="auth-pass" placeholder="••••••••">
+            
+            <div style="display: flex; gap: 12px; margin-top: 8px;">
+                <button class="btn-main" onclick="signInEmail()" style="padding: 14px;">Connexion</button>
+                <button class="btn-secondary" onclick="signUpEmail()" style="margin-bottom: 0; padding: 14px;">Inscription</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="setup" class="fullscreen-screen" style="display: none;">
         <div class="wizard-step active" id="step1">
-            <div class="setup-illustration">👋</div>
+            <div style="font-size: 72px; text-align: center; margin-bottom: 24px;">👋</div>
             <h1 style="text-align: center; margin-bottom: 8px;">Bienvenue</h1>
             <p style="text-align: center; color: var(--text-light); font-weight: 600; margin-bottom: 32px;">Personnalisons ton expérience.</p>
             
@@ -490,16 +612,13 @@
         </div>
 
         <div class="wizard-step" id="step2">
-            <div class="setup-illustration">🎯</div>
+            <div style="font-size: 72px; text-align: center; margin-bottom: 24px;">🎯</div>
             <h1 style="text-align: center; margin-bottom: 32px;">Ton Objectif</h1>
-            
             <div class="card">
                 <label>Poids actuel (kg)</label>
                 <input type="number" id="setup-current-weight" step="0.1">
-                
                 <label>Poids cible (kg)</label>
                 <input type="number" id="setup-target-weight" step="0.1">
-                
                 <label>Rythme</label>
                 <select id="setup-pace">
                     <option value="slow">Tranquille</option>
@@ -512,23 +631,20 @@
     </div>
 
     <div id="app" style="display: none;">
-        
         <header>
             <div class="header-top">
                 <div>
-                    <div class="greeting">Bonjour ! 👋</div>
+                    <div class="greeting">Bonjour <span id="user-display-name">!</span> 👋</div>
                     <h1>Aujourd'hui</h1>
                 </div>
-                <div class="streak-badge">
+                <div class="streak-badge" onclick="logOut()" title="Se déconnecter">
                     🔥 <span id="streak-count">0</span>
                 </div>
             </div>
         </header>
 
         <div class="container">
-            
             <div id="home-tab" class="tab-content active">
-                
                 <div class="action-grid">
                     <button class="action-btn" onclick="openModal('meals-modal')">
                         <div class="action-icon">🍽️</div>
@@ -551,8 +667,8 @@
                 <div class="main-stats">
                     <div class="stat-widget primary">
                         <div class="widget-header">
-                            <span class="widget-title">Calories</span>
-                            <span class="widget-icon">⚡</span>
+                            <span>Calories</span>
+                            <span>⚡</span>
                         </div>
                         <div class="widget-value" id="cal-now">0</div>
                         <div class="widget-sub">sur <span id="cal-goal">0</span> kcal</div>
@@ -560,11 +676,11 @@
                             <div class="progress-fill" id="cal-fill" style="width: 0%"></div>
                         </div>
                     </div>
-
+                    
                     <div class="stat-widget water">
                         <div class="widget-header">
-                            <span class="widget-title">Hydratation</span>
-                            <span class="widget-icon">💧</span>
+                            <span>Hydratation</span>
+                            <span>💧</span>
                         </div>
                         <div class="widget-value"><span id="water-now">0</span> ml</div>
                         <div class="widget-sub">sur <span id="water-goal">2000</span> ml</div>
@@ -575,8 +691,7 @@
                 </div>
 
                 <div class="section-title">Journal des repas</div>
-                <div id="today-log">
-                    </div>
+                <div id="today-log"></div>
             </div>
 
             <div id="data-tab" class="tab-content">
@@ -591,12 +706,14 @@
                         <strong style="font-size:18px" id="stats-sleep">-</strong>
                     </div>
                 </div>
-
+                
                 <div class="section-title" style="margin-top:32px;">Historique</div>
-                <div id="history-log">
-                    </div>
+                <div id="history-log"></div>
+                
+                <button class="btn-secondary" onclick="logOut()" style="margin-top: 32px; color: #FF3B30; border-color: rgba(255, 59, 48, 0.2);">
+                    Déconnexion
+                </button>
             </div>
-
         </div>
     </div>
 
@@ -615,13 +732,13 @@
         <div class="modal-content">
             <div class="modal-drag"></div>
             <div class="modal-header">
-                <h3 class="modal-title">Choisir le contenant</h3>
+                <h3 class="modal-title">Contenant</h3>
                 <button class="close-btn" onclick="closeModal('water-modal')">✕</button>
             </div>
             <div class="choice-grid" id="water-containers"></div>
         </div>
     </div>
-    
+
     <div id="sleep-modal" class="modal" onclick="closeOnBackdrop(event, 'sleep-modal')">
         <div class="modal-content">
             <div class="modal-drag"></div>
@@ -662,19 +779,38 @@
     <div class="toast" id="toast"></div>
 
     <script>
-        // --- DONNEES ---
+        // ==========================================
+        // CONFIGURATION FIREBASE
+        // ==========================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyDaIqBkYViw1Vad553tkT6r7-o_qVW_GYU",
+            authDomain: "suivi-sante-94f4e.firebaseapp.com",
+            projectId: "suivi-sante-94f4e",
+            storageBucket: "suivi-sante-94f4e.firebasestorage.app",
+            messagingSenderId: "821267258521",
+            appId: "1:821267258521:web:45d446eef12b4803cb6c08",
+            measurementId: "G-FGH0JV2DJH"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const googleProvider = new firebase.auth.GoogleAuthProvider();
+
+        // ==========================================
+        // DONNEES LOCALES PAR DEFAUT
+        // ==========================================
         const meals = [
-            {name: 'Petit-déjeuner', icon: '🥐', cal: 350},
+            {name: 'Petit-déjeuner', icon: '🥐', cal: 350}, 
             {name: 'Déjeuner', icon: '🥗', cal: 600},
-            {name: 'Dîner', icon: '🍽️', cal: 550},
-            {name: 'En-cas', icon: '🍎', cal: 150},
+            {name: 'Dîner', icon: '🍽️', cal: 550}, 
+            {name: 'En-cas', icon: '🍎', cal: 150}, 
             {name: 'Shaker', icon: '🥤', cal: 120}
         ];
-
+        
         const waterContainers = [
-            {name: 'Verre', icon: '🥛', ml: 250},
+            {name: 'Verre', icon: '🥛', ml: 250}, 
             {name: 'Petite gourde', icon: '🧃', ml: 500},
-            {name: 'Grande gourde', icon: '💧', ml: 750},
+            {name: 'Grande gourde', icon: '💧', ml: 750}, 
             {name: 'Bouteille', icon: '🍾', ml: 1000}
         ];
 
@@ -684,151 +820,215 @@
             goals: {cal: 2000, waterMl: 2000},
             history: [], 
             today: {date: new Date().toDateString(), foods: [], waterMl: 0, cal: 0},
-            waterContainer: {name: 'Verre', icon: '🥛', ml: 250},
-            sleep: [],
+            waterContainer: {name: 'Verre', icon: '🥛', ml: 250}, 
+            sleep: [], 
             streak: 0
         };
 
-        // --- LOGIQUE ---
+        // ==========================================
+        // GESTION DE L'AUTHENTIFICATION FIREBASE
+        // ==========================================
+        auth.onAuthStateChanged(user => {
+            document.getElementById('loader').style.display = 'none';
+            if (user) {
+                // Connecté
+                document.getElementById('auth-screen').style.display = 'none';
+                
+                // Formater le prénom
+                let displayName = user.email.split('@')[0];
+                if (user.displayName) {
+                    displayName = user.displayName.split(' ')[0];
+                }
+                document.getElementById('user-display-name').textContent = displayName + " !";
+                
+                // Charger les données sauvegardées de cet utilisateur
+                loadLocalData();
+            } else {
+                // Déconnecté
+                document.getElementById('auth-screen').style.display = 'flex';
+                document.getElementById('app').style.display = 'none';
+                document.getElementById('setup').style.display = 'none';
+            }
+        });
+
+        function signInGoogle() {
+            auth.signInWithPopup(googleProvider).catch(err => showToast(err.message));
+        }
+
+        function signInEmail() {
+            const email = document.getElementById('auth-email').value;
+            const pass = document.getElementById('auth-pass').value;
+            if(!email || !pass) return showToast("Remplis tous les champs");
+            auth.signInWithEmailAndPassword(email, pass).catch(err => showToast(err.message));
+        }
+
+        function signUpEmail() {
+            const email = document.getElementById('auth-email').value;
+            const pass = document.getElementById('auth-pass').value;
+            if(!email || !pass) return showToast("Remplis tous les champs");
+            auth.createUserWithEmailAndPassword(email, pass).catch(err => showToast(err.message));
+        }
+
+        function logOut() {
+            auth.signOut();
+        }
+
+        // ==========================================
+        // LOGIQUE METIER & CALCULS
+        // ==========================================
         function calcGoals() {
             const w = data.profile.weight;
-            // BMR basique
-            const bmr = data.profile.gender === 'male' ? (10 * w) + (6.25 * data.profile.height) - (5 * data.profile.age) + 5 : (10 * w) + (6.25 * data.profile.height) - (5 * data.profile.age) - 161;
-            const tdee = bmr * 1.375; // light activity default
+            const bmr = data.profile.gender === 'male' ? 
+                (10 * w) + (6.25 * data.profile.height) - (5 * data.profile.age) + 5 : 
+                (10 * w) + (6.25 * data.profile.height) - (5 * data.profile.age) - 161;
+                
             const def = {slow: 250, moderate: 500, fast: 750};
-            
-            data.goals.cal = Math.round(tdee - def[data.profile.pace]);
+            data.goals.cal = Math.round((bmr * 1.375) - def[data.profile.pace]);
             data.goals.waterMl = Math.round(w * 30);
         }
 
-        // --- ACTIONS ---
         function addWater(btn) {
             data.today.waterMl += data.waterContainer.ml;
-            save();
+            saveLocalData(); 
             render();
-            if(btn) {
-                btn.style.transform = 'scale(0.85)';
-                setTimeout(() => btn.style.transform = 'scale(1)', 150);
+            
+            // Animation du bouton
+            if(btn) { 
+                btn.style.transform = 'scale(0.85)'; 
+                setTimeout(() => btn.style.transform = 'scale(1)', 150); 
             }
             showToast(`💧 +${data.waterContainer.ml}ml ajoutés`);
         }
 
         function selectContainer(container) {
-            data.waterContainer = container;
-            save();
-            render();
+            data.waterContainer = container; 
+            saveLocalData(); 
+            render(); 
             closeModal('water-modal');
             showToast(`Contenant par défaut : ${container.name}`);
         }
 
         function addFood(name, cal, icon) {
-            data.today.foods.push({name, cal, icon, time: new Date().toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit'})});
-            data.today.cal += cal;
-            save();
-            render();
-            closeModal('meals-modal');
+            const time = new Date().toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit'});
+            data.today.foods.push({name, cal, icon, time});
+            data.today.cal += cal; 
+            
+            saveLocalData(); 
+            render(); 
+            closeModal('meals-modal'); 
             showToast(`😋 ${name} ajouté`);
         }
 
         function deleteFood(i) {
-            data.today.cal -= data.today.foods[i].cal;
-            data.today.foods.splice(i, 1);
-            save();
+            data.today.cal -= data.today.foods[i].cal; 
+            data.today.foods.splice(i, 1); 
+            saveLocalData(); 
             render();
         }
 
         function logSleep() {
-            const bed = $('sleep-bed').value;
-            const wake = $('sleep-wake').value;
+            const bed = document.getElementById('sleep-bed').value;
+            const wake = document.getElementById('sleep-wake').value;
+            
             if (!bed || !wake) return showToast('Heures manquantes');
             
-            const b = new Date(`2000-01-01T${bed}`);
+            const b = new Date(`2000-01-01T${bed}`); 
             let w = new Date(`2000-01-01T${wake}`);
-            if (w < b) w = new Date(`2000-01-02T${wake}`);
+            if (w < b) w = new Date(`2000-01-02T${wake}`); // Gérer la nuit
             
             const hrs = ((w - b) / 3600000).toFixed(1);
             data.sleep.unshift({date: new Date().toLocaleDateString(), hrs});
-            save();
-            render();
-            closeModal('sleep-modal');
+            
+            saveLocalData(); 
+            render(); 
+            closeModal('sleep-modal'); 
             showToast('😴 Sommeil enregistré');
         }
 
         function syncData() {
-            const w = parseFloat($('sync-weight').value);
-            if (w) {
-                data.profile.weight = w;
-                calcGoals(); // Recalculer les obj.
+            const w = parseFloat(document.getElementById('sync-weight').value);
+            if (w) { 
+                data.profile.weight = w; 
+                calcGoals(); 
             }
-            save();
-            render();
-            closeModal('sync-modal');
+            saveLocalData(); 
+            render(); 
+            closeModal('sync-modal'); 
             showToast('✅ Poids mis à jour');
         }
 
-        // --- SETUP ---
+        // ==========================================
+        // WIZARD D'INSTALLATION
+        // ==========================================
         function nextStep() {
-            data.profile.age = parseInt($('setup-age').value);
-            data.profile.height = parseInt($('setup-height').value);
-            data.profile.gender = $('setup-gender').value;
+            data.profile.age = parseInt(document.getElementById('setup-age').value);
+            data.profile.height = parseInt(document.getElementById('setup-height').value);
+            data.profile.gender = document.getElementById('setup-gender').value;
             
             if (!data.profile.age || !data.profile.height) return showToast('Complète les infos');
             
-            $('step1').classList.remove('active');
-            $('step2').classList.add('active');
+            document.getElementById('step1').classList.remove('active'); 
+            document.getElementById('step2').classList.add('active');
         }
 
         function completeSetup() {
-            data.profile.weight = parseFloat($('setup-current-weight').value);
-            data.profile.target = parseFloat($('setup-target-weight').value);
-            data.profile.pace = $('setup-pace').value;
+            data.profile.weight = parseFloat(document.getElementById('setup-current-weight').value);
+            data.profile.target = parseFloat(document.getElementById('setup-target-weight').value);
+            data.profile.pace = document.getElementById('setup-pace').value;
             
             if (!data.profile.weight) return showToast('Poids requis');
             
-            calcGoals();
+            calcGoals(); 
             data.setup = true;
             
-            $('setup').style.display = 'none';
-            $('app').style.display = 'block';
-            save();
+            document.getElementById('setup').style.display = 'none'; 
+            document.getElementById('app').style.display = 'block';
+            saveLocalData(); 
             render();
         }
 
-        // --- UI RENDERING ---
+        // ==========================================
+        // AFFICHAGE (RENDU)
+        // ==========================================
         function render() {
-            // Stats
-            $('cal-now').textContent = data.today.cal;
-            $('cal-goal').textContent = data.goals.cal;
-            $('cal-fill').style.width = Math.min(100, (data.today.cal / data.goals.cal) * 100) + '%';
+            // Mise à jour des barres et compteurs
+            document.getElementById('cal-now').textContent = data.today.cal; 
+            document.getElementById('cal-goal').textContent = data.goals.cal;
+            document.getElementById('cal-fill').style.width = Math.min(100, (data.today.cal / data.goals.cal) * 100) + '%';
             
-            $('water-now').textContent = data.today.waterMl;
-            $('water-goal').textContent = data.goals.waterMl;
-            $('water-fill').style.width = Math.min(100, (data.today.waterMl / data.goals.waterMl) * 100) + '%';
+            document.getElementById('water-now').textContent = data.today.waterMl; 
+            document.getElementById('water-goal').textContent = data.goals.waterMl;
+            document.getElementById('water-fill').style.width = Math.min(100, (data.today.waterMl / data.goals.waterMl) * 100) + '%';
             
-            $('streak-count').textContent = data.streak;
-            $('water-container-label').textContent = data.waterContainer.name;
+            document.getElementById('streak-count').textContent = data.streak; 
+            document.getElementById('water-container-label').textContent = data.waterContainer.name;
+            
+            document.getElementById('stats-weight').textContent = data.profile.weight + ' kg';
+            document.getElementById('stats-sleep').textContent = data.sleep[0] ? data.sleep[0].hrs + 'h' : 'Aucun';
 
-            // Stats tab
-            $('stats-weight').textContent = data.profile.weight + ' kg';
-            $('stats-sleep').textContent = data.sleep[0] ? data.sleep[0].hrs + 'h' : 'Aucun';
-
-            // Lists
-            $('meals-list').innerHTML = meals.map(m => `
+            // Génération des listes dans les modales
+            document.getElementById('meals-list').innerHTML = meals.map(m => `
                 <div class="choice-card" onclick="addFood('${m.name}', ${m.cal}, '${m.icon}')">
                     <div style="font-size:32px">${m.icon}</div>
-                    <div><div style="font-weight:700">${m.name}</div><div style="color:var(--text-light); font-size:14px">${m.cal} kcal</div></div>
-                </div>
-            `).join('');
-            
-            $('water-containers').innerHTML = waterContainers.map(c => `
-                <div class="choice-card" onclick='selectContainer(${JSON.stringify(c)})'>
-                    <div style="font-size:32px">${c.icon}</div>
-                    <div><div style="font-weight:700">${c.name}</div><div style="color:var(--text-light); font-size:14px">${c.ml} ml</div></div>
+                    <div>
+                        <div style="font-weight:700">${m.name}</div>
+                        <div style="color:var(--text-light); font-size:14px">${m.cal} kcal</div>
+                    </div>
                 </div>
             `).join('');
 
-            // Journal
-            $('today-log').innerHTML = data.today.foods.length ? data.today.foods.map((f, i) => `
+            document.getElementById('water-containers').innerHTML = waterContainers.map(c => `
+                <div class="choice-card" onclick='selectContainer(${JSON.stringify(c)})'>
+                    <div style="font-size:32px">${c.icon}</div>
+                    <div>
+                        <div style="font-weight:700">${c.name}</div>
+                        <div style="color:var(--text-light); font-size:14px">${c.ml} ml</div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Génération du journal
+            document.getElementById('today-log').innerHTML = data.today.foods.length ? data.today.foods.map((f, i) => `
                 <div class="log-item">
                     <div class="log-icon">${f.icon || '🍽️'}</div>
                     <div class="log-details">
@@ -841,94 +1041,110 @@
             `).join('') : `
                 <div class="empty-state">
                     <span class="empty-emoji">🍽️</span>
-                    Aucun repas pour le moment.<br>Il est temps de manger !
+                    Aucun repas pour le moment.
                 </div>
             `;
 
-            $('history-log').innerHTML = data.history.length ? data.history.map(h => `
+            // Génération de l'historique
+            document.getElementById('history-log').innerHTML = data.history.length ? data.history.map(h => `
                 <div class="log-item" style="background:var(--surface); box-shadow:var(--shadow-soft);">
                     <div class="log-details">
                         <div class="log-name">${new Date(h.date).toLocaleDateString('fr-FR', {weekday:'long', day:'numeric', month:'short'})}</div>
                         <div class="log-meta">💧 ${h.waterMl} ml bus</div>
                     </div>
-                    <div class="log-cal" style="color: ${h.cal > data.goals.cal ? '#FF9500' : 'var(--primary)'}">${h.cal}</div>
+                    <div class="log-cal" style="color: ${h.cal > data.goals.cal ? '#FF9500' : 'var(--primary)'}">${h.cal} kcal</div>
                 </div>
             `).reverse().join('') : `
                 <div class="empty-state" style="background:var(--surface); border-radius:20px;">
                     <span class="empty-emoji">📅</span>
-                    Ton historique apparaîtra ici demain.
+                    Ton historique apparaîtra demain.
                 </div>
             `;
         }
 
-        // --- UTILITAIRES ---
-        function switchTab(name, btn) {
-            document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            btn.classList.add('active');
-            $(`${name}-tab`).classList.add('active');
+        // ==========================================
+        // UTILITAIRES DE NAVIGATION
+        // ==========================================
+        function switchTab(tabName, btnElement) { 
+            document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active')); 
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active')); 
+            
+            btnElement.classList.add('active'); 
+            document.getElementById(tabName + '-tab').classList.add('active'); 
         }
-
+        
         function openModal(id) { 
-            $(id).classList.add('active'); 
-            document.body.style.overflow = 'hidden'; 
+            document.getElementById(id).classList.add('active'); 
+            document.body.style.overflow = 'hidden';
         }
         
         function closeModal(id) { 
-            $(id).classList.remove('active'); 
-            document.body.style.overflow = ''; 
+            document.getElementById(id).classList.remove('active'); 
+            document.body.style.overflow = '';
+        }
+        
+        function closeOnBackdrop(event, id) { 
+            if (event.target.id === id) closeModal(id); 
+        }
+        
+        function showToast(message) { 
+            const t = document.getElementById('toast'); 
+            t.textContent = message; 
+            t.classList.add('show'); 
+            setTimeout(() => t.classList.remove('show'), 2500); 
         }
 
-        function closeOnBackdrop(e, id) {
-            if (e.target.id === id) closeModal(id);
-        }
-
-        function showToast(msg) {
-            const t = $('toast');
-            t.textContent = msg;
-            t.classList.add('show');
-            setTimeout(() => t.classList.remove('show'), 2500);
-        }
-
-        // --- SYSTEME DE SAUVEGARDE ---
-        async function save() {
-            try { await window.storage.set('fit', JSON.stringify(data)); } catch (e) {}
-        }
-
-        async function load() {
-            try {
-                const s = await window.storage.get('fit');
-                if (s?.value) {
-                    const savedData = JSON.parse(s.value);
-                    // Fusion pour ne pas perdre les nouvelles variables si l'utilisateur met à jour
-                    data = { ...data, ...savedData }; 
-                    if (!data.history) data.history = [];
-                    
-                    const currentDate = new Date().toDateString();
-                    if (data.today.date !== currentDate) {
-                        if (data.today.cal > 0 || data.today.waterMl > 0) {
-                            data.history.push({...data.today});
-                            if (data.history.length > 30) data.history.shift();
-                        }
-                        data.today = {date: currentDate, foods: [], waterMl: 0, cal: 0};
-                        save();
-                    }
-                }
-                
-                if (data.setup) {
-                    $('app').style.display = 'block';
-                    render();
-                } else {
-                    $('setup').style.display = 'flex';
-                }
-            } catch (e) {
-                // En cas d'erreur de lecture, on affiche le setup
-                $('setup').style.display = 'flex';
+        // ==========================================
+        // GESTION DU STOCKAGE DE DONNEES
+        // ==========================================
+        async function saveLocalData() {
+            // On associe les données à l'ID utilisateur
+            const uid = auth.currentUser ? auth.currentUser.uid : 'anonymous';
+            try { 
+                await window.storage.set('fit_' + uid, JSON.stringify(data)); 
+            } catch (e) { 
+                localStorage.setItem('fit_' + uid, JSON.stringify(data)); 
             }
         }
 
-        const $ = id => document.getElementById(id);
-        load();
+        async function loadLocalData() {
+            const uid = auth.currentUser ? auth.currentUser.uid : 'anonymous';
+            let storageObj = null;
+            
+            try { 
+                storageObj = await window.storage.get('fit_' + uid); 
+            } catch (e) {
+                // Fallback si l'API storage plante
+            }
+            
+            const rawData = storageObj?.value || localStorage.getItem('fit_' + uid);
+            
+            if (rawData) {
+                const savedData = JSON.parse(rawData);
+                data = { ...data, ...savedData }; 
+                if (!data.history) data.history = [];
+                
+                // GESTION DU CHANGEMENT DE JOUR
+                const currentDate = new Date().toDateString();
+                if (data.today.date !== currentDate) {
+                    if (data.today.cal > 0 || data.today.waterMl > 0) {
+                        data.history.push({...data.today});
+                        if (data.history.length > 30) data.history.shift(); // On garde 30 jours max
+                    }
+                    data.today = {date: currentDate, foods: [], waterMl: 0, cal: 0};
+                    saveLocalData();
+                }
+            }
+            
+            // REDIRECTION SELON L'ETAT
+            if (data.setup) { 
+                document.getElementById('app').style.display = 'block'; 
+                document.getElementById('setup').style.display = 'none'; 
+                render(); 
+            } else { 
+                document.getElementById('setup').style.display = 'flex'; 
+            }
+        }
     </script>
 </body>
 </html>
