@@ -5,549 +5,490 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <title>FitTrack</title>
+    <title>FitTrack Pro</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
 
         :root {
             --primary: #FF6B6B;
             --primary-grad: linear-gradient(135deg, #FF8E53, #FF6B6B);
-            --water: #48C774;
-            --water-grad: linear-gradient(135deg, #20E2D7, #48C774);
-            --bg: #F7F9FC;
+            --water: #00C6FF;
+            --water-grad: linear-gradient(135deg, #0072FF, #00C6FF);
+            --prot: #FF4757;
+            --carb: #1E90FF;
+            --fat: #FFA502;
+            --bg: #F4F7FB;
             --surface: #FFFFFF;
             --text-dark: #2D3436;
             --text-light: #A0AEC0;
             --shadow-soft: 0 10px 40px rgba(0, 0, 0, 0.05);
-            --shadow-floating: 0 14px 28px rgba(255, 107, 107, 0.2);
             --radius-lg: 28px;
             --radius-md: 20px;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-            font-family: 'Nunito', -apple-system, sans-serif;
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            -webkit-tap-highlight-color: transparent; 
+            font-family: 'Nunito', sans-serif; 
         }
 
-        body {
-            background: var(--bg);
-            color: var(--text-dark);
-            line-height: 1.5;
-            padding-bottom: calc(100px + env(safe-area-inset-bottom));
-            overflow-x: hidden;
+        body { 
+            background: var(--bg); 
+            color: var(--text-dark); 
+            line-height: 1.5; 
+            padding-bottom: 120px; 
+            overflow-x: hidden; 
         }
 
         /* --- HEADER --- */
-        header {
-            padding: calc(24px + env(safe-area-inset-top)) 24px 16px;
-            background: var(--bg);
-            position: sticky;
-            top: 0;
-            z-index: 90;
+        header { 
+            padding: calc(24px + env(safe-area-inset-top)) 24px 16px; 
+            position: sticky; 
+            top: 0; 
+            z-index: 90; 
+            background: var(--bg); 
         }
 
-        .greeting {
-            font-size: 16px;
-            color: var(--text-light);
-            font-weight: 600;
-            margin-bottom: 4px;
+        .greeting { 
+            font-size: 16px; 
+            color: var(--text-light); 
+            font-weight: 600; 
         }
 
-        h1 {
-            font-size: 28px;
-            font-weight: 800;
-            color: var(--text-dark);
+        h1 { 
+            font-size: 28px; 
+            font-weight: 800; 
         }
 
-        .header-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
+        .header-top { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: flex-end; 
         }
 
-        .streak-badge {
-            background: white;
-            padding: 8px 16px;
-            border-radius: 100px;
-            font-weight: 700;
-            font-size: 14px;
-            color: #FF9500;
-            box-shadow: var(--shadow-soft);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            cursor: pointer;
+        .streak-badge { 
+            background: white; 
+            padding: 8px 16px; 
+            border-radius: 100px; 
+            font-weight: 700; 
+            font-size: 14px; 
+            color: #FF9500; 
+            box-shadow: var(--shadow-soft); 
+            cursor: pointer; 
         }
 
-        .container {
-            padding: 0 24px;
-            max-width: 600px;
-            margin: 0 auto;
+        .container { 
+            padding: 0 24px; 
+            max-width: 600px; 
+            margin: 0 auto; 
         }
 
-        /* --- CARTES & WIDGETS --- */
-        .card {
-            background: var(--surface);
-            border-radius: var(--radius-lg);
-            padding: 24px;
-            margin-bottom: 20px;
-            box-shadow: var(--shadow-soft);
+        .section-title { 
+            font-size: 18px; 
+            font-weight: 800; 
+            margin: 24px 0 16px; 
         }
 
-        .section-title {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            color: var(--text-dark);
+        .card { 
+            background: var(--surface); 
+            border-radius: var(--radius-lg); 
+            padding: 24px; 
+            margin-bottom: 20px; 
+            box-shadow: var(--shadow-soft); 
         }
 
-        .action-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            margin-bottom: 24px;
+        /* --- WIDGET MACROS (Style Foodvisor) --- */
+        .macro-dashboard { 
+            background: white; 
+            border-radius: var(--radius-lg); 
+            padding: 24px; 
+            box-shadow: var(--shadow-soft); 
+            margin-bottom: 20px; 
         }
 
-        .action-btn {
-            background: var(--surface);
-            border: none;
-            border-radius: var(--radius-md);
-            padding: 16px 8px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            box-shadow: var(--shadow-soft);
-            cursor: pointer;
-            transition: transform 0.2s;
+        .cal-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: flex-end; 
+            margin-bottom: 16px; 
         }
 
-        .action-btn:active {
-            transform: scale(0.92);
+        .cal-title { 
+            font-size: 14px; 
+            color: var(--text-light); 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
         }
 
-        .action-icon {
-            font-size: 28px;
-            height: 48px;
-            width: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--bg);
-            border-radius: 16px;
+        .cal-value { 
+            font-size: 36px; 
+            font-weight: 900; 
+            line-height: 1; 
+            color: var(--primary); 
+        }
+        
+        .macro-row { 
+            display: flex; 
+            gap: 12px; 
+            margin-top: 20px; 
         }
 
-        .action-label {
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--text-light);
+        .macro-col { 
+            flex: 1; 
         }
 
-        /* --- STATS --- */
-        .main-stats {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 16px;
-            margin-bottom: 24px;
+        .macro-label { 
+            font-size: 12px; 
+            font-weight: 700; 
+            color: var(--text-light); 
+            margin-bottom: 4px; 
+            display: flex; 
+            justify-content: space-between; 
         }
 
-        .stat-widget {
-            background: var(--surface);
-            border-radius: var(--radius-lg);
-            padding: 20px;
-            box-shadow: var(--shadow-soft);
+        .macro-track { 
+            height: 8px; 
+            background: var(--bg); 
+            border-radius: 4px; 
+            overflow: hidden; 
         }
 
-        .stat-widget.primary {
-            background: var(--primary-grad);
-            color: white;
+        .macro-fill { 
+            height: 100%; 
+            border-radius: 4px; 
+            transition: width 0.5s ease; 
         }
 
-        .stat-widget.water {
-            background: var(--water-grad);
-            color: white;
+        /* --- WIDGET EAU (Style Waterllama) --- */
+        .water-widget { 
+            background: white; 
+            border-radius: var(--radius-lg); 
+            padding: 24px; 
+            box-shadow: var(--shadow-soft); 
+            display: flex; 
+            gap: 20px; 
+            align-items: center; 
         }
 
-        .widget-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-            font-weight: 700;
+        .water-visual { 
+            width: 80px; 
+            height: 120px; 
+            background: #E8F4F8; 
+            border-radius: 20px 20px 30px 30px; 
+            position: relative; 
+            overflow: hidden; 
+            border: 4px solid #D1E8F0; 
         }
 
-        .widget-value {
-            font-size: 32px;
-            font-weight: 800;
-            line-height: 1;
-            margin-bottom: 12px;
+        .water-wave { 
+            position: absolute; 
+            bottom: 0; 
+            left: 0; 
+            width: 100%; 
+            background: var(--water-grad); 
+            transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1); 
+            border-radius: 0 0 24px 24px; 
         }
 
-        .widget-sub {
-            font-size: 14px;
-            opacity: 0.8;
-            font-weight: 600;
+        .water-info { 
+            flex: 1; 
         }
 
-        .progress-track {
-            height: 8px;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 4px;
-            margin-top: 16px;
-            overflow: hidden;
+        .water-title { 
+            font-weight: 800; 
+            font-size: 20px; 
+            margin-bottom: 4px; 
         }
 
-        .progress-fill {
-            height: 100%;
-            background: white;
-            border-radius: 4px;
-            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+        .water-drinks { 
+            display: flex; 
+            gap: 12px; 
+            margin-top: 16px; 
+        }
+
+        .drink-btn { 
+            background: var(--bg); 
+            border: none; 
+            width: 50px; 
+            height: 50px; 
+            border-radius: 16px; 
+            font-size: 24px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            cursor: pointer; 
+            transition: transform 0.2s; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05); 
+        }
+
+        .drink-btn:active { 
+            transform: scale(0.9); 
+        }
+
+        /* --- BOUTONS ACTIONS --- */
+        .action-btn-main { 
+            width: 100%; 
+            padding: 18px; 
+            background: var(--primary-grad); 
+            color: white; 
+            border: none; 
+            border-radius: 100px; 
+            font-size: 18px; 
+            font-weight: 800; 
+            cursor: pointer; 
+            box-shadow: var(--shadow-floating); 
+            margin-bottom: 12px; 
+        }
+
+        .action-btn-outline { 
+            width: 100%; 
+            padding: 18px; 
+            background: transparent; 
+            color: var(--text-dark); 
+            border: 2px solid #E2E8F0; 
+            border-radius: 100px; 
+            font-size: 16px; 
+            font-weight: 800; 
+            cursor: pointer; 
+            margin-bottom: 12px; 
         }
 
         /* --- JOURNAL --- */
-        .log-item {
-            display: flex;
-            align-items: center;
-            padding: 16px;
-            background: var(--bg);
-            border-radius: var(--radius-md);
-            margin-bottom: 12px;
+        .log-item { 
+            display: flex; 
+            align-items: center; 
+            padding: 16px; 
+            background: white; 
+            border-radius: var(--radius-md); 
+            margin-bottom: 12px; 
+            box-shadow: var(--shadow-soft); 
         }
 
-        .log-icon {
-            font-size: 24px;
-            margin-right: 16px;
-            background: white;
-            width: 44px;
-            height: 44px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 14px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+        .log-icon { 
+            font-size: 28px; 
+            margin-right: 16px; 
+            background: var(--bg); 
+            width: 50px; 
+            height: 50px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            border-radius: 16px; 
         }
 
-        .log-details {
-            flex-grow: 1;
+        .log-details { 
+            flex-grow: 1; 
         }
 
-        .log-name {
-            font-weight: 700;
-            font-size: 16px;
-            margin-bottom: 2px;
+        .log-name { 
+            font-weight: 800; 
+            font-size: 16px; 
         }
 
-        .log-meta {
-            font-size: 13px;
-            color: var(--text-light);
-            font-weight: 600;
+        .log-macros { 
+            font-size: 12px; 
+            color: var(--text-light); 
+            font-weight: 700; 
+            margin-top: 4px; 
+            display: flex; 
+            gap: 8px; 
         }
 
-        .log-cal {
-            font-weight: 800;
-            color: var(--primary);
-            font-size: 16px;
+        .log-cal { 
+            font-weight: 900; 
+            color: var(--text-dark); 
+            font-size: 18px; 
         }
 
-        .delete-btn {
-            background: none;
-            border: none;
-            color: #FF3B30;
-            font-size: 24px;
-            margin-left: 12px;
-            padding: 8px;
-            cursor: pointer;
-            opacity: 0.5;
+        /* --- MODALES & FORMS --- */
+        input, select { 
+            width: 100%; 
+            padding: 16px 20px; 
+            border: 2px solid var(--bg); 
+            border-radius: 16px; 
+            font-size: 16px; 
+            font-weight: 700; 
+            background: var(--bg); 
+            color: var(--text-dark); 
+            margin-bottom: 16px; 
+            -webkit-appearance: none; 
         }
 
-        /* --- INPUTS & BOUTONS --- */
-        input, select {
-            width: 100%;
-            padding: 16px 20px;
-            border: 2px solid transparent;
-            border-radius: 16px;
-            font-size: 16px;
-            font-weight: 600;
-            background: var(--bg);
-            color: var(--text-dark);
-            margin-bottom: 16px;
-            -webkit-appearance: none;
-            transition: all 0.2s;
+        input:focus, select:focus { 
+            outline: none; 
+            border-color: var(--primary); 
+            background: white; 
         }
 
-        input:focus, select:focus {
-            outline: none;
-            border-color: var(--primary);
-            background: white;
-            box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.1);
-        }
-
-        label {
-            display: block;
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--text-light);
-            margin-bottom: 8px;
-            padding-left: 4px;
-        }
-
-        .btn-main {
-            width: 100%;
-            padding: 18px;
-            background: var(--primary-grad);
-            color: white;
-            border: none;
-            border-radius: 100px;
-            font-size: 18px;
-            font-weight: 800;
-            cursor: pointer;
-            box-shadow: var(--shadow-floating);
-            transition: transform 0.2s;
-        }
-
-        .btn-main:active {
-            transform: translateY(2px);
-        }
-
-        .btn-secondary {
-            width: 100%;
-            padding: 18px;
-            background: var(--surface);
-            color: var(--text-dark);
-            border: 2px solid var(--bg);
-            border-radius: 100px;
-            font-size: 16px;
-            font-weight: 800;
-            cursor: pointer;
-            margin-bottom: 12px;
-            transition: background 0.2s;
-        }
-
-        .btn-secondary:active {
-            background: var(--bg);
-        }
-
-        /* --- MODALES BOTTOM SHEET --- */
-        .modal {
-            display: flex;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(30, 35, 45, 0.4);
-            backdrop-filter: blur(4px);
-            z-index: 1000;
-            align-items: flex-end;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .modal.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .modal-content {
-            background: var(--surface);
-            width: 100%;
-            max-height: 85vh;
-            border-radius: 32px 32px 0 0;
-            padding: 32px 24px calc(24px + env(safe-area-inset-bottom));
-            transform: translateY(100%);
-            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-            overflow-y: auto;
-        }
-
-        .modal.active .modal-content {
-            transform: translateY(0);
-        }
-
-        .modal-drag {
-            width: 40px;
-            height: 5px;
-            background: #E2E8F0;
-            border-radius: 3px;
-            margin: -10px auto 24px;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-        }
-
-        .modal-title {
-            font-size: 22px;
-            font-weight: 800;
-        }
-
-        .close-btn {
-            background: var(--bg);
-            border: none;
-            width: 36px;
-            height: 36px;
-            border-radius: 18px;
-            font-size: 20px;
-            color: var(--text-light);
-            cursor: pointer;
-        }
-
-        .choice-grid {
-            display: grid;
-            gap: 12px;
-        }
-
-        .choice-card {
-            background: var(--bg);
-            padding: 16px 20px;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            cursor: pointer;
-        }
-
-        .choice-card:active {
-            background: #E2E8F0;
+        label { 
+            display: block; 
+            font-size: 14px; 
+            font-weight: 800; 
+            color: var(--text-light); 
+            margin-bottom: 8px; 
         }
         
-        /* --- NAVIGATION FLOTTANTE --- */
-        .tab-bar {
-            position: fixed;
-            bottom: calc(20px + env(safe-area-inset-bottom));
-            left: 24px;
-            right: 24px;
-            background: var(--surface);
-            border-radius: 100px;
-            padding: 8px;
-            display: flex;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
-            z-index: 100;
+        .modal { 
+            display: flex; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: rgba(0,0,0,0.4); 
+            backdrop-filter: blur(4px); 
+            z-index: 1000; 
+            align-items: flex-end; 
+            opacity: 0; 
+            pointer-events: none; 
+            transition: opacity 0.3s; 
         }
 
-        .tab-item {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            background: transparent;
-            color: var(--text-light);
-            border-radius: 100px;
-            font-size: 14px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+        .modal.active { 
+            opacity: 1; 
+            pointer-events: auto; 
         }
 
-        .tab-item.active {
-            background: var(--bg);
-            color: var(--primary);
+        .modal-content { 
+            background: var(--surface); 
+            width: 100%; 
+            max-height: 85vh; 
+            border-radius: 32px 32px 0 0; 
+            padding: 32px 24px 40px; 
+            transform: translateY(100%); 
+            transition: transform 0.4s; 
+            overflow-y: auto; 
         }
 
-        .tab-content {
-            display: none;
+        .modal.active .modal-content { 
+            transform: translateY(0); 
         }
 
-        .tab-content.active {
-            display: block;
-            animation: fadeUp 0.4s ease;
+        .modal-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 24px; 
         }
 
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .close-btn { 
+            background: var(--bg); 
+            border: none; 
+            width: 36px; 
+            height: 36px; 
+            border-radius: 18px; 
+            font-weight: bold; 
+            cursor: pointer; 
         }
 
-        /* --- NOTIFICATION TOAST --- */
-        .toast {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%) translateY(-100px);
-            background: var(--text-dark);
-            color: white;
-            padding: 14px 24px;
-            border-radius: 100px;
-            font-weight: 700;
-            font-size: 14px;
-            z-index: 2000;
-            transition: transform 0.4s;
+        /* --- SETUP WIZARD --- */
+        .fullscreen-screen { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: var(--bg); 
+            z-index: 3000; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            padding: 24px; 
+            overflow-y: auto; 
         }
 
-        .toast.show {
-            transform: translateX(-50%) translateY(0);
+        .wizard-step { 
+            display: none; 
+            animation: fadeUp 0.4s ease; 
         }
 
-        /* --- ECRANS PLEIN ECRAN --- */
-        .fullscreen-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--bg);
-            z-index: 3000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 24px;
-            overflow-y: auto;
+        .wizard-step.active { 
+            display: block; 
         }
 
-        .wizard-step {
-            display: none;
-            animation: fadeUp 0.4s ease;
+        .choice-pill { 
+            border: 2px solid #E2E8F0; 
+            padding: 16px; 
+            border-radius: 16px; 
+            margin-bottom: 12px; 
+            font-weight: 700; 
+            cursor: pointer; 
+            text-align: center; 
+            background: white; 
+            transition: 0.2s; 
         }
 
-        .wizard-step.active {
-            display: block;
+        .choice-pill.selected { 
+            border-color: var(--primary); 
+            background: rgba(255,107,107,0.1); 
+            color: var(--primary); 
         }
 
-        .empty-state {
-            text-align: center;
-            padding: 30px 20px;
-            color: var(--text-light);
-            font-weight: 600;
+        /* TAB BAR */
+        .tab-bar { 
+            position: fixed; 
+            bottom: 20px; 
+            left: 24px; 
+            right: 24px; 
+            background: white; 
+            border-radius: 100px; 
+            padding: 8px; 
+            display: flex; 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1); 
+            z-index: 100; 
         }
 
-        .empty-emoji {
-            font-size: 40px;
-            margin-bottom: 12px;
-            display: block;
+        .tab-item { 
+            flex: 1; 
+            padding: 12px; 
+            border: none; 
+            background: transparent; 
+            color: var(--text-light); 
+            border-radius: 100px; 
+            font-weight: 800; 
+            display: flex; 
+            justify-content: center; 
+            gap: 8px; 
         }
 
-        /* --- LOADER --- */
-        .loader-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--bg);
-            z-index: 9999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .tab-item.active { 
+            background: var(--bg); 
+            color: var(--primary); 
         }
 
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid var(--surface);
-            border-top-color: var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+        .tab-content { 
+            display: none; 
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        .tab-content.active { 
+            display: block; 
+            animation: fadeUp 0.4s ease; 
+        }
+
+        @keyframes fadeUp { 
+            from { opacity: 0; transform: translateY(10px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+
+        .toast { 
+            position: fixed; 
+            top: 20px; 
+            left: 50%; 
+            transform: translateX(-50%) translateY(-100px); 
+            background: #2D3436; 
+            color: white; 
+            padding: 14px 24px; 
+            border-radius: 100px; 
+            font-weight: 700; 
+            z-index: 2000; 
+            transition: 0.4s; 
+        }
+
+        .toast.show { 
+            transform: translateX(-50%) translateY(0); 
         }
     </style>
 
@@ -556,77 +497,83 @@
 </head>
 <body>
 
-    <div id="loader" class="loader-overlay">
-        <div class="spinner"></div>
-    </div>
-
     <div id="auth-screen" class="fullscreen-screen" style="display: none;">
         <div style="text-align: center; margin-bottom: 40px;">
-            <div style="font-size: 64px; margin-bottom: 16px;">🔥</div>
+            <div style="font-size: 64px; margin-bottom: 16px;">🥑</div>
             <h1 style="font-size: 32px;">FitTrack</h1>
-            <p style="color: var(--text-light); font-weight: 600;">Tes données, partout avec toi.</p>
+            <p style="color: var(--text-light); font-weight: 600;">Nutrition & Hydratation</p>
         </div>
-
-        <button class="btn-secondary" onclick="signInGoogle()" style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 32px;">
-            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20" alt="Google">
-            Continuer avec Google
+        
+        <button class="action-btn-outline" onclick="signInGoogle()" style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 32px;">
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20"> Continuer avec Google
         </button>
-
-        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px;">
-            <div style="flex: 1; height: 2px; background: #E2E8F0; border-radius: 2px;"></div>
-            <span style="color: var(--text-light); font-weight: 700; font-size: 14px;">OU</span>
-            <div style="flex: 1; height: 2px; background: #E2E8F0; border-radius: 2px;"></div>
-        </div>
-
+        
         <div class="card" style="padding: 20px;">
             <label>Email</label>
-            <input type="email" id="auth-email" placeholder="ton@email.com">
-            <label>Mot de passe</label>
-            <input type="password" id="auth-pass" placeholder="••••••••">
+            <input type="email" id="auth-email">
             
-            <div style="display: flex; gap: 12px; margin-top: 8px;">
-                <button class="btn-main" onclick="signInEmail()" style="padding: 14px;">Connexion</button>
-                <button class="btn-secondary" onclick="signUpEmail()" style="margin-bottom: 0; padding: 14px;">Inscription</button>
-            </div>
+            <label>Mot de passe</label>
+            <input type="password" id="auth-pass">
+            
+            <button class="action-btn-main" onclick="signInEmail()" style="margin-top: 8px;">Connexion</button>
+            <button class="action-btn-outline" onclick="signUpEmail()" style="margin-bottom: 0;">Créer un compte</button>
         </div>
     </div>
 
     <div id="setup" class="fullscreen-screen" style="display: none;">
+        
         <div class="wizard-step active" id="step1">
-            <div style="font-size: 72px; text-align: center; margin-bottom: 24px;">👋</div>
-            <h1 style="text-align: center; margin-bottom: 8px;">Bienvenue</h1>
-            <p style="text-align: center; color: var(--text-light); font-weight: 600; margin-bottom: 32px;">Personnalisons ton expérience.</p>
+            <h1 style="text-align: center; margin-bottom: 8px;">Ton Objectif</h1>
+            <p style="text-align: center; color: var(--text-light); margin-bottom: 32px; font-weight:700;">Que souhaites-tu accomplir ?</p>
             
+            <div class="choice-pill selected" onclick="selectGoal('lose', this)">🔥 Perdre du poids</div>
+            <div class="choice-pill" onclick="selectGoal('maintain', this)">⚖️ Maintenir mon poids</div>
+            <div class="choice-pill" onclick="selectGoal('gain', this)">💪 Prendre du muscle</div>
+            
+            <button class="action-btn-main" style="margin-top:24px;" onclick="nextStep(2)">Continuer</button>
+        </div>
+
+        <div class="wizard-step" id="step2">
+            <h1 style="text-align: center; margin-bottom: 32px;">Ton Profil</h1>
             <div class="card">
                 <label>Sexe</label>
                 <select id="setup-gender">
                     <option value="male">Homme</option>
                     <option value="female">Femme</option>
                 </select>
-                <label>Âge</label>
-                <input type="number" id="setup-age" placeholder="ex: 27">
-                <label>Taille (cm)</label>
-                <input type="number" id="setup-height" placeholder="ex: 175">
+                
+                <div style="display:flex; gap:12px;">
+                    <div style="flex:1">
+                        <label>Âge</label>
+                        <input type="number" id="setup-age">
+                    </div>
+                    <div style="flex:1">
+                        <label>Taille (cm)</label>
+                        <input type="number" id="setup-height">
+                    </div>
+                </div>
+                
+                <label>Niveau d'activité</label>
+                <select id="setup-activity">
+                    <option value="1.2">Sédentaire (Bureau)</option>
+                    <option value="1.375" selected>Léger (1-2 séances/sem)</option>
+                    <option value="1.55">Modéré (3-4 séances/sem)</option>
+                    <option value="1.725">Très actif (5+ séances/sem)</option>
+                </select>
             </div>
-            <button class="btn-main" onclick="nextStep()">Continuer</button>
+            <button class="action-btn-main" onclick="nextStep(3)">Continuer</button>
         </div>
 
-        <div class="wizard-step" id="step2">
-            <div style="font-size: 72px; text-align: center; margin-bottom: 24px;">🎯</div>
-            <h1 style="text-align: center; margin-bottom: 32px;">Ton Objectif</h1>
+        <div class="wizard-step" id="step3">
+            <h1 style="text-align: center; margin-bottom: 32px;">Dernière étape</h1>
             <div class="card">
                 <label>Poids actuel (kg)</label>
                 <input type="number" id="setup-current-weight" step="0.1">
+                
                 <label>Poids cible (kg)</label>
                 <input type="number" id="setup-target-weight" step="0.1">
-                <label>Rythme</label>
-                <select id="setup-pace">
-                    <option value="slow">Tranquille</option>
-                    <option value="moderate" selected>Normal</option>
-                    <option value="fast">Intense</option>
-                </select>
             </div>
-            <button class="btn-main" onclick="completeSetup()">C'est parti !</button>
+            <button class="action-btn-main" onclick="completeSetup()">Calculer mon plan !</button>
         </div>
     </div>
 
@@ -637,7 +584,7 @@
                     <div class="greeting">Bonjour <span id="user-display-name">!</span> 👋</div>
                     <h1>Aujourd'hui</h1>
                 </div>
-                <div class="streak-badge" onclick="logOut()" title="Se déconnecter">
+                <div class="streak-badge" onclick="logOut()">
                     🔥 <span id="streak-count">0</span>
                 </div>
             </div>
@@ -645,304 +592,349 @@
 
         <div class="container">
             <div id="home-tab" class="tab-content active">
-                <div class="action-grid">
-                    <button class="action-btn" onclick="openModal('meals-modal')">
-                        <div class="action-icon">🍽️</div>
-                        <span class="action-label">Repas</span>
-                    </button>
-                    <button class="action-btn" onclick="addWater(this)" oncontextmenu="event.preventDefault(); openModal('water-modal');">
-                        <div class="action-icon">💧</div>
-                        <span class="action-label" id="water-container-label">Verre</span>
-                    </button>
-                    <button class="action-btn" onclick="openModal('sleep-modal')">
-                        <div class="action-icon">😴</div>
-                        <span class="action-label">Sommeil</span>
-                    </button>
-                    <button class="action-btn" onclick="openModal('sync-modal')">
-                        <div class="action-icon">⚖️</div>
-                        <span class="action-label">Poids</span>
-                    </button>
-                </div>
-
-                <div class="main-stats">
-                    <div class="stat-widget primary">
-                        <div class="widget-header">
-                            <span>Calories</span>
-                            <span>⚡</span>
+                
+                <div class="macro-dashboard">
+                    <div class="cal-header">
+                        <div>
+                            <div class="cal-title">Calories consommées</div>
+                            <div class="cal-value" id="cal-now">0</div>
                         </div>
-                        <div class="widget-value" id="cal-now">0</div>
-                        <div class="widget-sub">sur <span id="cal-goal">0</span> kcal</div>
-                        <div class="progress-track">
-                            <div class="progress-fill" id="cal-fill" style="width: 0%"></div>
+                        <div style="text-align: right; color: var(--text-light); font-weight: 800;">
+                            / <span id="cal-goal">0</span> kcal
                         </div>
                     </div>
                     
-                    <div class="stat-widget water">
-                        <div class="widget-header">
-                            <span>Hydratation</span>
-                            <span>💧</span>
+                    <div class="macro-row">
+                        <div class="macro-col">
+                            <div class="macro-label">
+                                <span>Protéines</span>
+                                <span id="prot-text">0/0g</span>
+                            </div>
+                            <div class="macro-track">
+                                <div class="macro-fill" id="prot-fill" style="background: var(--prot); width: 0%;"></div>
+                            </div>
                         </div>
-                        <div class="widget-value"><span id="water-now">0</span> ml</div>
-                        <div class="widget-sub">sur <span id="water-goal">2000</span> ml</div>
-                        <div class="progress-track">
-                            <div class="progress-fill" id="water-fill" style="width: 0%"></div>
+                        <div class="macro-col">
+                            <div class="macro-label">
+                                <span>Glucides</span>
+                                <span id="carb-text">0/0g</span>
+                            </div>
+                            <div class="macro-track">
+                                <div class="macro-fill" id="carb-fill" style="background: var(--carb); width: 0%;"></div>
+                            </div>
+                        </div>
+                        <div class="macro-col">
+                            <div class="macro-label">
+                                <span>Lipides</span>
+                                <span id="fat-text">0/0g</span>
+                            </div>
+                            <div class="macro-track">
+                                <div class="macro-fill" id="fat-fill" style="background: var(--fat); width: 0%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="action-btn-outline" style="margin-top:20px; margin-bottom:0; padding:12px;" onclick="openModal('meals-modal')">
+                        + Ajouter un repas
+                    </button>
+                </div>
+
+                <div class="water-widget">
+                    <div class="water-visual">
+                        <div class="water-wave" id="water-wave" style="height: 0%;"></div>
+                    </div>
+                    <div class="water-info">
+                        <div class="water-title"><span id="water-now">0</span> ml</div>
+                        <div style="color:var(--text-light); font-weight:700; font-size:14px;">
+                            Objectif : <span id="water-goal">2000</span> ml
+                        </div>
+                        
+                        <div class="water-drinks">
+                            <button class="drink-btn" onclick="addDrink('eau', 250)" title="Verre d'eau">💧</button>
+                            <button class="drink-btn" onclick="addDrink('the', 300)" title="Thé">🍵</button>
+                            <button class="drink-btn" onclick="addDrink('cafe', 150)" title="Café">☕</button>
                         </div>
                     </div>
                 </div>
 
-                <div class="section-title">Journal des repas</div>
+                <div class="section-title">Journal du jour</div>
                 <div id="today-log"></div>
             </div>
 
             <div id="data-tab" class="tab-content">
-                <div class="section-title">Vue d'ensemble</div>
-                <div class="card">
-                    <div style="display:flex; justify-content:space-between; margin-bottom:16px;">
-                        <span style="font-weight:700; color:var(--text-light)">Poids actuel</span>
-                        <strong style="font-size:18px" id="stats-weight">- kg</strong>
-                    </div>
-                    <div style="display:flex; justify-content:space-between;">
-                        <span style="font-weight:700; color:var(--text-light)">Dernier sommeil</span>
-                        <strong style="font-size:18px" id="stats-sleep">-</strong>
-                    </div>
-                </div>
+                <div class="section-title">Suivi</div>
+                <button class="action-btn-outline" onclick="openModal('sync-modal')">⚖️ Mettre à jour mon poids</button>
                 
-                <div class="section-title" style="margin-top:32px;">Historique</div>
+                <div class="section-title">Historique</div>
                 <div id="history-log"></div>
-                
-                <button class="btn-secondary" onclick="logOut()" style="margin-top: 32px; color: #FF3B30; border-color: rgba(255, 59, 48, 0.2);">
-                    Déconnexion
-                </button>
             </div>
         </div>
     </div>
 
     <div id="meals-modal" class="modal" onclick="closeOnBackdrop(event, 'meals-modal')">
         <div class="modal-content">
-            <div class="modal-drag"></div>
             <div class="modal-header">
-                <h3 class="modal-title">Ajouter un repas</h3>
+                <h3 style="font-weight:900; font-size:24px;">Que manges-tu ?</h3>
                 <button class="close-btn" onclick="closeModal('meals-modal')">✕</button>
             </div>
-            <div class="choice-grid" id="meals-list"></div>
-        </div>
-    </div>
-
-    <div id="water-modal" class="modal" onclick="closeOnBackdrop(event, 'water-modal')">
-        <div class="modal-content">
-            <div class="modal-drag"></div>
-            <div class="modal-header">
-                <h3 class="modal-title">Contenant</h3>
-                <button class="close-btn" onclick="closeModal('water-modal')">✕</button>
-            </div>
-            <div class="choice-grid" id="water-containers"></div>
-        </div>
-    </div>
-
-    <div id="sleep-modal" class="modal" onclick="closeOnBackdrop(event, 'sleep-modal')">
-        <div class="modal-content">
-            <div class="modal-drag"></div>
-            <div class="modal-header">
-                <h3 class="modal-title">Sommeil</h3>
-                <button class="close-btn" onclick="closeModal('sleep-modal')">✕</button>
-            </div>
-            <label>Heure de coucher</label>
-            <input type="time" id="sleep-bed">
-            <label>Heure de réveil</label>
-            <input type="time" id="sleep-wake">
-            <button class="btn-main" style="margin-top:16px;" onclick="logSleep()">Enregistrer</button>
+            <div id="meals-list" style="display: grid; gap: 12px;"></div>
         </div>
     </div>
 
     <div id="sync-modal" class="modal" onclick="closeOnBackdrop(event, 'sync-modal')">
         <div class="modal-content">
-            <div class="modal-drag"></div>
             <div class="modal-header">
-                <h3 class="modal-title">Nouveau poids</h3>
+                <h3>Nouveau poids</h3>
                 <button class="close-btn" onclick="closeModal('sync-modal')">✕</button>
             </div>
-            <label>Ton poids aujourd'hui (kg)</label>
-            <input type="number" id="sync-weight" step="0.1" placeholder="ex: 70.5">
-            <button class="btn-main" style="margin-top:16px;" onclick="syncData()">Mettre à jour</button>
+            <label>Poids (kg)</label>
+            <input type="number" id="sync-weight" step="0.1">
+            <button class="action-btn-main" onclick="syncData()">Enregistrer</button>
         </div>
     </div>
 
     <div class="tab-bar">
-        <button class="tab-item active" onclick="switchTab('home', this)">
-            <span style="font-size:20px;">🏠</span> Accueil
-        </button>
-        <button class="tab-item" onclick="switchTab('data', this)">
-            <span style="font-size:20px;">📊</span> Données
-        </button>
+        <button class="tab-item active" onclick="switchTab('home', this)">🏠 Aujourd'hui</button>
+        <button class="tab-item" onclick="switchTab('data', this)">📊 Historique</button>
     </div>
 
     <div class="toast" id="toast"></div>
 
     <script>
-        // ==========================================
-        // CONFIGURATION FIREBASE
-        // ==========================================
+        // ========================================================
+        // CONFIGURATION FIREBASE (Avec tes clés)
+        // ========================================================
         const firebaseConfig = {
             apiKey: "AIzaSyDaIqBkYViw1Vad553tkT6r7-o_qVW_GYU",
             authDomain: "suivi-sante-94f4e.firebaseapp.com",
             projectId: "suivi-sante-94f4e",
             storageBucket: "suivi-sante-94f4e.firebasestorage.app",
             messagingSenderId: "821267258521",
-            appId: "1:821267258521:web:45d446eef12b4803cb6c08",
-            measurementId: "G-FGH0JV2DJH"
+            appId: "1:821267258521:web:45d446eef12b4803cb6c08"
         };
         
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const googleProvider = new firebase.auth.GoogleAuthProvider();
 
-        // ==========================================
-        // DONNEES LOCALES PAR DEFAUT
-        // ==========================================
-        const meals = [
-            {name: 'Petit-déjeuner', icon: '🥐', cal: 350}, 
-            {name: 'Déjeuner', icon: '🥗', cal: 600},
-            {name: 'Dîner', icon: '🍽️', cal: 550}, 
-            {name: 'En-cas', icon: '🍎', cal: 150}, 
-            {name: 'Shaker', icon: '🥤', cal: 120}
-        ];
-        
-        const waterContainers = [
-            {name: 'Verre', icon: '🥛', ml: 250}, 
-            {name: 'Petite gourde', icon: '🧃', ml: 500},
-            {name: 'Grande gourde', icon: '💧', ml: 750}, 
-            {name: 'Bouteille', icon: '🍾', ml: 1000}
+        // ========================================================
+        // BASE DE DONNEES REPAS (Inspirée Foodvisor)
+        // ========================================================
+        const mealsDb = [
+            {name: 'Petit-déjeuner équilibré', icon: '🥣', cal: 450, prot: 20, carb: 55, fat: 15},
+            {name: 'Salade Poulet/Avocat', icon: '🥗', cal: 550, prot: 40, carb: 15, fat: 35},
+            {name: 'Plat de Pâtes (viande)', icon: '🍝', cal: 700, prot: 35, carb: 85, fat: 20},
+            {name: 'Steak & Légumes', icon: '🥩', cal: 500, prot: 45, carb: 20, fat: 25},
+            {name: 'Shaker Protéiné', icon: '🥤', cal: 150, prot: 30, carb: 5, fat: 2},
+            {name: 'Fruit / En-cas', icon: '🍎', cal: 100, prot: 1, carb: 25, fat: 0}
         ];
 
+        // ========================================================
+        // STRUCTURE DES DONNEES
+        // ========================================================
         let data = {
             setup: false,
-            profile: {gender: 'male', age: 27, height: 175, weight: 75, target: 70, pace: 'moderate'},
-            goals: {cal: 2000, waterMl: 2000},
+            profile: {
+                gender: 'male', 
+                age: 25, 
+                height: 175, 
+                weight: 70, 
+                target: 70, 
+                activity: 1.375, 
+                goal: 'lose'
+            },
+            goals: {
+                cal: 2000, 
+                waterMl: 2000, 
+                prot: 100, 
+                carb: 200, 
+                fat: 70
+            },
             history: [], 
-            today: {date: new Date().toDateString(), foods: [], waterMl: 0, cal: 0},
-            waterContainer: {name: 'Verre', icon: '🥛', ml: 250}, 
-            sleep: [], 
+            today: {
+                date: new Date().toDateString(), 
+                foods: [], 
+                waterMl: 0, 
+                cal: 0, 
+                prot: 0, 
+                carb: 0, 
+                fat: 0
+            },
             streak: 0
         };
 
-        // ==========================================
+        // ========================================================
         // GESTION DE L'AUTHENTIFICATION FIREBASE
-        // ==========================================
+        // ========================================================
         auth.onAuthStateChanged(user => {
-            document.getElementById('loader').style.display = 'none';
             if (user) {
-                // Connecté
+                // Utilisateur connecté
                 document.getElementById('auth-screen').style.display = 'none';
                 
-                // Formater le prénom
+                // Formater l'affichage du nom
                 let displayName = user.email.split('@')[0];
                 if (user.displayName) {
                     displayName = user.displayName.split(' ')[0];
                 }
-                document.getElementById('user-display-name').textContent = displayName + " !";
+                document.getElementById('user-display-name').textContent = displayName;
                 
-                // Charger les données sauvegardées de cet utilisateur
+                // Charger les données
                 loadLocalData();
             } else {
-                // Déconnecté
+                // Utilisateur déconnecté
                 document.getElementById('auth-screen').style.display = 'flex';
                 document.getElementById('app').style.display = 'none';
                 document.getElementById('setup').style.display = 'none';
             }
         });
 
-        function signInGoogle() {
-            auth.signInWithPopup(googleProvider).catch(err => showToast(err.message));
+        function signInGoogle() { 
+            auth.signInWithPopup(googleProvider).catch(e => showToast(e.message)); 
         }
-
-        function signInEmail() {
+        
+        function signInEmail() { 
             const email = document.getElementById('auth-email').value;
             const pass = document.getElementById('auth-pass').value;
-            if(!email || !pass) return showToast("Remplis tous les champs");
-            auth.signInWithEmailAndPassword(email, pass).catch(err => showToast(err.message));
+            auth.signInWithEmailAndPassword(email, pass).catch(e => showToast(e.message)); 
         }
-
-        function signUpEmail() {
+        
+        function signUpEmail() { 
             const email = document.getElementById('auth-email').value;
             const pass = document.getElementById('auth-pass').value;
-            if(!email || !pass) return showToast("Remplis tous les champs");
-            auth.createUserWithEmailAndPassword(email, pass).catch(err => showToast(err.message));
+            auth.createUserWithEmailAndPassword(email, pass).catch(e => showToast(e.message)); 
+        }
+        
+        function logOut() { 
+            auth.signOut(); 
         }
 
-        function logOut() {
-            auth.signOut();
+        // ========================================================
+        // LOGIQUE WIZARD / ONBOARDING
+        // ========================================================
+        function selectGoal(goal, element) {
+            data.profile.goal = goal;
+            
+            // Retirer la sélection précédente
+            document.querySelectorAll('#step1 .choice-pill').forEach(el => {
+                el.classList.remove('selected');
+            });
+            
+            // Ajouter la nouvelle sélection
+            element.classList.add('selected');
         }
 
-        // ==========================================
-        // LOGIQUE METIER & CALCULS
-        // ==========================================
-        function calcGoals() {
-            const w = data.profile.weight;
-            const bmr = data.profile.gender === 'male' ? 
-                (10 * w) + (6.25 * data.profile.height) - (5 * data.profile.age) + 5 : 
-                (10 * w) + (6.25 * data.profile.height) - (5 * data.profile.age) - 161;
+        function nextStep(stepNumber) {
+            if(stepNumber === 3) {
+                // Sauvegarder les données de l'étape 2
+                data.profile.age = parseInt(document.getElementById('setup-age').value);
+                data.profile.height = parseInt(document.getElementById('setup-height').value);
+                data.profile.gender = document.getElementById('setup-gender').value;
+                data.profile.activity = parseFloat(document.getElementById('setup-activity').value);
                 
-            const def = {slow: 250, moderate: 500, fast: 750};
-            data.goals.cal = Math.round((bmr * 1.375) - def[data.profile.pace]);
-            data.goals.waterMl = Math.round(w * 30);
+                if (!data.profile.age || !data.profile.height) {
+                    return showToast('Complète les infos');
+                }
+            }
+            
+            // Changer l'étape visible
+            document.querySelectorAll('.wizard-step').forEach(s => {
+                s.classList.remove('active');
+            });
+            document.getElementById('step' + stepNumber).classList.add('active');
         }
 
-        function addWater(btn) {
-            data.today.waterMl += data.waterContainer.ml;
+        function completeSetup() {
+            data.profile.weight = parseFloat(document.getElementById('setup-current-weight').value);
+            data.profile.target = parseFloat(document.getElementById('setup-target-weight').value);
+            
+            if (!data.profile.weight) {
+                return showToast('Poids requis');
+            }
+            
+            calcGoals(); 
+            data.setup = true;
+            
+            document.getElementById('setup').style.display = 'none'; 
+            document.getElementById('app').style.display = 'block';
+            
             saveLocalData(); 
             render();
+        }
+
+        // ========================================================
+        // CALCULS (BMR + MACROS)
+        // ========================================================
+        function calcGoals() {
+            const w = data.profile.weight;
             
-            // Animation du bouton
-            if(btn) { 
-                btn.style.transform = 'scale(0.85)'; 
-                setTimeout(() => btn.style.transform = 'scale(1)', 150); 
+            // 1. Calcul du BMR (Formule Mifflin-St Jeor)
+            let bmr = (10 * w) + (6.25 * data.profile.height) - (5 * data.profile.age);
+            bmr += (data.profile.gender === 'male') ? 5 : -161;
+            
+            // 2. Calcul du TDEE (Dépense énergétique totale)
+            let tdee = bmr * data.profile.activity;
+            
+            // 3. Ajustement selon l'objectif choisi à l'étape 1
+            if(data.profile.goal === 'lose') {
+                tdee -= 400; // Déficit
+            } else if(data.profile.goal === 'gain') {
+                tdee += 300; // Surplus
             }
-            showToast(`💧 +${data.waterContainer.ml}ml ajoutés`);
+            
+            data.goals.cal = Math.round(tdee);
+            data.goals.waterMl = Math.round(w * 35); // 35ml par kg
+            
+            // 4. Répartition Macros (style Foodvisor)
+            // Protéines: ~2g/kg (lose/gain) ou 1.5g/kg (maintain)
+            const protMultiplier = (data.profile.goal === 'maintain') ? 1.5 : 2.0;
+            data.goals.prot = Math.round(w * protMultiplier);
+            
+            // Lipides: ~1g/kg
+            data.goals.fat = Math.round(w * 1);
+            
+            // Glucides: Le reste des calories (1g prot = 4kcal, 1g fat = 9kcal, 1g carb = 4kcal)
+            const remainingCal = data.goals.cal - (data.goals.prot * 4) - (data.goals.fat * 9);
+            data.goals.carb = Math.round(remainingCal / 4);
         }
 
-        function selectContainer(container) {
-            data.waterContainer = container; 
+        // ========================================================
+        // ACTIONS METIERS
+        // ========================================================
+        function addDrink(type, ml) {
+            data.today.waterMl += ml;
             saveLocalData(); 
-            render(); 
-            closeModal('water-modal');
-            showToast(`Contenant par défaut : ${container.name}`);
+            render();
+            showToast(`+${ml}ml de ${type}`);
         }
 
-        function addFood(name, cal, icon) {
+        function addFood(index) {
+            const f = mealsDb[index];
             const time = new Date().toLocaleTimeString('fr-FR', {hour: '2-digit', minute:'2-digit'});
-            data.today.foods.push({name, cal, icon, time});
-            data.today.cal += cal; 
+            
+            data.today.foods.push({...f, time});
+            data.today.cal += f.cal;
+            data.today.prot += f.prot;
+            data.today.carb += f.carb;
+            data.today.fat += f.fat;
             
             saveLocalData(); 
             render(); 
             closeModal('meals-modal'); 
-            showToast(`😋 ${name} ajouté`);
+            showToast(`✅ ${f.name}`);
         }
 
         function deleteFood(i) {
-            data.today.cal -= data.today.foods[i].cal; 
-            data.today.foods.splice(i, 1); 
+            const f = data.today.foods[i];
+            
+            data.today.cal -= f.cal;
+            data.today.prot -= f.prot;
+            data.today.carb -= f.carb;
+            data.today.fat -= f.fat;
+            
+            data.today.foods.splice(i, 1);
+            
             saveLocalData(); 
             render();
-        }
-
-        function logSleep() {
-            const bed = document.getElementById('sleep-bed').value;
-            const wake = document.getElementById('sleep-wake').value;
-            
-            if (!bed || !wake) return showToast('Heures manquantes');
-            
-            const b = new Date(`2000-01-01T${bed}`); 
-            let w = new Date(`2000-01-01T${wake}`);
-            if (w < b) w = new Date(`2000-01-02T${wake}`); // Gérer la nuit
-            
-            const hrs = ((w - b) / 3600000).toFixed(1);
-            data.sleep.unshift({date: new Date().toLocaleDateString(), hrs});
-            
-            saveLocalData(); 
-            render(); 
-            closeModal('sleep-modal'); 
-            showToast('😴 Sommeil enregistré');
         }
 
         function syncData() {
@@ -957,186 +949,174 @@
             showToast('✅ Poids mis à jour');
         }
 
-        // ==========================================
-        // WIZARD D'INSTALLATION
-        // ==========================================
-        function nextStep() {
-            data.profile.age = parseInt(document.getElementById('setup-age').value);
-            data.profile.height = parseInt(document.getElementById('setup-height').value);
-            data.profile.gender = document.getElementById('setup-gender').value;
-            
-            if (!data.profile.age || !data.profile.height) return showToast('Complète les infos');
-            
-            document.getElementById('step1').classList.remove('active'); 
-            document.getElementById('step2').classList.add('active');
-        }
-
-        function completeSetup() {
-            data.profile.weight = parseFloat(document.getElementById('setup-current-weight').value);
-            data.profile.target = parseFloat(document.getElementById('setup-target-weight').value);
-            data.profile.pace = document.getElementById('setup-pace').value;
-            
-            if (!data.profile.weight) return showToast('Poids requis');
-            
-            calcGoals(); 
-            data.setup = true;
-            
-            document.getElementById('setup').style.display = 'none'; 
-            document.getElementById('app').style.display = 'block';
-            saveLocalData(); 
-            render();
-        }
-
-        // ==========================================
-        // AFFICHAGE (RENDU)
-        // ==========================================
+        // ========================================================
+        // FONCTION DE RENDU (Mise à jour de l'UI)
+        // ========================================================
         function render() {
-            // Mise à jour des barres et compteurs
-            document.getElementById('cal-now').textContent = data.today.cal; 
+            // -- Mise à jour des Calories --
+            document.getElementById('cal-now').textContent = data.today.cal;
             document.getElementById('cal-goal').textContent = data.goals.cal;
-            document.getElementById('cal-fill').style.width = Math.min(100, (data.today.cal / data.goals.cal) * 100) + '%';
             
-            document.getElementById('water-now').textContent = data.today.waterMl; 
+            // -- Mise à jour des Barres de Macros --
+            const pPct = Math.min(100, (data.today.prot / data.goals.prot) * 100) || 0;
+            const cPct = Math.min(100, (data.today.carb / data.goals.carb) * 100) || 0;
+            const fPct = Math.min(100, (data.today.fat / data.goals.fat) * 100) || 0;
+            
+            document.getElementById('prot-fill').style.width = pPct + '%';
+            document.getElementById('carb-fill').style.width = cPct + '%';
+            document.getElementById('fat-fill').style.width = fPct + '%';
+            
+            document.getElementById('prot-text').textContent = `${data.today.prot}/${data.goals.prot}g`;
+            document.getElementById('carb-text').textContent = `${data.today.carb}/${data.goals.carb}g`;
+            document.getElementById('fat-text').textContent = `${data.today.fat}/${data.goals.fat}g`;
+
+            // -- Mise à jour de l'Eau (Effet Waterllama) --
+            document.getElementById('water-now').textContent = data.today.waterMl;
             document.getElementById('water-goal').textContent = data.goals.waterMl;
-            document.getElementById('water-fill').style.width = Math.min(100, (data.today.waterMl / data.goals.waterMl) * 100) + '%';
-            
-            document.getElementById('streak-count').textContent = data.streak; 
-            document.getElementById('water-container-label').textContent = data.waterContainer.name;
-            
-            document.getElementById('stats-weight').textContent = data.profile.weight + ' kg';
-            document.getElementById('stats-sleep').textContent = data.sleep[0] ? data.sleep[0].hrs + 'h' : 'Aucun';
+            const wPct = Math.min(100, (data.today.waterMl / data.goals.waterMl) * 100) || 0;
+            document.getElementById('water-wave').style.height = wPct + '%';
 
-            // Génération des listes dans les modales
-            document.getElementById('meals-list').innerHTML = meals.map(m => `
-                <div class="choice-card" onclick="addFood('${m.name}', ${m.cal}, '${m.icon}')">
-                    <div style="font-size:32px">${m.icon}</div>
-                    <div>
-                        <div style="font-weight:700">${m.name}</div>
-                        <div style="color:var(--text-light); font-size:14px">${m.cal} kcal</div>
+            // -- Liste des repas dans la modale --
+            document.getElementById('meals-list').innerHTML = mealsDb.map((m, i) => `
+                <div class="log-item" style="cursor:pointer; margin-bottom:0;" onclick="addFood(${i})">
+                    <div class="log-icon" style="font-size:32px;">${m.icon}</div>
+                    <div class="log-details">
+                        <div class="log-name">${m.name}</div>
+                        <div class="log-macros">P:${m.prot}g • G:${m.carb}g • L:${m.fat}g</div>
                     </div>
+                    <div class="log-cal">${m.cal} kcal</div>
                 </div>
             `).join('');
 
-            document.getElementById('water-containers').innerHTML = waterContainers.map(c => `
-                <div class="choice-card" onclick='selectContainer(${JSON.stringify(c)})'>
-                    <div style="font-size:32px">${c.icon}</div>
-                    <div>
-                        <div style="font-weight:700">${c.name}</div>
-                        <div style="color:var(--text-light); font-size:14px">${c.ml} ml</div>
+            // -- Journal du jour sur l'accueil --
+            if (data.today.foods.length > 0) {
+                document.getElementById('today-log').innerHTML = data.today.foods.map((f, i) => `
+                    <div class="log-item">
+                        <div class="log-icon">${f.icon}</div>
+                        <div class="log-details">
+                            <div class="log-name">${f.name}</div>
+                            <div class="log-macros">P:${f.prot}g • G:${f.carb}g • L:${f.fat}g</div>
+                        </div>
+                        <div class="log-cal">${f.cal} kcal</div>
+                        <button class="delete-btn" onclick="deleteFood(${i})">✕</button>
                     </div>
-                </div>
-            `).join('');
+                `).join('');
+            } else {
+                document.getElementById('today-log').innerHTML = `
+                    <p style="text-align:center; color:var(--text-light); font-weight:700; padding:20px;">
+                        Aucun repas enregistré pour le moment.
+                    </p>
+                `;
+            }
 
-            // Génération du journal
-            document.getElementById('today-log').innerHTML = data.today.foods.length ? data.today.foods.map((f, i) => `
-                <div class="log-item">
-                    <div class="log-icon">${f.icon || '🍽️'}</div>
-                    <div class="log-details">
-                        <div class="log-name">${f.name}</div>
-                        <div class="log-meta">${f.time}</div>
+            // -- Historique sur l'onglet Données --
+            if (data.history.length > 0) {
+                document.getElementById('history-log').innerHTML = data.history.map(h => `
+                    <div class="log-item">
+                        <div class="log-details">
+                            <div class="log-name">${new Date(h.date).toLocaleDateString('fr-FR', {weekday:'long', day:'numeric', month:'short'})}</div>
+                            <div class="log-macros">💧 ${h.waterMl}ml bus</div>
+                        </div>
+                        <div class="log-cal">${h.cal} kcal</div>
                     </div>
-                    <div class="log-cal">${f.cal}</div>
-                    <button class="delete-btn" onclick="deleteFood(${i})">✕</button>
-                </div>
-            `).join('') : `
-                <div class="empty-state">
-                    <span class="empty-emoji">🍽️</span>
-                    Aucun repas pour le moment.
-                </div>
-            `;
-
-            // Génération de l'historique
-            document.getElementById('history-log').innerHTML = data.history.length ? data.history.map(h => `
-                <div class="log-item" style="background:var(--surface); box-shadow:var(--shadow-soft);">
-                    <div class="log-details">
-                        <div class="log-name">${new Date(h.date).toLocaleDateString('fr-FR', {weekday:'long', day:'numeric', month:'short'})}</div>
-                        <div class="log-meta">💧 ${h.waterMl} ml bus</div>
-                    </div>
-                    <div class="log-cal" style="color: ${h.cal > data.goals.cal ? '#FF9500' : 'var(--primary)'}">${h.cal} kcal</div>
-                </div>
-            `).reverse().join('') : `
-                <div class="empty-state" style="background:var(--surface); border-radius:20px;">
-                    <span class="empty-emoji">📅</span>
-                    Ton historique apparaîtra demain.
-                </div>
-            `;
+                `).reverse().join('');
+            } else {
+                document.getElementById('history-log').innerHTML = `
+                    <p style="text-align:center; color:var(--text-light); font-weight:700; padding:20px;">
+                        Ton historique apparaîtra ici demain.
+                    </p>
+                `;
+            }
         }
 
-        // ==========================================
-        // UTILITAIRES DE NAVIGATION
-        // ==========================================
-        function switchTab(tabName, btnElement) { 
-            document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active')); 
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active')); 
+        // ========================================================
+        // FONCTIONS UTILITAIRES DE L'UI
+        // ========================================================
+        function switchTab(tabName, buttonElement) { 
+            // Retirer la classe active de tous les onglets
+            document.querySelectorAll('.tab-item').forEach(t => {
+                t.classList.remove('active');
+            }); 
             
-            btnElement.classList.add('active'); 
+            // Cacher tout le contenu
+            document.querySelectorAll('.tab-content').forEach(t => {
+                t.classList.remove('active');
+            }); 
+            
+            // Activer le bon onglet et contenu
+            buttonElement.classList.add('active'); 
             document.getElementById(tabName + '-tab').classList.add('active'); 
         }
         
         function openModal(id) { 
             document.getElementById(id).classList.add('active'); 
-            document.body.style.overflow = 'hidden';
         }
         
         function closeModal(id) { 
             document.getElementById(id).classList.remove('active'); 
-            document.body.style.overflow = '';
         }
         
         function closeOnBackdrop(event, id) { 
-            if (event.target.id === id) closeModal(id); 
+            if (event.target.id === id) {
+                closeModal(id); 
+            }
         }
         
         function showToast(message) { 
-            const t = document.getElementById('toast'); 
-            t.textContent = message; 
-            t.classList.add('show'); 
-            setTimeout(() => t.classList.remove('show'), 2500); 
+            const toast = document.getElementById('toast'); 
+            toast.textContent = message; 
+            toast.classList.add('show'); 
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500); 
         }
 
-        // ==========================================
-        // GESTION DU STOCKAGE DE DONNEES
-        // ==========================================
+        // ========================================================
+        // SAUVEGARDE & CHARGEMENT
+        // ========================================================
         async function saveLocalData() {
-            // On associe les données à l'ID utilisateur
+            // Lier les données à l'utilisateur connecté via Firebase Auth
             const uid = auth.currentUser ? auth.currentUser.uid : 'anonymous';
-            try { 
-                await window.storage.set('fit_' + uid, JSON.stringify(data)); 
-            } catch (e) { 
-                localStorage.setItem('fit_' + uid, JSON.stringify(data)); 
-            }
+            localStorage.setItem('fit_' + uid, JSON.stringify(data));
         }
 
         async function loadLocalData() {
             const uid = auth.currentUser ? auth.currentUser.uid : 'anonymous';
-            let storageObj = null;
+            const raw = localStorage.getItem('fit_' + uid);
             
-            try { 
-                storageObj = await window.storage.get('fit_' + uid); 
-            } catch (e) {
-                // Fallback si l'API storage plante
-            }
-            
-            const rawData = storageObj?.value || localStorage.getItem('fit_' + uid);
-            
-            if (rawData) {
-                const savedData = JSON.parse(rawData);
-                data = { ...data, ...savedData }; 
-                if (!data.history) data.history = [];
+            if (raw) {
+                const savedData = JSON.parse(raw);
+                data = { ...data, ...savedData };
                 
-                // GESTION DU CHANGEMENT DE JOUR
+                // Assurer la compatibilité avec les anciens comptes
+                if(data.today.prot === undefined) data.today.prot = 0;
+                if(data.today.carb === undefined) data.today.carb = 0;
+                if(data.today.fat === undefined) data.today.fat = 0;
+                
+                // Gestion du changement de jour
                 const currentDate = new Date().toDateString();
                 if (data.today.date !== currentDate) {
-                    if (data.today.cal > 0 || data.today.waterMl > 0) {
+                    if (data.today.cal > 0) {
                         data.history.push({...data.today});
-                        if (data.history.length > 30) data.history.shift(); // On garde 30 jours max
                     }
-                    data.today = {date: currentDate, foods: [], waterMl: 0, cal: 0};
+                    
+                    // Reset de la journée
+                    data.today = {
+                        date: currentDate, 
+                        foods: [], 
+                        waterMl: 0, 
+                        cal: 0, 
+                        prot: 0, 
+                        carb: 0, 
+                        fat: 0
+                    };
+                    
                     saveLocalData();
                 }
             }
             
-            // REDIRECTION SELON L'ETAT
+            // Afficher l'application ou l'onboarding
             if (data.setup) { 
                 document.getElementById('app').style.display = 'block'; 
                 document.getElementById('setup').style.display = 'none'; 
