@@ -41,7 +41,7 @@
             background: var(--bg); 
             color: var(--text-dark); 
             line-height: 1.4; 
-            padding-bottom: 90px; /* Espace réduit en bas de page */
+            padding-bottom: 70px; /* Espace réduit au minimum en bas de page */
             overflow-x: hidden; 
             font-size: 15px;
         }
@@ -573,43 +573,46 @@
             letter-spacing: 0.5px;
         }
 
-        /* --- MENU FLOTTANT COMPACT (Style Pilule) --- */
+        /* --- MENU FLOTTANT EXTREMEMENT COMPACT --- */
         .tab-bar { 
             position: fixed; 
-            bottom: 16px; /* Plus proche du bas */
-            left: 24px; 
-            right: 24px; 
+            /* Se cale tout en bas avec une toute petite marge */
+            bottom: calc(env(safe-area-inset-bottom) + 8px); 
+            left: 50%; 
+            transform: translateX(-50%);
+            width: calc(100% - 32px);
+            max-width: 380px; /* Plus petit en largeur */
             background: rgba(248, 249, 250, 0.95);
             backdrop-filter: blur(10px);
-            border-radius: 100px; /* Bords très ronds */
-            padding: 6px 12px; /* Beaucoup plus fin */
+            border-radius: 40px; 
+            padding: 4px; /* Padding réduit au minimum absolu */
             display: flex; 
             justify-content: space-between;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.08); 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06); 
             z-index: 100; 
             border: 1px solid rgba(0,0,0,0.05);
         }
 
         .tab-item { 
             flex: 1; 
-            padding: 6px 0; /* Padding réduit */
+            height: 44px; /* Hauteur fixe et petite (standard Apple) */
             border: none; 
             background: transparent; 
             color: var(--text-light); 
-            border-radius: 100px; 
+            border-radius: 30px; 
             font-weight: 700; 
             display: flex; 
             flex-direction: column; 
             align-items: center; 
             justify-content: center; 
-            gap: 3px; /* Espace texte/icone réduit */
-            font-size: 10px; /* Texte plus petit */
+            gap: 2px; /* Espace réduit entre icône et texte */
+            font-size: 9px; /* Texte minuscule, très discret */
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .tab-item .icon {
-            font-size: 18px; /* Icône plus discrète */
+            font-size: 16px; /* Icônes plus fines */
             filter: grayscale(100%) opacity(0.6); 
             transition: all 0.3s ease;
         }
@@ -617,7 +620,7 @@
         .tab-item.active { 
             background: #FFFFFF; 
             color: var(--primary); 
-            box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
 
         .tab-item.active .icon {
@@ -891,7 +894,7 @@
                 <span style="font-weight:700; font-size:14px; color:var(--text-light)">ml</span>
             </div>
             
-            <button class="action-btn-water" style="margin-top:16px;" onclick="addWaterllamaDrink()">Valider</button>
+            <button class="action-btn-main" style="margin-top:16px; background:var(--water-grad);" onclick="addWaterllamaDrink()">Valider</button>
         </div>
     </div>
 
